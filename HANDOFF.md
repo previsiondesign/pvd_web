@@ -112,7 +112,7 @@ Key facts a fresh session needs:
   after an avoice.co-inspired dark gradient look) remain live for reference.
 - Option B is the only multi-page option; A and C are single-page index mockups.
 - Contact form (option-b/contact.html) is a stub — `onsubmit` shows an alert; needs a real backend (e.g. Formspree) for production.
-- `images/logos/PrevisionP.png` (P-mark) is unused in the mockups — possible favicon candidate; no favicon is set on any page.
+- No favicon is set on any page — `images/logos/prevision_logo.svg` (icon-only 3D box, also copied to shared/images/prevision_icon.svg) is the natural candidate. (The old PrevisionP.png P-mark was removed 2026-06-10.)
 - Email `info@previsiondesign.com` and "CA License C-30995" appear across all pages — verify before launch.
 
 ## Memory
