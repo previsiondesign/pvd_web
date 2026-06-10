@@ -41,6 +41,10 @@ website-mockups/
                          (palette: 071739 4B6382 A4B5C4 CDD5DB A68868 E3C39D)
   option-c/              "Narrative Scroll" — dark theme, single page, scroll-driven
   shared/images/         Logo copies + portfolio photos used by all options
+  under-construction/    Branded "Site Under Construction" placeholder in the B2
+                         Preppy scheme — fully self-contained single file (inline
+                         CSS + inline logo SVG, no external assets except Google
+                         Fonts); strip the .back-to-hub block for production
 pallettes/               Palette sample JPGs (local only, gitignored — hex values
                          captured in the b2-* variant stylesheets)
 PreVision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized by
