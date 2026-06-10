@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 236.49 188.05">
+  <!-- ALIGNMENT NOTE: the art bounds include the blue cast shadow, which extends
+       to the LEFT of the 3D "P" box. The P box itself spans x 61.17-236.49 of the
+       236.49-wide viewBox, i.e. 25.9%-100% of the width (width/height = 1.2576).
+       Align to the P box, not the bounds:
+       - left-aligned contexts: shift left by 25.9% of rendered width
+         (= rendered height x 0.3253)
+       - centered contexts: shift left by 12.9% of rendered width
+         (= rendered height x 0.1626)
+       The mockup lockups implement this as a calc() default keyed to icon height. -->
+
   <!-- Generator: Adobe Illustrator 30.5.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 3)  -->
   <defs>
     <style>

@@ -612,8 +612,14 @@ section { padding: 72px 0; }
 .back-to-hub:hover { background: #000; color: #fff; transform: translateY(-1px); }
 
 /* ---- LOGO LOCKUP: 3D box icon + lowercase wordmark as live type ---- */
-.logo-lockup { display: inline-flex; align-items: center; gap: 11px; }
-.logo-icon { height: 34px; width: auto; display: block; }
+.logo-lockup { --icon-h: 34px; display: inline-flex; align-items: center; gap: 11px; }
+/* Optical alignment default: the icon art's cast shadow extends left of the
+   P box (see ALIGNMENT NOTE in shared/images/prevision_icon.svg). Shift icon
+   and text by 25.9% of the icon's width (= height x 0.3253) so the P box,
+   not the shadow, sits on the layout edge. Keyed to --icon-h so it adapts
+   to any size; footer overrides --icon-h and inherits the correct offset. */
+.logo-icon { height: var(--icon-h); width: auto; display: block; transform: translateX(calc(var(--icon-h) * -0.3253)); }
+.logo-text { transform: translateX(calc(var(--icon-h) * -0.3253)); }
 .logo-text {
   font-family: var(--font-heading);
   font-size: 21px;
@@ -621,7 +627,7 @@ section { padding: 72px 0; }
   color: var(--dark);
   white-space: nowrap;
 }
-.site-footer .logo-icon { height: 26px; }
+.site-footer .logo-lockup { --icon-h: 26px; }
 .site-footer .logo-text { color: var(--white); font-size: 17px; opacity: 0.92; }
 
 /* ---- TYPE STUDY: Tech (Space Grotesk + IBM Plex; mono labels) ---- */

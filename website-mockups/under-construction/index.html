@@ -50,20 +50,20 @@
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 22px;
+      gap: 17.6px;
       margin-bottom: 44px;
     }
 
     .lockup svg {
-      height: 92px;
+      height: 73.6px;
       width: auto;
-      /* the blue cast shadow extends left in the viewBox; shift so the
-         P box itself (x 61-236 of 236) is what's visually centered */
+      /* center the P box, not the art bounds — the cast shadow extends left.
+         See ALIGNMENT NOTE in shared/images/prevision_icon.svg */
       transform: translateX(-12.9%);
     }
 
     .lockup .name {
-      font-size: 25px;
+      font-size: 20px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: -0.02em;
@@ -150,9 +150,9 @@
     @media (max-width: 520px) {
       .card { padding: 44px 28px 36px; }
       h1 { font-size: 26px; }
-      .lockup { gap: 16px; }
-      .lockup svg { height: 72px; }
-      .lockup .name { font-size: 20px; }
+      .lockup { gap: 13px; }
+      .lockup svg { height: 58px; }
+      .lockup .name { font-size: 16px; }
     }
 
     /* review tool — remove for production deploy */
