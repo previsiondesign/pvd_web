@@ -23,6 +23,12 @@ website-mockups/
   option-b3/             B variant "Editorial" — full-bleed Bayshore hero with
                          overlapping white panel, centered-stack header, numbered
                          service index, alternating feature rows, light footer
+  option-b4/             B variant "Gradient Studio" — dark SaaS-style page
+                         (inspired by avoice.co landing): gradient mesh hero
+                         panel w/ dot grid + serif-italic accents (Playfair
+                         Display), framed Bayshore hero shot, mini service
+                         cards, feature deep-dives w/ gradient image cards,
+                         mock Parasolv UI window, gradient CTA band
   option-c/              "Narrative Scroll" — dark theme, single page, scroll-driven
   shared/images/         Logo copies + portfolio photos used by all options
 docs/                    Resume + firm-profile reference PDFs
