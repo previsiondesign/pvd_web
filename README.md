@@ -1,6 +1,6 @@
-# PreVision Design — Website Mockups
+# Prevision Design — Website Mockups
 
-Marketing-site mockups for [PreVision Design](https://previsiondesign.com), an architectural consulting firm specializing in shadow analysis, visual simulation, daylight studies, and CEQA visual impact work.
+Marketing-site mockups for [Prevision Design](https://previsiondesign.com), an architectural consulting firm specializing in shadow analysis, visual simulation, daylight studies, and CEQA visual impact work.
 
 ## Options
 

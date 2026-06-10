@@ -1,10 +1,10 @@
-# Handoff — PreVision Design Website
+# Handoff — Prevision Design Website
 
 _Last updated: 2026-06-09_
 
 ## Project
 
-Marketing-site mockups for **PreVision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in Marin County, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software.
+Marketing-site mockups for **Prevision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in San Francisco, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software.
 
 Git repo, pushed to **https://github.com/previsiondesign/pvd_web** (public).
 Live via GitHub Pages at **https://previsiondesign.github.io/pvd_web/** — root `index.html` is a hub page linking all mockup options (rebuilds automatically on push to main; `.nojekyll` present).
@@ -47,10 +47,10 @@ website-mockups/
                          Fonts); strip the .back-to-hub block for production
 pallettes/               Palette sample JPGs (local only, gitignored — hex values
                          captured in the b2-* variant stylesheets)
-PreVision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized by
+Prevision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized by
                          page/section in editable tables — for copy revision
 docs/                    Resume + firm-profile reference PDFs
-PreVision_Design_Firm_Overviews.docx
+Prevision_Design_Firm_Overviews.docx
 ```
 
 Each option has its own `css/styles.css` (shared palette: blue `#5188B5`, orange `#F18B01`, Montserrat headings / Roboto body via Google Fonts).
@@ -81,7 +81,7 @@ Key facts a fresh session needs:
 
 - Direction: **B2 "Boxed Canvas" selected** (2026-06-10). Three color studies
   (option-b2-autumn/blues/preppy) generated from palette samples in pallettes/;
-  no palette picked yet. Copy revision underway via PreVision_Site_Copy.docx —
+  no palette picked yet. Copy revision underway via Prevision_Site_Copy.docx —
   when edits come back, apply them to the winning variant and clone B's
   subpages (services/portfolio/about/contact) into its style.
 - Hero (B2 + color variants, 2026-06-10): headline simplified to "Analysis for

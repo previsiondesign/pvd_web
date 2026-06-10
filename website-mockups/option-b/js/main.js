@@ -1,4 +1,4 @@
-// PreVision Design - Option B: Corporate Professional
+// Prevision Design - Option B: Corporate Professional
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shrink

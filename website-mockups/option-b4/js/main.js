@@ -1,4 +1,4 @@
-// PreVision Design - Option B4: Gradient Studio
+// Prevision Design - Option B4: Gradient Studio
 
 document.addEventListener('DOMContentLoaded', () => {
   // Header hairline on scroll

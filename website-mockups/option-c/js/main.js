@@ -1,4 +1,4 @@
-// PreVision Design - Option C: Narrative Scroll
+// Prevision Design - Option C: Narrative Scroll
 
 document.addEventListener('DOMContentLoaded', () => {
 

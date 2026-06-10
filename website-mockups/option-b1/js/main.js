@@ -1,4 +1,4 @@
-// PreVision Design - Option B1: Split Hero
+// Prevision Design - Option B1: Split Hero
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shadow

@@ -1,4 +1,4 @@
-// PreVision Design - Option B2: Boxed Canvas
+// Prevision Design - Option B2: Boxed Canvas
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shadow

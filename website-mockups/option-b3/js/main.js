@@ -1,4 +1,4 @@
-// PreVision Design - Option B3: Editorial
+// Prevision Design - Option B3: Editorial
 
 document.addEventListener('DOMContentLoaded', () => {
   // Header shadow + logo shrink on scroll

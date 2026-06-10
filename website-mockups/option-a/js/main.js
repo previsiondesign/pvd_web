@@ -1,4 +1,4 @@
-// PreVision Design - Option A: Gallery-Forward
+// Prevision Design - Option A: Gallery-Forward
 
 document.addEventListener('DOMContentLoaded', () => {
 
