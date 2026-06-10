@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PreVision Design — Website Mockups</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #5188B5; --blue-dark: #3a6d96; --orange: #F18B01;
+      --dark: #1a1a1a; --gray: #6D6D6D; --light: #f5f6f8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--light);
+      color: var(--gray);
+      min-height: 100vh;
+      padding: 56px 24px;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .logo { height: 44px; width: auto; display: block; margin-bottom: 28px; }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px; font-weight: 700; color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .sub { font-size: 15px; margin-bottom: 40px; }
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--orange);
+      margin: 36px 0 16px;
+    }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+    a.card {
+      display: block; background: #fff; border: 1px solid #ddd; border-radius: 8px;
+      padding: 22px 24px; text-decoration: none; color: inherit;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    a.card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-color: var(--blue); }
+    .card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px; font-weight: 700; color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .card p { font-size: 13.5px; line-height: 1.55; }
+    footer { margin-top: 56px; font-size: 13px; color: #9C9C9C; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="logo" src="website-mockups/shared/images/prevision_logo.svg" alt="PreVision Design">
+    <h1>Website Mockups</h1>
+    <p class="sub">Design directions for the PreVision Design marketing site. Internal review only.</p>
+
+    <h2>Option B Variants &mdash; Current Direction</h2>
+    <div class="cards">
+      <a class="card" href="website-mockups/option-b1/index.html">
+        <h3>B1 &mdash; Split Hero</h3>
+        <p>Full width. Text left, Bayshore waterfront image right; utility bar and horizontal service cards.</p>
+      </a>
+      <a class="card" href="website-mockups/option-b2/index.html">
+        <h3>B2 &mdash; Boxed Canvas</h3>
+        <p>Contained layout &mdash; the page sits on a centered white sheet over a gray backdrop; not full width on desktop.</p>
+      </a>
+      <a class="card" href="website-mockups/option-b3/index.html">
+        <h3>B3 &mdash; Editorial</h3>
+        <p>Full-bleed hero with overlapping panel, numbered service index, magazine-style feature rows.</p>
+      </a>
+    </div>
+
+    <h2>Original Options</h2>
+    <div class="cards">
+      <a class="card" href="website-mockups/option-a/index.html">
+        <h3>A &mdash; Gallery-Forward</h3>
+        <p>Dark theme, single page, image-led.</p>
+      </a>
+      <a class="card" href="website-mockups/option-b/index.html">
+        <h3>B &mdash; Corporate Professional</h3>
+        <p>Light theme, five pages (home, services, portfolio, about, contact).</p>
+      </a>
+      <a class="card" href="website-mockups/option-c/index.html">
+        <h3>C &mdash; Narrative Scroll</h3>
+        <p>Dark theme, single page, scroll-driven storytelling.</p>
+      </a>
+    </div>
+
+    <footer>&copy; 2026 PreVision Design &mdash; Adam Phillips, Licensed Architect, CA C-30995</footer>
+  </div>
+</body>
+</html>
