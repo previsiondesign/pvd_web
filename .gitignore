@@ -5,6 +5,9 @@ images/projects/
 # Reference docs kept local — references PDF contains third-party contact info
 docs/
 
+# Palette reference images (third-party samples; hex values live in the variant CSS)
+pallettes/
+
 # Local scratch / machine-specific
 _logotest.html
 .claude/settings.local.json

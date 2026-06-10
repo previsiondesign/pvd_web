@@ -29,8 +29,18 @@ website-mockups/
                          Display), framed Bayshore hero shot, mini service
                          cards, feature deep-dives w/ gradient image cards,
                          mock Parasolv UI window, gradient CTA band
+  option-b2-autumn/      B2 color study — navy/slate + amber buttons, rust badges
+                         (palette: 07111D 39444D 5D5D5D E5E5DF DB9941 AE2C11)
+  option-b2-blues/       B2 color study — teal + charcoal/warm grays, monochrome
+                         (palette: D9D4D1 BAB1AD AEC0C2 098698 3D444B 505A63)
+  option-b2-preppy/      B2 color study — navy/steel + camel/sand accents
+                         (palette: 071739 4B6382 A4B5C4 CDD5DB A68868 E3C39D)
   option-c/              "Narrative Scroll" — dark theme, single page, scroll-driven
   shared/images/         Logo copies + portfolio photos used by all options
+pallettes/               Palette sample JPGs (local only, gitignored — hex values
+                         captured in the b2-* variant stylesheets)
+PreVision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized by
+                         page/section in editable tables — for copy revision
 docs/                    Resume + firm-profile reference PDFs
 PreVision_Design_Firm_Overviews.docx
 ```
@@ -61,9 +71,13 @@ Key facts a fresh session needs:
 
 ## State / open items
 
-- Direction: B was judged closest (2026-06-09); three single-page B variants
-  (b1/b2/b3, all using bayshore_page02.jpg as hero) were built for comparison.
-  Variant nav links are in-page anchors; whichever wins gets B's subpages cloned.
+- Direction: **B2 "Boxed Canvas" selected** (2026-06-10). Three color studies
+  (option-b2-autumn/blues/preppy) generated from palette samples in pallettes/;
+  no palette picked yet. Copy revision underway via PreVision_Site_Copy.docx —
+  when edits come back, apply them to the winning variant and clone B's
+  subpages (services/portfolio/about/contact) into its style.
+- Earlier exploration: B variants b1/b3/b4 (Bayshore hero per request, b4 styled
+  after an avoice.co-inspired dark gradient look) remain live for reference.
 - Option B is the only multi-page option; A and C are single-page index mockups.
 - Contact form (option-b/contact.html) is a stub — `onsubmit` shows an alert; needs a real backend (e.g. Formspree) for production.
 - `images/logos/PrevisionP.png` (P-mark) is unused in the mockups — possible favicon candidate; no favicon is set on any page.
