@@ -86,6 +86,15 @@ Key facts a fresh session needs:
   (5s interval, crossfade, clickable dots; taglines in data-tagline attrs).
   Per Adam: avoid "consulting" language; "sun/shadow" is the preferred term —
   note the copy doc still shows the old static hero copy.
+- **Before/after rule (per Adam, 2026-06-10): any image with a before/after
+  pair should be shown as a sequence — 1s on the before, 1s crossfade, 3s on
+  the after.** Hero slides implement this via `.has-ba` (`.ba-before`/`.ba-after`
+  imgs). Pairs in shared/images/portfolio: bayshore_page01→02 (page01 resized
+  from images/projects/sims/Old Bayshore/FINAL_OldBayshore_VisSims_Page_01.jpg),
+  61gough_before→after, sfport_view1→_after, sfport_view3→_after,
+  sfport_view10→_after, mission_view1_before→after, ygnacio_before→after.
+  Currently applied to hero slides 1 (Bayshore), 2 (61 Gough), 4 (SF Port);
+  not yet to the Featured Work grid.
 - Earlier exploration: B variants b1/b3/b4 (Bayshore hero per request, b4 styled
   after an avoice.co-inspired dark gradient look) remain live for reference.
 - Option B is the only multi-page option; A and C are single-page index mockups.

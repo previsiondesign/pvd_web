@@ -144,10 +144,20 @@ a:hover { color: var(--orange); }
 .hero-slide.is-active { opacity: 1; }
 
 .hero-slide img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
+/* before/after slides: 1s on the before, then the after fades in over 1s */
+.hero-slide .ba-after {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.hero-slide.ba-shown .ba-after { opacity: 1; }
 
 /* reserve two lines so rotating taglines don't shift the buttons */
 .hero-tagline {
