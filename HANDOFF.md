@@ -41,7 +41,11 @@ website-mockups/
                          (palette: 071739 4B6382 A4B5C4 CDD5DB A68868 E3C39D)
   option-c/              "Narrative Scroll" — dark theme, single page, scroll-driven
   shared/images/         Logo copies + portfolio photos used by all options
-  option-b2-type-business/  Type study on Preppy: Inter throughout ("businessy")
+  option-b2-type-business/  Type study, Inter throughout ("businessy") — Adam's
+                            pick so far. Switched to AUTUMN palette 2026-06-10
+                            (others remain Preppy). Lockup tuned per Adam: icon
+                            37.4px (1.1x original), text 20.2px, gap 18px,
+                            semibold on "vision" only, centered on the bar
   option-b2-type-sleek/     Type study on Preppy: Syne headings + Work Sans body
   option-b2-type-tech/      Type study on Preppy: Space Grotesk + IBM Plex Sans,
                             IBM Plex Mono for nav/stat/badge labels

@@ -1,24 +1,24 @@
 /* ============================================
-   Prevision Design - B2 Type — Business (Preppy palette, Boxed Canvas)
+   Prevision Design - B2 Type — Business (Autumn palette, Boxed Canvas)
    Contained layout — the page sits on a centered
    white sheet over a gray backdrop; never full width
    on desktop.
    ============================================ */
 
 :root {
-  --blue: #4B6382;
-  --blue-dark: #071739;
-  --blue-light: #A4B5C4;
-  --orange: #A68868;
-  --orange-light: #E3C39D;
-  --dark: #071739;
+  --blue: #39444D;
+  --blue-dark: #07111D;
+  --blue-light: #5D6A75;
+  --orange: #DB9941;
+  --orange-light: #E8B46E;
+  --dark: #07111D;
   --gray-900: #2d2d2d;
   --gray-700: #4a4a4a;
-  --gray-600: #5C6670;
+  --gray-600: #5D5D5D;
   --gray-400: #9C9C9C;
   --gray-200: #d4d4d4;
   --gray-100: #ececec;
-  --light: #EEF1F4;
+  --light: #E5E5DF;
   --white: #ffffff;
   --font-heading: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -37,7 +37,7 @@ body {
   line-height: 1.6;
   color: var(--gray-700);
   /* visible backdrop behind the boxed page */
-  background: linear-gradient(180deg, #c3ccd4 0%, #d8dee4 40%, #cdd5dc 100%);
+  background: linear-gradient(180deg, #c6c5be 0%, #d9d8d2 40%, #cfcec7 100%);
   min-height: 100vh;
 }
 
@@ -185,7 +185,7 @@ a:hover { color: var(--orange); }
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7,23,57,0.15) 30%, rgba(7,23,57,0.8) 100%);
+  background: linear-gradient(180deg, rgba(7,17,29,0.12) 30%, rgba(7,17,29,0.8) 100%);
 }
 
 .hero-content {
@@ -234,7 +234,7 @@ a:hover { color: var(--orange); }
 .btn:hover { transform: translateY(-1px); }
 
 .btn-primary { background: var(--orange); color: var(--white); }
-.btn-primary:hover { background: #93785A; color: var(--white); }
+.btn-primary:hover { background: #C98A33; color: var(--white); }
 
 .btn-outline {
   background: transparent;
@@ -431,7 +431,7 @@ section { padding: 72px 0; }
   width: fit-content;
 }
 
-.badge-visual { background: var(--orange); color: var(--white); }
+.badge-visual { background: #AE2C11; color: var(--white); }
 .badge-shadow { background: var(--blue); color: var(--white); }
 
 /* ---- CLIENTS ---- */
@@ -614,7 +614,7 @@ section { padding: 72px 0; }
 /* ---- LOGO LOCKUP: 3D box icon + lowercase wordmark as live type ---- */
 .logo { display: flex; align-items: center; }
 .logo-lockup { display: flex; align-items: center; gap: 18px; }
-.logo-icon { height: 40.8px; width: auto; display: block; }
+.logo-icon { height: 37.4px; width: auto; display: block; }
 .logo-text {
   font-family: var(--font-heading);
   font-size: 20.2px;
