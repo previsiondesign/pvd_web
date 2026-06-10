@@ -58,10 +58,13 @@ website-mockups/
                             type; icon copies at shared/images/prevision_icon.svg
                             and _reverse.svg, generated from
                             images/logos/prevision_logo.svg)
-  under-construction/    Branded "Site Under Construction" placeholder in the B2
-                         Preppy scheme — fully self-contained single file (inline
-                         CSS + inline logo SVG, no external assets except Google
-                         Fonts); strip the .back-to-hub block for production
+  under-construction/    Branded "Site Under Construction" placeholder — Autumn
+                         palette + Inter with the icon/lowercase lockup (matches
+                         Type — Business). Fully self-contained single file
+                         (inline CSS + inline icon SVG, no external assets except
+                         Google Fonts); strip the .back-to-hub block for
+                         production. Per Adam: no domain eyebrow, short lede,
+                         footer is just firm name + San Francisco, CA
 pallettes/               Palette sample JPGs (local only, gitignored — hex values
                          captured in the b2-* variant stylesheets)
 Prevision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized by
