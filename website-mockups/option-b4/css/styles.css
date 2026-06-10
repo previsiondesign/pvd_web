@@ -433,10 +433,6 @@ a:hover { color: var(--orange-light); }
   align-items: center;
 }
 
-.feature-rev .feature-inner { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
-.feature-rev .feature-text { order: 2; }
-.feature-rev .feature-card { order: 1; }
-
 .feature h2 {
   font-family: var(--font-heading);
   font-size: 28px;
@@ -754,10 +750,7 @@ a:hover { color: var(--orange-light); }
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 1024px) {
-  .feature-inner,
-  .feature-rev .feature-inner { grid-template-columns: 1fr; gap: 36px; }
-  .feature-rev .feature-text { order: 1; }
-  .feature-rev .feature-card { order: 2; }
+  .feature-inner { grid-template-columns: 1fr; gap: 36px; }
   .cards-row { grid-template-columns: 1fr; }
   .impact-stats { grid-template-columns: repeat(3, 1fr); gap: 24px; }
 }
