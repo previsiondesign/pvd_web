@@ -7,7 +7,11 @@ _Last updated: 2026-06-09_
 Marketing-site mockups for **PreVision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in Marin County, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software.
 
 Git repo, pushed to **https://github.com/previsiondesign/pvd_web** (public).
-Live via GitHub Pages at **https://previsiondesign.github.io/pvd_web/** — root `index.html` is a hub page linking all mockup options (rebuilds automatically on push to main; `.nojekyll` present). Excluded via `.gitignore`: `images/projects/` (1.7 GB raw renders/video — exceeds GitHub limits; web-ready copies live in `website-mockups/shared/images/`) and `docs/` (references PDF contains third-party contact info — keep local).
+Live via GitHub Pages at **https://previsiondesign.github.io/pvd_web/** — root `index.html` is a hub page linking all mockup options (rebuilds automatically on push to main; `.nojekyll` present).
+
+Hub conventions (per Adam, 2026-06-10):
+- The **most-current iterations always go in the first section** of the hub page; demote earlier rounds below when adding a new round.
+- Every mockup page carries a fixed **"← All Mockups" button** (bottom-right, `.back-to-hub` in each option's styles.css) linking back to the live hub URL. Add it to any new mockup pages. Excluded via `.gitignore`: `images/projects/` (1.7 GB raw renders/video — exceeds GitHub limits; web-ready copies live in `website-mockups/shared/images/`) and `docs/` (references PDF contains third-party contact info — keep local).
 
 ```
 images/logos/            Master brand assets (source of truth, exported from Illustrator)
