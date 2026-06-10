@@ -614,8 +614,8 @@ section { padding: 72px 0; }
 /* ---- LOGO LOCKUP: 3D box icon + lowercase wordmark as live type ---- */
 .logo { display: flex; align-items: center; }
 .logo-lockup { display: flex; align-items: center; gap: 18px; }
-.logo-icon { height: 37.4px; width: auto; display: block; transform: translate(-14px, 2px); }
-.logo-text { transform: translateX(-14px); }
+.logo-icon { height: 37.4px; width: auto; display: block; transform: translate(-12px, 2px); }
+.logo-text { transform: translateX(-12px); }
 .logo-text {
   font-family: var(--font-heading);
   font-size: 20.2px;
