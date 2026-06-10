@@ -11,6 +11,10 @@ Live via GitHub Pages at **https://previsiondesign.github.io/pvd_web/** — root
 
 Hub conventions (per Adam, 2026-06-10):
 - The **most-current iterations always go in the first section** of the hub page; demote earlier rounds below when adding a new round.
+- **Highlight the selection trail**: the chosen card in each round gets
+  `class="card selected"` + a `<span class="pick">Selected</span>` badge, and the
+  "Selection path" chip strip at the top is extended with each new pick.
+  Current path: B → B2 → B2 Autumn → Type Business.
 - Every mockup page carries a fixed **"← All Mockups" button** (bottom-right, `.back-to-hub` in each option's styles.css) linking back to the live hub URL. Add it to any new mockup pages. Excluded via `.gitignore`: `images/projects/` (1.7 GB raw renders/video — exceeds GitHub limits; web-ready copies live in `website-mockups/shared/images/`) and `docs/` (references PDF contains third-party contact info — keep local).
 
 ```

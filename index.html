@@ -47,6 +47,35 @@
       margin-bottom: 6px;
     }
     .card p { font-size: 13.5px; line-height: 1.55; }
+    /* selection trail */
+    .path {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      margin: -20px 0 8px; font-size: 13px;
+    }
+    .path-label {
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);
+      margin-right: 4px;
+    }
+    .path .step {
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--blue-dark); background: #fff; border: 1px solid var(--orange);
+      padding: 5px 14px; border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .path .step:hover { background: var(--orange); color: #fff; }
+    .path .step.current { background: var(--orange); color: #fff; }
+    .path .arrow { color: #9C9C9C; }
+    a.card.selected { border: 2px solid var(--orange); padding: 21px 23px; }
+    a.card.selected h3 { padding-right: 70px; }
+    .pick {
+      position: absolute; top: 12px; right: 12px;
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff; background: var(--orange);
+      padding: 3px 10px; border-radius: 999px;
+    }
+    a.card { position: relative; }
     footer { margin-top: 56px; font-size: 13px; color: #9C9C9C; }
   </style>
 </head>
@@ -56,11 +85,23 @@
     <h1>Website Mockups</h1>
     <p class="sub">Design directions for the Prevision Design marketing site. Internal review only.</p>
 
+    <div class="path">
+      <span class="path-label">Selection path</span>
+      <a class="step" href="website-mockups/option-b/index.html">B</a>
+      <span class="arrow">&rarr;</span>
+      <a class="step" href="website-mockups/option-b2/index.html">B2</a>
+      <span class="arrow">&rarr;</span>
+      <a class="step" href="website-mockups/option-b2-autumn/index.html">B2 Autumn</a>
+      <span class="arrow">&rarr;</span>
+      <a class="step current" href="website-mockups/option-b2-type-business/index.html">Type Business</a>
+    </div>
+
     <!-- Convention: the most-current iterations always go in the FIRST section below.
          When a new round of mockups is added, insert it at the top and demote the rest. -->
     <h2>B2 Type Studies &mdash; Current Direction</h2>
     <div class="cards">
-      <a class="card" href="website-mockups/option-b2-type-business/index.html">
+      <a class="card selected" href="website-mockups/option-b2-type-business/index.html">
+        <span class="pick">Selected</span>
         <h3>Type &mdash; Business</h3>
         <p>Clean, modern, businessy: Inter throughout; icon + lowercase "prevision design" lockup. Autumn palette.</p>
       </a>
@@ -76,7 +117,8 @@
 
     <h2>B2 Color Studies</h2>
     <div class="cards">
-      <a class="card" href="website-mockups/option-b2-autumn/index.html">
+      <a class="card selected" href="website-mockups/option-b2-autumn/index.html">
+        <span class="pick">Selected</span>
         <h3>B2 &mdash; Autumn</h3>
         <p>Deep navy &amp; slate with amber buttons and rust badges; warm off-white panels.</p>
       </a>
@@ -108,7 +150,8 @@
         <h3>B1 &mdash; Split Hero</h3>
         <p>Full width. Text left, Bayshore waterfront image right; utility bar and horizontal service cards.</p>
       </a>
-      <a class="card" href="website-mockups/option-b2/index.html">
+      <a class="card selected" href="website-mockups/option-b2/index.html">
+        <span class="pick">Selected</span>
         <h3>B2 &mdash; Boxed Canvas</h3>
         <p>Contained layout &mdash; the page sits on a centered white sheet over a gray backdrop; not full width on desktop.</p>
       </a>
@@ -128,7 +171,8 @@
         <h3>A &mdash; Gallery-Forward</h3>
         <p>Dark theme, single page, image-led.</p>
       </a>
-      <a class="card" href="website-mockups/option-b/index.html">
+      <a class="card selected" href="website-mockups/option-b/index.html">
+        <span class="pick">Selected</span>
         <h3>B &mdash; Corporate Professional</h3>
         <p>Light theme, five pages (home, services, portfolio, about, contact).</p>
       </a>
