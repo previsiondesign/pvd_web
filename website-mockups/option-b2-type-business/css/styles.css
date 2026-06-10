@@ -612,11 +612,12 @@ section { padding: 72px 0; }
 .back-to-hub:hover { background: #000; color: #fff; transform: translateY(-1px); }
 
 /* ---- LOGO LOCKUP: 3D box icon + lowercase wordmark as live type ---- */
-.logo-lockup { display: inline-flex; align-items: center; gap: 11px; }
-.logo-icon { height: 34px; width: auto; display: block; }
+.logo { display: flex; align-items: center; }
+.logo-lockup { display: flex; align-items: center; gap: 14px; }
+.logo-icon { height: 51px; width: auto; display: block; }
 .logo-text {
   font-family: var(--font-heading);
-  font-size: 21px;
+  font-size: 25.2px;
   line-height: 1;
   color: var(--dark);
   white-space: nowrap;
@@ -625,5 +626,6 @@ section { padding: 72px 0; }
 .site-footer .logo-text { color: var(--white); font-size: 17px; opacity: 0.92; }
 
 /* ---- TYPE STUDY: Business (Inter throughout) ---- */
-.logo-text { font-weight: 600; letter-spacing: -0.02em; }
+.logo-text { font-weight: 400; letter-spacing: -0.02em; }
+.logo-text .vis { font-weight: 600; }
 .logo-text .lt2 { font-weight: 400; }
