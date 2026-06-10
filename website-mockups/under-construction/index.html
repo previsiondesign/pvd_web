@@ -48,15 +48,15 @@
 
     .lockup {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 22px;
       margin-bottom: 44px;
     }
 
     .lockup svg {
-      height: 46px;
+      height: 92px;
       width: auto;
-      transform: translateY(2px);
     }
 
     .lockup .name {
@@ -75,7 +75,7 @@
       font-weight: 700;
       line-height: 1.2;
       letter-spacing: -0.01em;
-      color: var(--navy);
+      color: var(--slate);
       margin-bottom: 18px;
     }
 
@@ -147,8 +147,8 @@
     @media (max-width: 520px) {
       .card { padding: 44px 28px 36px; }
       h1 { font-size: 26px; }
-      .lockup { gap: 13px; }
-      .lockup svg { height: 36px; }
+      .lockup { gap: 16px; }
+      .lockup svg { height: 72px; }
       .lockup .name { font-size: 20px; }
     }
 
@@ -200,7 +200,8 @@
 
     <div class="meta">
       <span class="firm">Prevision Design</span><br>
-      San Francisco, CA
+      San Francisco, CA<br>
+      <a href="tel:+14154980141" style="color: inherit; text-decoration: none;">(415) 498-0141</a>
     </div>
   </main>
 
