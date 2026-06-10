@@ -57,7 +57,6 @@ Key facts a fresh session needs:
 - Direction: B was judged closest (2026-06-09); three single-page B variants
   (b1/b2/b3, all using bayshore_page02.jpg as hero) were built for comparison.
   Variant nav links are in-page anchors; whichever wins gets B's subpages cloned.
-- B1/B2/B3 are local only — not yet committed/pushed to GitHub.
 - Option B is the only multi-page option; A and C are single-page index mockups.
 - Contact form (option-b/contact.html) is a stub — `onsubmit` shows an alert; needs a real backend (e.g. Formspree) for production.
 - `images/logos/PrevisionP.png` (P-mark) is unused in the mockups — possible favicon candidate; no favicon is set on any page.
