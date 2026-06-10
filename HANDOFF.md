@@ -126,6 +126,28 @@ Key facts a fresh session needs:
 - No favicon is set on any page — `images/logos/prevision_logo.svg` (icon-only 3D box, also copied to shared/images/prevision_icon.svg) is the natural candidate. (The old PrevisionP.png P-mark was removed 2026-06-10.)
 - Email `info@previsiondesign.com` and "CA License C-30995" appear across all pages — verify before launch.
 
+## Domain migration (in progress, 2026-06-10)
+
+Moving previsiondesign.com: registrar Wild West Domains/secureserver.net
+("Inexpensive Domains" reseller account) → Porkbun; web Wix → GitHub Pages;
+email stays Office 365. Transfer initiated and approved at the losing
+registrar; pending completion at Porkbun. DNS currently hosted by Wix
+(ns10/ns11.wixdns.net) — **keep the Wix plan active until cutover**.
+
+Production repo: **github.com/previsiondesign/site** (local clone D:\Dev\site)
+— serves the under-construction page, Pages enabled, custom domain
+www.previsiondesign.com pre-set (cert pending DNS). Remaining steps:
+1. When domain lands at Porkbun (expiry should read 2027): create DNS records
+   there — O365 set (MX previsiondesign-com.mail.protection.outlook.com prio 0;
+   SPF; DMARC; selector1/2._domainkey CNAMEs → ...apd405.onmicrosoft.com;
+   autodiscover CNAME), files CNAME → custom.smartfile.com (SmartFile),
+   GitHub Pages (apex A 185.199.108/109/110/111.153; www CNAME
+   previsiondesign.github.io). Drop old Wix records (apex A 185.230.63.x,
+   www→cdn1.wixdns.net, m→www69.wixdns.net).
+2. Switch nameservers to Porkbun's; verify email send/receive + site + HTTPS
+   cert issued, then enable "Enforce HTTPS" on the site repo.
+3. After a few stable days: cancel the Wix site plan (LAST step).
+
 ## Memory
 
 Session memory at `C:\Users\AdamPhillips\.claude\projects\D--Dev-Prevision-Web\memory\` has `brand-logo-font-dependency.md` covering item 1–2 above.
