@@ -57,6 +57,9 @@
     .lockup svg {
       height: 92px;
       width: auto;
+      /* the blue cast shadow extends left in the viewBox; shift so the
+         P box itself (x 61-236 of 236) is what's visually centered */
+      transform: translateX(-12.9%);
     }
 
     .lockup .name {
