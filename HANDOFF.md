@@ -4,7 +4,9 @@ _Last updated: 2026-06-09_
 
 ## Project
 
-Marketing-site mockups for **PreVision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in Marin County, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software. Not a git repository.
+Marketing-site mockups for **PreVision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in Marin County, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software.
+
+Git repo, pushed to **https://github.com/previsiondesign/pvd_web** (public). Excluded via `.gitignore`: `images/projects/` (1.7 GB raw renders/video — exceeds GitHub limits; web-ready copies live in `website-mockups/shared/images/`) and `docs/` (references PDF contains third-party contact info — keep local).
 
 ```
 images/logos/            Master brand assets (source of truth, exported from Illustrator)
