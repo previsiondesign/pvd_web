@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | PreVision Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img class="pv-logo" src="../shared/images/prevision_logo.svg" alt="PreVision Design">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Let's discuss your project's analytical and consulting needs</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-form">
+          <form onsubmit="event.preventDefault(); alert('Form submission would be connected to a service like Formspree in production.');">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your full name">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="your@email.com">
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Project inquiry, RFP, etc.">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+
+        <div>
+          <div class="contact-info-block">
+            <h4>Email</h4>
+            <p><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></p>
+          </div>
+
+          <div class="contact-info-block">
+            <h4>Location</h4>
+            <p>Marin County, California</p>
+          </div>
+
+          <div class="contact-info-block">
+            <h4>Credentials</h4>
+            <p>Adam Phillips<br>Licensed Architect, CA C-30995</p>
+          </div>
+
+          <div class="contact-info-block">
+            <h4>Service Area</h4>
+            <p>San Francisco Bay Area &amp; California statewide. We regularly serve San Francisco, Oakland, Emeryville, Redwood City, Burlingame, Walnut Creek, Solano County, and jurisdictions throughout the state.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design" style="height:28px; opacity:0.7;">
+          <p>Specialized architectural consulting delivering precise shadow analysis, visual simulation, and environmental consulting services throughout California.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html#shadow">Shadow Studies</a></li>
+            <li><a href="services.html#visual">Visual Studies</a></li>
+            <li><a href="services.html#daylight">Daylight Studies</a></li>
+            <li><a href="services.html#review">Peer Review</a></li>
+            <li><a href="services.html#software">Parasolv Software</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></li>
+            <li>Marin County, California</li>
+            <li>CA License C-30995</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 PreVision Design. All rights reserved.</span>
+        <span>Adam Phillips, Licensed Architect</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

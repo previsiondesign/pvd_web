@@ -1,0 +1,12 @@
+# Raw project assets — multi-GB renders/video/PDFs, exceed GitHub's 100 MB file limit.
+# Web-ready copies the mockups actually use live in website-mockups/shared/images/.
+images/projects/
+
+# Reference docs kept local — references PDF contains third-party contact info
+docs/
+
+# Local scratch / machine-specific
+_logotest.html
+.claude/settings.local.json
+Thumbs.db
+.DS_Store

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PreVision Design | Architectural Analysis &amp; Environmental Consulting</title>
+  <meta name="description" content="PreVision Design delivers precise shadow analysis, visual simulation, and environmental consulting services for architects, developers, and planning agencies throughout California.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="#" class="logo">
+      <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design">
+    </a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- FULLSCREEN NAV -->
+  <div class="nav-overlay">
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- HERO: BEFORE/AFTER SLIDER -->
+  <section class="section hero" id="hero">
+    <div class="hero-slider">
+      <img src="../shared/images/portfolio/61gough_before.jpg" alt="Before" class="before-img">
+      <img src="../shared/images/portfolio/61gough_after.jpg" alt="After" class="after-img">
+      <div class="slider-handle">
+        <span class="arrows">&lsaquo; &rsaquo;</span>
+      </div>
+    </div>
+    <div class="hero-overlay">
+      <div class="hero-text">
+        <h1>Architectural Analysis for<br>the Built Environment</h1>
+        <p>Precise shadow analysis, visual simulation, and environmental consulting trusted by California's leading architects, developers, and planning agencies.</p>
+      </div>
+    </div>
+    <div class="slider-labels">
+      <span>Before</span>
+      <span>After</span>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-title">
+      <h2>What We Do</h2>
+      <h3>Specialized Expertise</h3>
+    </div>
+    <div class="services-scroll">
+
+      <div class="svc-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48"><path d="M24 4v4M24 40v4M4 24h4M40 24h4M10 10l3 3M35 35l3 3M10 38l3-3M35 13l3-3"/><circle cx="24" cy="24" r="10"/><path d="M24 34v10l16 0" stroke-dasharray="3 2"/></svg>
+        </div>
+        <h4>Shadow Studies</h4>
+        <p>Quantitative shadow impact assessments, Section 295 compliance, shadow envelope studies, and location-duration heatmapping for CEQA and planning review.</p>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="2"/><path d="M6 14h36M16 24l6-4 6 6 8-6"/><circle cx="14" cy="21" r="3"/></svg>
+        </div>
+        <h4>Visual Studies</h4>
+        <p>Photorealistic visual simulations and photomontages that communicate complex design proposals to stakeholders, planning commissions, and communities.</p>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48"><path d="M24 4l-4 12h8l-4 12"/><rect x="8" y="28" width="32" height="16" rx="2"/><path d="M14 34h6M14 38h10M28 34h6"/><path d="M24 4C14 4 6 12 6 22" stroke-dasharray="3 2"/><path d="M24 4C34 4 42 12 42 22" stroke-dasharray="3 2"/></svg>
+        </div>
+        <h4>Daylight Studies</h4>
+        <p>Comprehensive daylight access analysis evaluating natural light conditions for proposed developments and their impact on surrounding properties.</p>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48"><path d="M12 38V20l12-10 12 10v18H12z"/><rect x="20" y="28" width="8" height="10"/><path d="M6 42h36"/><circle cx="40" cy="10" r="4"/><path d="M40 14v4M40 22v4" stroke-dasharray="2 2"/></svg>
+        </div>
+        <h4>Peer Review</h4>
+        <p>Independent technical review of shadow studies, visual simulations, and environmental analyses prepared by other consultants for quality assurance.</p>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48"><rect x="8" y="6" width="32" height="36" rx="3"/><path d="M14 14h20M14 20h14M14 26h18"/><path d="M14 34h8" stroke-dasharray="3 2"/><circle cx="36" cy="34" r="6"/><path d="M33 34l2 2 4-4"/></svg>
+        </div>
+        <h4>Software Development</h4>
+        <p>Proprietary Parasolv shadow analysis platform enabling rapid, accurate modeling of complex shadow phenomena for California's regulatory environment.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="section-title">
+      <h2>Selected Work</h2>
+      <h3>Project Portfolio</h3>
+    </div>
+
+    <div class="filter-pills">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="shadow">Shadow</button>
+      <button class="pill" data-filter="visual">Visual</button>
+      <button class="pill" data-filter="daylight">Daylight</button>
+    </div>
+
+    <div class="masonry">
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/sfport_view1_after.jpg" alt="SF Port Coastal Flood Study" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>SF Port Coastal Flood Study</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="shadow">
+        <img src="../shared/images/portfolio/61gough_after.jpg" alt="61 Gough Street" loading="lazy">
+        <div class="info">
+          <span class="tag">Shadow Study</span>
+          <h4>61 Gough Street</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/potrero_page1.jpg" alt="Potrero Yard" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Potrero Yard Modernization</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/claremont_page03.jpg" alt="Claremont Residences" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Claremont Residences</h4>
+          <span class="loc">Oakland, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="shadow">
+        <img src="../shared/images/portfolio/onni_page01.jpg" alt="Onni Christie" loading="lazy">
+        <div class="info">
+          <span class="tag">Shadow Study</span>
+          <h4>Onni Christie Development</h4>
+          <span class="loc">Emeryville, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/mission_view1_after.jpg" alt="Mission Mixed Use" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Mission District Mixed Use</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/bayshore_page02.jpg" alt="Old Bayshore" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Old Bayshore Visual Impact</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/columbus_lounge.jpg" alt="Columbus Residence" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Columbus Residence Interiors</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="daylight">
+        <img src="../shared/images/portfolio/onni_page04.jpg" alt="Sutter Hospital" loading="lazy">
+        <div class="info">
+          <span class="tag">Daylight Study</span>
+          <h4>Sutter Hospital EIR</h4>
+          <span class="loc">Emeryville, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/sfport_view3_after.jpg" alt="SF Port View 3" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>SF Port Waterfront Study</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="visual">
+        <img src="../shared/images/portfolio/ygnacio_after.jpg" alt="Ygnacio Valley" loading="lazy">
+        <div class="info">
+          <span class="tag">Visual Simulation</span>
+          <h4>Hyatt Place, Ygnacio Valley</h4>
+          <span class="loc">Walnut Creek, CA</span>
+        </div>
+      </div>
+
+      <div class="masonry-item" data-category="shadow">
+        <img src="../shared/images/portfolio/potrero_page2.jpg" alt="Potrero Power Station" loading="lazy">
+        <div class="info">
+          <span class="tag">Shadow Study</span>
+          <h4>Potrero Power Station</h4>
+          <span class="loc">San Francisco, CA</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-photo">
+        <img src="../shared/images/adam_phillips.jpg" alt="Adam Phillips">
+      </div>
+      <div class="about-text">
+        <span class="label">Leadership</span>
+        <h3>Adam Phillips</h3>
+        <div class="title">Principal &amp; Founder &mdash; Licensed Architect, CA C-30995</div>
+        <p>Adam Phillips launched PreVision Design in 2010, bringing deep expertise in San Francisco's architecture, development, and entitlement processes. He has built PreVision Design into the premier resource for shadow analysis, visual simulation, and environmental consulting in California.</p>
+        <p>His technical analyses and visual simulations have been accepted by major reviewing agencies including SF Planning, Oakland Planning, SF Rec &amp; Parks, the Port of San Francisco, OCII, and UC Berkeley.</p>
+        <ul class="credentials">
+          <li>CA License C-30995</li>
+          <li>120+ Projects</li>
+          <li>15+ Years</li>
+          <li>Parasolv Developer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <span class="label">Get in Touch</span>
+    <h3>Start Your Project</h3>
+    <div class="contact-links">
+      <div class="contact-item">
+        <h4>Email</h4>
+        <p><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>Marin County, California</p>
+      </div>
+      <div class="contact-item">
+        <h4>Credentials</h4>
+        <p>Adam Phillips, Licensed Architect<br>CA C-30995</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design">
+    <span>&copy; 2026 PreVision Design. All rights reserved.</span>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <img src="" alt="">
+    <div class="lightbox-caption">
+      <h4></h4>
+      <p></p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

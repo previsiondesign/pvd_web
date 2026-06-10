@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PreVision Design | Architectural Analysis &amp; Environmental Consulting</title>
+  <meta name="description" content="PreVision Design delivers precise shadow analysis, visual simulation, and environmental consulting services for architects, developers, and planning agencies throughout California.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress"></div>
+
+  <!-- FLOATING LOGO -->
+  <a href="#hero" class="floating-logo">
+    <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design">
+  </a>
+
+  <!-- DOT NAV -->
+  <nav class="dot-nav">
+    <a href="#hero" class="active"><span class="tooltip">Home</span></a>
+    <a href="#mission"><span class="tooltip">Mission</span></a>
+    <a href="#shadow"><span class="tooltip">Shadow Studies</span></a>
+    <a href="#visual"><span class="tooltip">Visual Studies</span></a>
+    <a href="#daylight"><span class="tooltip">Daylight Studies</span></a>
+    <a href="#review"><span class="tooltip">Peer Review</span></a>
+    <a href="#software"><span class="tooltip">Software</span></a>
+    <a href="#work"><span class="tooltip">Work</span></a>
+    <a href="#about"><span class="tooltip">About</span></a>
+    <a href="#contact"><span class="tooltip">Contact</span></a>
+  </nav>
+
+  <!-- 1. HERO (dark) -->
+  <section class="narrative-section hero-section dark-section" id="hero">
+    <div class="hero-bg">
+      <img src="../shared/images/portfolio/sfport_view1_after.jpg" alt="" class="active">
+      <img src="../shared/images/portfolio/potrero_page1.jpg" alt="">
+      <img src="../shared/images/portfolio/claremont_page03.jpg" alt="">
+      <img src="../shared/images/portfolio/onni_page04.jpg" alt="">
+    </div>
+    <div class="hero-center">
+      <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design">
+      <h1>Architectural Analysis for<br>the Built Environment</h1>
+      <p>Precise shadow analysis, visual simulation, and environmental consulting trusted by California's leading architects, developers, and planning agencies.</p>
+    </div>
+    <a href="#mission" class="scroll-arrow">
+      <svg viewBox="0 0 32 32"><path d="M8 12l8 8 8-8"/></svg>
+    </a>
+  </section>
+
+  <!-- 2. MISSION (light) -->
+  <section class="narrative-section mission-section light-section" id="mission">
+    <div>
+      <div class="accent-bar reveal"></div>
+      <h2 class="reveal">Technical excellence at the intersection of design, regulation, and environmental stewardship.</h2>
+      <p class="reveal">Based in Marin County and serving jurisdictions throughout California, PreVision Design has established itself as the premier resource for complex shadow analysis, CEQA compliance, and visual impact assessment.</p>
+    </div>
+  </section>
+
+  <!-- 3. SHADOW STUDIES (dark) -->
+  <section class="narrative-section service-narrative dark-section" id="shadow">
+    <div class="service-inner">
+      <div class="service-text reveal-left">
+        <span class="label">01 &mdash; Service</span>
+        <h3>Shadow Studies</h3>
+        <p>We specialize in quantitative shadow impact assessments, Section 295 compliance, shadow envelope studies, and location-duration heatmapping for CEQA and planning review.</p>
+        <p>Our shadow consulting practice is built on over a decade of experience navigating California's most demanding regulatory requirements, from San Francisco to Solano County and beyond.</p>
+      </div>
+      <div class="service-visual reveal-right">
+        <div class="shadow-diagram">
+          <svg viewBox="0 0 400 300">
+            <!-- Ground -->
+            <rect x="0" y="250" width="400" height="50" fill="rgba(255,255,255,0.03)"/>
+            <line x1="0" y1="250" x2="400" y2="250" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <!-- Building -->
+            <rect x="170" y="130" width="60" height="120" fill="var(--blue)" opacity="0.8" rx="2"/>
+            <rect x="175" y="140" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="190" y="140" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="205" y="140" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="175" y="162" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="190" y="162" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="205" y="162" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="175" y="184" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="190" y="184" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <rect x="205" y="184" width="10" height="14" fill="rgba(255,255,255,0.3)" rx="1"/>
+            <!-- Shadow (animated) -->
+            <polygon class="shadow-sweep" points="170,250 230,250 350,250 230,250" fill="rgba(15,17,20,0.5)"/>
+            <polygon class="shadow-sweep" points="170,250 230,250 330,290 100,290" fill="rgba(15,17,20,0.3)"/>
+            <!-- Sun indicator -->
+            <circle cx="80" cy="60" r="20" fill="var(--orange)" opacity="0.8"/>
+            <line x1="80" y1="32" x2="80" y2="22" stroke="var(--orange)" stroke-width="2" opacity="0.5"/>
+            <line x1="80" y1="88" x2="80" y2="98" stroke="var(--orange)" stroke-width="2" opacity="0.5"/>
+            <line x1="52" y1="60" x2="42" y2="60" stroke="var(--orange)" stroke-width="2" opacity="0.5"/>
+            <line x1="108" y1="60" x2="118" y2="60" stroke="var(--orange)" stroke-width="2" opacity="0.5"/>
+            <!-- Park label -->
+            <rect x="280" y="238" width="60" height="12" fill="#2a9d8f" opacity="0.6" rx="2"/>
+            <text x="310" y="247" text-anchor="middle" fill="white" font-size="7" font-family="Montserrat, sans-serif">PARK</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. VISUAL STUDIES (light) - scroll-driven before/after -->
+  <section class="narrative-section service-narrative light-section" id="visual">
+    <div class="service-inner">
+      <div class="service-visual reveal-left">
+        <div class="ba-container">
+          <img src="../shared/images/portfolio/sfport_view1.jpg" alt="Before">
+          <div class="ba-after">
+            <img src="../shared/images/portfolio/sfport_view1_after.jpg" alt="After">
+          </div>
+          <span class="ba-label left">Before</span>
+          <span class="ba-label right">After</span>
+        </div>
+      </div>
+      <div class="service-text reveal-right">
+        <span class="label">02 &mdash; Service</span>
+        <h3>Visual Studies</h3>
+        <p>Our visual simulation and photomontage services create compelling, accurate visualizations that communicate complex design proposals to stakeholders, planning commissions, and communities.</p>
+        <p>Each simulation is built on precise 3D modeling, carefully matched site photography, and meticulous photo compositing to produce photorealistic representations that facilitate informed decision-making.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DAYLIGHT STUDIES (dark) -->
+  <section class="narrative-section service-narrative dark-section" id="daylight">
+    <div class="service-inner">
+      <div class="service-text reveal-left">
+        <span class="label">03 &mdash; Service</span>
+        <h3>Daylight Studies</h3>
+        <p>Our daylight analysis services evaluate natural light access conditions for proposed developments and their surrounding environments. Using advanced 3D modeling and simulation tools, we quantify how new construction will affect daylight availability.</p>
+        <p>These analyses provide the technical foundation for informed decisions about building massing, setbacks, and design modifications that balance development goals with daylight preservation.</p>
+      </div>
+      <div class="service-visual reveal-right">
+        <img src="../shared/images/portfolio/onni_page04.jpg" alt="Daylight Study" style="border-radius:12px;">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. PEER REVIEW (light) -->
+  <section class="narrative-section credentials-section light-section" id="review">
+    <div>
+      <span class="label reveal">04 &mdash; Service</span>
+      <h3 class="reveal">Peer Review</h3>
+      <p class="reveal" style="color:var(--gray-600); max-width:600px; margin:0 auto 16px; font-size:17px; line-height:1.7;">Independent technical review of shadow studies, visual simulations, and environmental analyses. Our deep expertise in methodology and regulatory standards makes us a trusted resource for quality assurance and verification.</p>
+      <p class="reveal" style="color:var(--gray-600); max-width:600px; margin:0 auto 48px; font-size:15px; line-height:1.7;">Our work is accepted by California's most demanding reviewing agencies:</p>
+      <div class="agency-badges reveal">
+        <div class="agency-badge">SF Planning Department</div>
+        <div class="agency-badge">Oakland Planning</div>
+        <div class="agency-badge">SF Rec &amp; Parks</div>
+        <div class="agency-badge">Port of San Francisco</div>
+        <div class="agency-badge">OCII</div>
+        <div class="agency-badge">UC Berkeley / LBNL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PARASOLV / SOFTWARE (dark) -->
+  <section class="narrative-section parasolv-section dark-section" id="software">
+    <div class="parasolv-inner">
+      <span class="label reveal">05 &mdash; Software</span>
+      <h3 class="reveal">Parasolv</h3>
+      <p class="reveal">Our proprietary shadow analysis platform, purpose-built for California's regulatory environment. Parasolv enables rapid, accurate computation of shadow impacts compliant with Section 295, CEQA, and jurisdictional planning standards.</p>
+
+      <div class="terminal-box reveal">
+        <div class="terminal-line"><span class="comment"># Parasolv Shadow Analysis Engine</span></div>
+        <div class="terminal-line"><span class="prompt">$ parasolv</span> analyze --project "530 Sansome" --standard sec295</div>
+        <div class="terminal-line"><span class="output">Loading 3D model... 24 buildings, 6 open spaces</span></div>
+        <div class="terminal-line"><span class="output">Computing annual shadow envelope...</span></div>
+        <div class="terminal-line"><span class="output">Generating location-duration heatmaps...</span></div>
+        <div class="terminal-line"><span class="highlight">Analysis complete: 0 net new shadow on protected spaces</span></div>
+        <div class="terminal-line"><span class="output">Report: shadow_report_530sansome.pdf (42 pages)</span></div>
+        <div class="terminal-line"><span class="comment"># Shadow fan diagrams, animations, and calculations exported</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SELECTED WORK (light) - horizontal gallery -->
+  <section class="narrative-section gallery-section light-section" id="work" style="min-height:auto;">
+    <div style="width:100%;">
+      <div class="section-title">
+        <span class="label reveal">Portfolio</span>
+        <h3 class="reveal">Selected Work</h3>
+      </div>
+      <div class="gallery-track">
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/sfport_view1_after.jpg" alt="SF Port" loading="lazy">
+          <div class="item-info">
+            <h4>SF Port Coastal Flood Study</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/potrero_page1.jpg" alt="Potrero Yard" loading="lazy">
+          <div class="item-info">
+            <h4>Potrero Yard Modernization</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/claremont_page03.jpg" alt="Claremont" loading="lazy">
+          <div class="item-info">
+            <h4>Claremont Residences</h4>
+            <span>Oakland, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/onni_page01.jpg" alt="Onni Christie" loading="lazy">
+          <div class="item-info">
+            <h4>Onni Christie Development</h4>
+            <span>Emeryville, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/mission_view1_after.jpg" alt="Mission Mixed Use" loading="lazy">
+          <div class="item-info">
+            <h4>Mission District Mixed Use</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/bayshore_page02.jpg" alt="Old Bayshore" loading="lazy">
+          <div class="item-info">
+            <h4>Old Bayshore Visual Impact</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/columbus_lounge.jpg" alt="Columbus Residence" loading="lazy">
+          <div class="item-info">
+            <h4>Columbus Residence Interiors</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/ygnacio_after.jpg" alt="Ygnacio Valley" loading="lazy">
+          <div class="item-info">
+            <h4>Hyatt Place, Ygnacio Valley</h4>
+            <span>Walnut Creek, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/sfport_view3_after.jpg" alt="SF Port" loading="lazy">
+          <div class="item-info">
+            <h4>SF Port Waterfront Study</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="../shared/images/portfolio/61gough_after.jpg" alt="61 Gough" loading="lazy">
+          <div class="item-info">
+            <h4>61 Gough Street</h4>
+            <span>San Francisco, CA</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. ABOUT (dark) -->
+  <section class="narrative-section about-narrative dark-section" id="about">
+    <div class="about-narrative-inner">
+      <div class="about-photo reveal-left">
+        <img src="../shared/images/adam_phillips.jpg" alt="Adam Phillips">
+      </div>
+      <div class="about-text reveal-right">
+        <span class="label">Leadership</span>
+        <h3>Adam Phillips</h3>
+        <div class="title">Principal &amp; Founder &mdash; Licensed Architect, CA C-30995</div>
+        <p>Adam Phillips launched PreVision Design in 2010, bringing deep expertise in San Francisco's architecture, development, and entitlement processes. He has built PreVision Design into the premier resource for shadow analysis, visual simulation, and environmental consulting in California.</p>
+        <p>His work combines rigorous technical methodology with practical understanding of regulatory pathways. He has developed proprietary software tools and his analyses have been accepted by major reviewing agencies across the state.</p>
+        <div class="about-stats">
+          <div class="about-stat">
+            <span class="num">120+</span>
+            <span class="desc">Projects</span>
+          </div>
+          <div class="about-stat">
+            <span class="num">15+</span>
+            <span class="desc">Years</span>
+          </div>
+          <div class="about-stat">
+            <span class="num">50+</span>
+            <span class="desc">Clients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. CONTACT (light) -->
+  <section class="narrative-section contact-narrative light-section" id="contact" style="min-height:auto; padding:100px 48px;">
+    <div>
+      <span class="label reveal">Get in Touch</span>
+      <h3 class="reveal">Start Your Project</h3>
+      <p class="reveal">Contact us to discuss your development project's analytical and consulting needs.</p>
+      <div class="contact-cards reveal">
+        <div class="contact-card">
+          <h4>Email</h4>
+          <p><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></p>
+        </div>
+        <div class="contact-card">
+          <h4>Location</h4>
+          <p>Marin County, California</p>
+        </div>
+        <div class="contact-card">
+          <h4>Credentials</h4>
+          <p>Adam Phillips<br>Licensed Architect, CA C-30995</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <img class="pv-logo" src="../shared/images/prevision_logo_reverse.svg" alt="PreVision Design">
+    <span>&copy; 2026 PreVision Design. All rights reserved.</span>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
