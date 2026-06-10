@@ -428,10 +428,14 @@ a:hover { color: var(--orange-light); }
 
 .feature-inner {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   gap: 64px;
-  align-items: center;
+  /* stretch so the image card matches the text column height */
+  align-items: stretch;
 }
+
+.feature-text { order: 2; }
+.feature-card { order: 1; }
 
 .feature h2 {
   font-family: var(--font-heading);
@@ -482,6 +486,7 @@ a:hover { color: var(--orange-light); }
 .learn-more:hover { color: var(--orange-light); }
 
 .feature-card {
+  position: relative;
   border-radius: var(--radius-lg);
   padding: 44px;
   display: flex;
@@ -489,8 +494,15 @@ a:hover { color: var(--orange-light); }
   justify-content: center;
 }
 
+/* absolutely positioned so the image never drives the row height —
+   the text column sets it, and the photo crops to fill (object-fit) */
 .feature-card img {
-  width: 100%;
+  position: absolute;
+  top: 44px;
+  left: 44px;
+  width: calc(100% - 88px);
+  height: calc(100% - 88px);
+  object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: 0 24px 60px rgba(10,16,24,0.4);
 }
@@ -751,6 +763,14 @@ a:hover { color: var(--orange-light); }
 /* ---- RESPONSIVE ---- */
 @media (max-width: 1024px) {
   .feature-inner { grid-template-columns: 1fr; gap: 36px; }
+  .feature-text { order: 1; }
+  .feature-card { order: 2; }
+  /* back to natural flow: image sizes itself, no height matching */
+  .feature-card img {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
   .cards-row { grid-template-columns: 1fr; }
   .impact-stats { grid-template-columns: repeat(3, 1fr); gap: 24px; }
 }
