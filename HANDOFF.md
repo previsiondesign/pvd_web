@@ -80,6 +80,12 @@ Key facts a fresh session needs:
   no palette picked yet. Copy revision underway via PreVision_Site_Copy.docx —
   when edits come back, apply them to the winning variant and clone B's
   subpages (services/portfolio/about/contact) into its style.
+- Hero (B2 + color variants, 2026-06-10): headline simplified to "Analysis for
+  the Built Environment"; static image replaced by a 5-slide slideshow cycling
+  project types with the subheadline (tagline) synced to the active slide
+  (5s interval, crossfade, clickable dots; taglines in data-tagline attrs).
+  Per Adam: avoid "consulting" language; "sun/shadow" is the preferred term —
+  note the copy doc still shows the old static hero copy.
 - Earlier exploration: B variants b1/b3/b4 (Bayshore hero per request, b4 styled
   after an avoice.co-inspired dark gradient look) remain live for reference.
 - Option B is the only multi-page option; A and C are single-page index mockups.

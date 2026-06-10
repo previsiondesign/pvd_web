@@ -34,17 +34,34 @@
       </div>
     </header>
 
-    <!-- HERO -->
+    <!-- HERO: slideshow cycling project types; tagline syncs to the active slide -->
     <section class="hero" id="top">
-      <img class="hero-img" src="../shared/images/portfolio/bayshore_page02.jpg" alt="Old Bayshore visual impact simulation — waterfront view">
+      <div class="hero-slides">
+        <div class="hero-slide is-active" data-tagline="Photorealistic visual simulations that show commissions and communities exactly what's proposed.">
+          <img src="../shared/images/portfolio/bayshore_page02.jpg" alt="Old Bayshore visual impact simulation — waterfront view">
+        </div>
+        <div class="hero-slide" data-tagline="Quantified sun and shadow studies — Section 295 and CEQA-compliant analysis and reporting.">
+          <img src="../shared/images/portfolio/61gough_after.jpg" alt="61 Gough Street sun and shadow study">
+        </div>
+        <div class="hero-slide" data-tagline="Daylight and solar access studies for proposed developments and their neighbors.">
+          <img src="../shared/images/portfolio/onni_page04.jpg" alt="Daylight study example">
+        </div>
+        <div class="hero-slide" data-tagline="Visual impact studies from public vantage points — accepted by reviewing agencies statewide.">
+          <img src="../shared/images/portfolio/sfport_view1_after.jpg" alt="SF Port coastal flood study visual simulation">
+        </div>
+        <div class="hero-slide" data-tagline="Technical studies and exhibits that carry projects through entitlement and public hearings.">
+          <img src="../shared/images/portfolio/claremont_page03.jpg" alt="Claremont Residences visual simulation">
+        </div>
+      </div>
       <div class="hero-scrim"></div>
       <div class="hero-content">
-        <h1>Architectural Analysis for<br>the Built Environment</h1>
-        <p>Precise shadow analysis, visual simulation, and environmental consulting services trusted by California's leading architects, developers, and planning agencies.</p>
+        <h1>Analysis for<br>the Built Environment</h1>
+        <p class="hero-tagline">Photorealistic visual simulations that show commissions and communities exactly what's proposed.</p>
         <div class="hero-actions">
           <a href="#services" class="btn btn-primary">Our Services</a>
           <a href="#work" class="btn btn-outline">View Work</a>
         </div>
+        <div class="hero-dots" aria-label="Hero slides"></div>
       </div>
     </section>
 
