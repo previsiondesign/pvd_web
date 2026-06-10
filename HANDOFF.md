@@ -14,6 +14,14 @@ website-mockups/
   option-a/              "Gallery-Forward" — dark theme, single page
   option-b/              "Corporate Professional" — light theme, 5 pages
                          (index, services, portfolio, about, contact)
+  option-b1/             B variant "Split Hero" — full width; text left / Bayshore
+                         image right hero, utility bar, horizontal service cards
+  option-b2/             B variant "Boxed Canvas" — NOT full width on desktop:
+                         page sits on a centered 1180px white sheet over a gray
+                         backdrop; Bayshore hero w/ scrim, sticky in-frame header
+  option-b3/             B variant "Editorial" — full-bleed Bayshore hero with
+                         overlapping white panel, centered-stack header, numbered
+                         service index, alternating feature rows, light footer
   option-c/              "Narrative Scroll" — dark theme, single page, scroll-driven
   shared/images/         Logo copies + portfolio photos used by all options
 docs/                    Resume + firm-profile reference PDFs
@@ -46,7 +54,10 @@ Key facts a fresh session needs:
 
 ## State / open items
 
-- No client/stakeholder has picked between options A, B, C yet (as far as this workspace shows).
+- Direction: B was judged closest (2026-06-09); three single-page B variants
+  (b1/b2/b3, all using bayshore_page02.jpg as hero) were built for comparison.
+  Variant nav links are in-page anchors; whichever wins gets B's subpages cloned.
+- B1/B2/B3 are local only — not yet committed/pushed to GitHub.
 - Option B is the only multi-page option; A and C are single-page index mockups.
 - Contact form (option-b/contact.html) is a stub — `onsubmit` shows an alert; needs a real backend (e.g. Formspree) for production.
 - `images/logos/PrevisionP.png` (P-mark) is unused in the mockups — possible favicon candidate; no favicon is set on any page.
