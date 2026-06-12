@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8091", "--directory", "website-mockups"],
       "port": 8091
+    },
+    {
+      "name": "clients-ui",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8093", "--directory", "D:/Dev/clients"],
+      "port": 8093
     }
   ]
 }

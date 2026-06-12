@@ -155,6 +155,25 @@ Remaining:
 2. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
    is dead weight now but harmless; nothing references Wix after this).
 
+## Client portal (built 2026-06-12, awaiting Adam's console steps)
+
+**github.com/previsiondesign/clients** (private; local clone D:\Dev\clients) —
+Dropbox-backed client file exchange for **clients.previsiondesign.com**.
+Static UI (Autumn/Inter/lockup, matches production placeholder) + Cloudflare
+Pages Functions. Per-client access codes → HMAC-cookie sessions; downloads via
+Dropbox temporary links from `<Client>/To Client`; chunked in-page uploads
+(~1 GB cap) into `<Client>/From Client`; Dropbox file request fallback for
+multi-GB. Folder isolation enforced server-side; Dropbox refresh token only in
+Cloudflare secrets. Full runbook in that repo's README.
+
+Verified locally via wrangler: login good/bad/tampered, session round-trip,
+cross-client path → 403, clean 502s on upstream failure. Remaining (Adam,
+console steps per README): create Dropbox app + run scripts/get-refresh-token.js,
+create Cloudflare Pages project + secrets, Porkbun `CNAME clients` →
+`<project>.pages.dev` (and delete the dead `files` → custom.smartfile.com
+record), then E2E test with TEST client and link "Client Area" from the live
+site footer.
+
 ## Memory
 
 Session memory at `C:\Users\AdamPhillips\.claude\projects\D--Dev-Prevision-Web\memory\` has `brand-logo-font-dependency.md` covering item 1–2 above.
