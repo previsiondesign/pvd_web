@@ -155,7 +155,26 @@ Remaining:
 2. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
    is dead weight now but harmless; nothing references Wix after this).
 
-## Client portal (built 2026-06-12, awaiting Adam's console steps)
+## Client portal — LIVE at https://clients.previsiondesign.com (2026-06-12)
+
+Full E2E green (9/9) on the custom domain with TLS: login/sessions, Dropbox
+auth, chunked upload committed to Dropbox, file-request fallback, cross-client
+isolation 403, logout. Cloudflare Pages project "clients" (clients-ec3.pages.dev)
+auto-deploys from the private repo on push to main; secrets live in the CF
+project env. The live placeholder site footer links to the portal.
+
+**Client onboarding runbook:** (1) add `"CODE": {"name": "...", "folder": "/Name"}`
+to the CLIENTS_JSON env var in CF Pages settings → Retry deployment; (2) in
+Dropbox create `Apps/Prevision Clients/<Name>/To Client` and `/From Client`;
+(3) email the client their code + https://clients.previsiondesign.com.
+Test with: `powershell -File scripts/e2e-test.ps1 -BaseUrl ... -Code ...`
+
+Loose ends: download E2E still SKIP until a file is seeded in
+`TEST/To Client` (then rerun the script); the dead `files` →
+custom.smartfile.com record at Porkbun still needs deleting; e2e test
+files accumulate in `TEST/From Client` (harmless, delete whenever).
+
+## Client portal (built 2026-06-12, original notes)
 
 **github.com/previsiondesign/clients** (private; local clone D:\Dev\clients) —
 Dropbox-backed client file exchange for **clients.previsiondesign.com**.
