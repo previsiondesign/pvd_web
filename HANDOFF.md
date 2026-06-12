@@ -145,11 +145,14 @@ Wrinkle hit on the way: Porkbun served a frozen imported zone (SOA serial
 never incremented; panel edits ignored) — fixed by Porkbun support
 ("pushed out a new wave of propagation").
 
+HTTPS: cert issued 2026-06-10 (needed a custom-domain remove/re-add nudge
+after the DNS freeze); **Enforce HTTPS enabled**. Verified: https://www 200,
+apex http+https 301 → https://www. (http://www → https redirect was still
+propagating through GitHub's CDN at last check — expected within the hour.)
+
 Remaining:
-1. HTTPS cert for www.previsiondesign.com — GitHub provisioning; enable
-   "Enforce HTTPS" on the site repo once issued.
-2. Adam: email round-trip test (send + receive on adam@previsiondesign.com).
-3. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
+1. Adam: email round-trip test (send + receive on adam@previsiondesign.com).
+2. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
    is dead weight now but harmless; nothing references Wix after this).
 
 ## Memory
