@@ -169,10 +169,12 @@ Dropbox create `Apps/Prevision Clients/<Name>/To Client` and `/From Client`;
 (3) email the client their code + https://clients.previsiondesign.com.
 Test with: `powershell -File scripts/e2e-test.ps1 -BaseUrl ... -Code ...`
 
-Loose ends: download E2E still SKIP until a file is seeded in
-`TEST/To Client` (then rerun the script); the dead `files` →
-custom.smartfile.com record at Porkbun still needs deleting; e2e test
-files accumulate in `TEST/From Client` (harmless, delete whenever).
+In-browser preview added 2026-06-12: /api/view streams pdf/images/txt/video
+inline (filename click opens a tab); other types fall back to download.
+Full battery now 11/11 including download redirect + inline view.
+Loose ends: the dead `files` → custom.smartfile.com record at Porkbun
+still needs deleting; e2e test files accumulate in `TEST/From Client`
+(harmless, delete whenever).
 
 ## Client portal (built 2026-06-12, original notes)
 
