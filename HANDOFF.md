@@ -135,18 +135,22 @@ registrar; pending completion at Porkbun. DNS currently hosted by Wix
 (ns10/ns11.wixdns.net) — **keep the Wix plan active until cutover**.
 
 Production repo: **github.com/previsiondesign/site** (local clone D:\Dev\site)
-— serves the under-construction page, Pages enabled, custom domain
-www.previsiondesign.com pre-set (cert pending DNS). Remaining steps:
-1. When domain lands at Porkbun (expiry should read 2027): create DNS records
-   there — O365 set (MX previsiondesign-com.mail.protection.outlook.com prio 0;
-   SPF; DMARC; selector1/2._domainkey CNAMEs → ...apd405.onmicrosoft.com;
-   autodiscover CNAME), files CNAME → custom.smartfile.com (SmartFile),
-   GitHub Pages (apex A 185.199.108/109/110/111.153; www CNAME
-   previsiondesign.github.io). Drop old Wix records (apex A 185.230.63.x,
-   www→cdn1.wixdns.net, m→www69.wixdns.net).
-2. Switch nameservers to Porkbun's; verify email send/receive + site + HTTPS
-   cert issued, then enable "Enforce HTTPS" on the site repo.
-3. After a few stable days: cancel the Wix site plan (LAST step).
+— serves the under-construction page at **www.previsiondesign.com**.
+
+**Cutover completed 2026-06-10:** domain at Porkbun (expiry 2027-06-20),
+nameservers on Porkbun's current fleet (*.ns.porkbun.com), all 12 records
+verified serving (O365 mail set + SmartFile files CNAME + GitHub Pages
+apex A/www CNAME). Site confirmed live on the domain from GitHub.
+Wrinkle hit on the way: Porkbun served a frozen imported zone (SOA serial
+never incremented; panel edits ignored) — fixed by Porkbun support
+("pushed out a new wave of propagation").
+
+Remaining:
+1. HTTPS cert for www.previsiondesign.com — GitHub provisioning; enable
+   "Enforce HTTPS" on the site repo once issued.
+2. Adam: email round-trip test (send + receive on adam@previsiondesign.com).
+3. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
+   is dead weight now but harmless; nothing references Wix after this).
 
 ## Memory
 
