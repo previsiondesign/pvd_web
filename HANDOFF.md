@@ -171,10 +171,25 @@ Test with: `powershell -File scripts/e2e-test.ps1 -BaseUrl ... -Code ...`
 
 In-browser preview added 2026-06-12: /api/view streams pdf/images/txt/video
 inline (filename click opens a tab); other types fall back to download.
-Full battery now 11/11 including download redirect + inline view.
-Loose ends: the dead `files` → custom.smartfile.com record at Porkbun
-still needs deleting; e2e test files accumulate in `TEST/From Client`
-(harmless, delete whenever).
+
+**Upgrades 2026-06-13 (all live, E2E 11/11):**
+- Subfolder navigation: portal lists folders and lets clients drill in
+  (breadcrumb back out), staying within the `To Client` subtree.
+- **Access model changed to slug-based unique links.** CLIENTS_JSON is now
+  keyed by URL slug; each project has an OPTIONAL `code`. No code → the link
+  `clients.previsiondesign.com/<slug>` grants access (recommend unguessable
+  slugs); `code` present → password-protected. `/api/login` replaced by
+  `/api/access`; SPA `_redirects` serves the portal for any `/<slug>`.
+- Adam's existing `TEST-0000` config entry still works as an open link.
+
+Open request not yet done — **folders inside real project dirs (#1):** requires
+switching the Dropbox app from App-folder to **Full Dropbox** access (recreate
+app + new token + update 3 CF secrets + rewrite CLIENTS_JSON folder paths to
+absolute). No code change needed — paths are already arbitrary. Tradeoff: token
+gains full-Dropbox reach. Awaiting Adam's go/no-go on the security tradeoff.
+
+Loose ends: the dead `files` → custom.smartfile.com record at Porkbun still
+needs deleting; e2e test files accumulate in `TEST/From Client` (harmless).
 
 ## Client portal (built 2026-06-12, original notes)
 
