@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Prevision Design</title>
+  <meta name="description" content="Start a conversation with Prevision Design about shadow studies, shadow shaping, daylight analysis, visual simulation, or peer review.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="page-frame">
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-lockup">
+            <img class="logo-icon" src="../shared/images/prevision_icon.svg" alt="Prevision Design">
+            <span class="logo-text">pre<span class="vis">vision</span> <span class="lt2">design</span></span>
+          </span>
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#work">Portfolio</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <div class="inner">
+        <h1>Start a Conversation</h1>
+        <p>Tell us about your project and what you need analyzed. We typically respond within one business day.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section>
+      <div class="inner">
+        <div class="contact-grid">
+
+          <!-- FORM -->
+          <div>
+            <form id="contact-form" novalidate>
+              <div class="field-row">
+                <div class="field">
+                  <label for="name">Name <span class="req">*</span></label>
+                  <input type="text" id="name" name="name" autocomplete="name" required>
+                </div>
+                <div class="field">
+                  <label for="email">Email <span class="req">*</span></label>
+                  <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="company">Company / Organization</label>
+                  <input type="text" id="company" name="company" autocomplete="organization">
+                </div>
+                <div class="field">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="project">Project name &amp; location</label>
+                <input type="text" id="project" name="project" placeholder="e.g. 450 Bryant St, San Francisco">
+              </div>
+
+              <fieldset class="field">
+                <legend>What can we help with? <span class="hint-inline">(select any)</span></legend>
+                <div class="check-grid">
+                  <label class="check"><input type="checkbox" name="services" value="Shadow Studies"><span>Shadow Studies</span></label>
+                  <label class="check"><input type="checkbox" name="services" value="Shadow Shaping"><span>Shadow Shaping</span></label>
+                  <label class="check"><input type="checkbox" name="services" value="Daylight Studies"><span>Daylight Studies</span></label>
+                  <label class="check"><input type="checkbox" name="services" value="Visual Studies"><span>Visual Studies</span></label>
+                  <label class="check"><input type="checkbox" name="services" value="Peer Review"><span>Peer Review</span></label>
+                  <label class="check"><input type="checkbox" name="services" value="Not sure yet"><span>Not sure yet</span></label>
+                </div>
+              </fieldset>
+
+              <div class="field">
+                <label for="message">How can we help? <span class="req">*</span></label>
+                <textarea id="message" name="message" rows="6" required placeholder="Scope, deadlines, review agency, or anything else useful."></textarea>
+              </div>
+
+              <!-- spam trap: hidden from people, tempting to bots -->
+              <div class="field hp" aria-hidden="true">
+                <label for="website">Website</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
+              <p class="form-error" id="form-error" hidden></p>
+
+              <button type="submit" class="btn btn-primary" id="submit-btn">Send Inquiry</button>
+              <p class="form-fineprint">We use your information only to respond to this inquiry.</p>
+            </form>
+
+            <div class="form-success" id="form-success" hidden>
+              <h3>Thank you &mdash; your inquiry is on its way.</h3>
+              <p id="success-detail">We'll follow up at the email you provided, usually within one business day.</p>
+              <p class="demo-note" id="demo-note" hidden>Mockup note: no message was actually sent &mdash; the form's delivery endpoint isn't connected yet.</p>
+            </div>
+          </div>
+
+          <!-- INFO -->
+          <aside class="contact-info">
+            <div class="info-block">
+              <h4>Email</h4>
+              <p><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></p>
+            </div>
+            <div class="info-block">
+              <h4>Phone</h4>
+              <p><a href="tel:+14154980141">(415) 498-0141</a></p>
+            </div>
+            <div class="info-block">
+              <h4>Office</h4>
+              <p>San Francisco, CA</p>
+            </div>
+            <div class="info-block">
+              <h4>Principal</h4>
+              <p>Adam Phillips<br>Licensed Architect, CA C-30995</p>
+            </div>
+            <div class="info-block">
+              <h4>Sending us files?</h4>
+              <p>Existing clients can upload directly through the
+                <a href="https://clients.previsiondesign.com">client area</a>.</p>
+            </div>
+            <div class="info-block">
+              <h4>Service area</h4>
+              <p>San Francisco Bay Area and California statewide &mdash; including San Francisco,
+                Oakland, Berkeley, San Mateo, and Menlo Park planning jurisdictions.</p>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="logo-lockup">
+              <img class="logo-icon" src="../shared/images/prevision_icon_reverse.svg" alt="Prevision Design">
+              <span class="logo-text">pre<span class="vis">vision</span> <span class="lt2">design</span></span>
+            </span>
+            <p>Specialized architectural consulting delivering precise shadow analysis, visual simulation, and environmental consulting services throughout California.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="index.html#services">Shadow Studies</a></li>
+              <li><a href="index.html#services">Shadow Shaping</a></li>
+              <li><a href="index.html#services">Daylight Studies</a></li>
+              <li><a href="index.html#services">Visual Studies</a></li>
+              <li><a href="index.html#services">Peer Review</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="contact.html">Contact form</a></li>
+              <li><a href="mailto:info@previsiondesign.com">info@previsiondesign.com</a></li>
+              <li>San Francisco, CA</li>
+              <li>CA License C-30995</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Prevision Design. All rights reserved.</span>
+          <span>Adam Phillips, Licensed Architect</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /page-frame -->
+
+  <script src="js/main.js"></script>
+  <a class="back-to-hub" href="https://previsiondesign.github.io/pvd_web/">&larr; All Mockups</a>
+</body>
+</html>

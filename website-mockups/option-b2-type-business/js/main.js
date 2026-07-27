@@ -1,5 +1,10 @@
 // Prevision Design - Option B2: Boxed Canvas
 
+// Contact form delivery endpoint. Leave empty and the form runs in mockup mode
+// (validates, shows the success panel, sends nothing). Set it to a form service
+// or serverless endpoint that accepts a JSON POST to go live.
+const FORM_ENDPOINT = '';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shadow
   const header = document.querySelector('.site-header');
@@ -76,5 +81,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     runBeforeAfter(slides[0]);
     restart();
+  }
+
+  // Contact form (contact.html)
+  const form = document.getElementById('contact-form');
+  if (form) {
+    const errorBox = document.getElementById('form-error');
+    const success = document.getElementById('form-success');
+    const demoNote = document.getElementById('demo-note');
+    const btn = document.getElementById('submit-btn');
+
+    const clearInvalid = (el) => el.classList.remove('invalid');
+    form.querySelectorAll('input, textarea').forEach((el) => {
+      el.addEventListener('input', () => clearInvalid(el));
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      // Validate required fields + email shape.
+      const required = ['name', 'email', 'message'];
+      let firstBad = null;
+      for (const id of required) {
+        const el = document.getElementById(id);
+        const empty = !el.value.trim();
+        el.classList.toggle('invalid', empty);
+        if (empty && !firstBad) firstBad = el;
+      }
+      const email = document.getElementById('email');
+      if (!firstBad && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        email.classList.add('invalid');
+        firstBad = email;
+        errorBox.textContent = 'Please enter a valid email address so we can reply.';
+        errorBox.hidden = false;
+        email.focus();
+        return;
+      }
+      if (firstBad) {
+        errorBox.textContent = 'Please fill in the required fields marked with *.';
+        errorBox.hidden = false;
+        firstBad.focus();
+        return;
+      }
+
+      // Silently drop bot submissions that fill the hidden field.
+      if (document.getElementById('website').value) return;
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: email.value.trim(),
+        company: document.getElementById('company').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        project: document.getElementById('project').value.trim(),
+        services: [...form.querySelectorAll('input[name="services"]:checked')].map((c) => c.value),
+        message: document.getElementById('message').value.trim(),
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      if (FORM_ENDPOINT) {
+        try {
+          const res = await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error('bad status ' + res.status);
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = 'Send Inquiry';
+          errorBox.textContent = 'Sorry — that didn’t go through. Please email info@previsiondesign.com instead.';
+          errorBox.hidden = false;
+          return;
+        }
+      } else {
+        demoNote.hidden = false; // mockup mode: be explicit that nothing was sent
+      }
+
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
   }
 });
