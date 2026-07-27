@@ -1,9 +1,14 @@
 // Prevision Design - Option B2: Boxed Canvas
 
-// Contact form delivery endpoint. Leave empty and the form runs in mockup mode
-// (validates, shows the success panel, sends nothing). Set it to a form service
-// or serverless endpoint that accepts a JSON POST to go live.
-const FORM_ENDPOINT = '';
+// Contact form delivery endpoint (Cloudflare Pages Function -> Resend).
+// Set to '' to run the form in mockup mode (validates, shows the success panel,
+// sends nothing and says so).
+const FORM_ENDPOINT = 'https://clients.previsiondesign.com/api/contact';
+
+// Attachment limits — keep in sync with functions/api/contact.js in the clients repo.
+const MAX_FILES = 3;
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shadow
@@ -96,6 +101,86 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('input', () => clearInvalid(el));
     });
 
+    // ---- optional attachments ----
+    const fileInput = document.getElementById('files');
+    const fileDrop = document.getElementById('file-drop');
+    const attachList = document.getElementById('attach-list');
+    let attachments = []; // File objects
+
+    const fmtSize = (b) =>
+      b >= 1e6 ? (b / 1e6).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1e3)) + ' KB';
+
+    function renderAttachments() {
+      attachList.innerHTML = '';
+      attachments.forEach((f, i) => {
+        const li = document.createElement('li');
+        const nm = document.createElement('span');
+        nm.className = 'aname';
+        nm.textContent = f.name;
+        const sz = document.createElement('span');
+        sz.className = 'asize';
+        sz.textContent = fmtSize(f.size);
+        const rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'aremove';
+        rm.setAttribute('aria-label', 'Remove ' + f.name);
+        rm.textContent = '×';
+        rm.addEventListener('click', () => {
+          attachments.splice(i, 1);
+          renderAttachments();
+        });
+        li.append(nm, sz, rm);
+        attachList.appendChild(li);
+      });
+    }
+
+    function addFiles(list) {
+      errorBox.hidden = true;
+      for (const f of list) {
+        if (attachments.length >= MAX_FILES) {
+          errorBox.textContent = `You can attach up to ${MAX_FILES} files — send the form and we'll reply with an upload link for the rest.`;
+          errorBox.hidden = false;
+          break;
+        }
+        if (f.size > MAX_FILE_BYTES) {
+          errorBox.textContent = `"${f.name}" is larger than 10 MB — send the form and we'll reply with an upload link.`;
+          errorBox.hidden = false;
+          continue;
+        }
+        const total = attachments.reduce((n, a) => n + a.size, 0) + f.size;
+        if (total > MAX_TOTAL_BYTES) {
+          errorBox.textContent = 'Attachments total more than 20 MB — please remove one.';
+          errorBox.hidden = false;
+          continue;
+        }
+        attachments.push(f);
+      }
+      renderAttachments();
+    }
+
+    if (fileDrop && fileInput) {
+      fileDrop.addEventListener('click', () => fileInput.click());
+      fileDrop.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+      });
+      fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+      ['dragenter', 'dragover'].forEach((ev) =>
+        fileDrop.addEventListener(ev, (e) => { e.preventDefault(); fileDrop.classList.add('drag'); })
+      );
+      ['dragleave', 'drop'].forEach((ev) =>
+        fileDrop.addEventListener(ev, (e) => { e.preventDefault(); fileDrop.classList.remove('drag'); })
+      );
+      fileDrop.addEventListener('drop', (e) => addFiles(e.dataTransfer.files));
+    }
+
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result).split(',')[1] || '');
+        r.onerror = () => reject(new Error('read failed'));
+        r.readAsDataURL(file);
+      });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorBox.hidden = true;
@@ -139,20 +224,36 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = attachments.length ? 'Uploading…' : 'Sending…';
 
       if (FORM_ENDPOINT) {
         try {
+          payload.files = await Promise.all(
+            attachments.map(async (f) => ({
+              name: f.name,
+              type: f.type,
+              size: f.size,
+              data: await toBase64(f),
+            }))
+          );
           const res = await fetch(FORM_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify(payload),
           });
-          if (!res.ok) throw new Error('bad status ' + res.status);
+          if (!res.ok) {
+            let msg = '';
+            try { msg = (await res.json()).error || ''; } catch { /* non-JSON */ }
+            // 503 = endpoint deployed but no mail key yet; don't show internals.
+            if (res.status === 503) msg = 'The form isn’t live yet.';
+            throw new Error(msg || 'bad status ' + res.status);
+          }
         } catch (err) {
           btn.disabled = false;
           btn.textContent = 'Send Inquiry';
-          errorBox.textContent = 'Sorry — that didn’t go through. Please email info@previsiondesign.com instead.';
+          errorBox.textContent =
+            (err && err.message && !/bad status/.test(err.message) ? err.message + ' ' : '') +
+            'Please try again, or email info@previsiondesign.com directly.';
           errorBox.hidden = false;
           return;
         }

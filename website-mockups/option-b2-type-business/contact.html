@@ -97,6 +97,17 @@
                 <textarea id="message" name="message" rows="6" required placeholder="Scope, deadlines, review agency, or anything else useful."></textarea>
               </div>
 
+              <div class="field">
+                <label for="files">Drawings or documents <span class="hint-inline">(optional)</span></label>
+                <div class="file-drop" id="file-drop" tabindex="0">
+                  <span class="fd-label">Attach files<br><em>PDF, images, or drawings &mdash; up to 3 files, 10&nbsp;MB each</em></span>
+                  <input type="file" id="files" name="files" multiple hidden
+                         accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,.dwg,.dxf,.zip,.doc,.docx">
+                </div>
+                <ul class="attach-list" id="attach-list"></ul>
+                <p class="attach-hint">Larger sets? Send the form first &mdash; we'll reply with an upload link.</p>
+              </div>
+
               <!-- spam trap: hidden from people, tempting to bots -->
               <div class="field hp" aria-hidden="true">
                 <label for="website">Website</label>
@@ -135,14 +146,9 @@
               <p>Adam Phillips<br>Licensed Architect, CA C-30995</p>
             </div>
             <div class="info-block">
-              <h4>Sending us files?</h4>
-              <p>Existing clients can upload directly through the
+              <h4>Existing clients</h4>
+              <p>Upload and download project files any time through the
                 <a href="https://clients.previsiondesign.com">client area</a>.</p>
-            </div>
-            <div class="info-block">
-              <h4>Service area</h4>
-              <p>San Francisco Bay Area and California statewide &mdash; including San Francisco,
-                Oakland, Berkeley, San Mateo, and Menlo Park planning jurisdictions.</p>
             </div>
           </aside>
 
