@@ -181,11 +181,21 @@ public share links). Falls back to email attachments if Dropbox is unreachable,
 so an inquiry is never lost. Caps: 3 files, 10 MB each, 30 MB total (client and
 server limits must stay in sync — js/main.js and functions/api/contact.js).
 
-⚠️ Deliverability: the first test landed in **Junk** in O365 — expected for a
-brand-new sending domain (and one test used a malformed PDF, itself a spam
-signal). Fix: mark not-junk + allow `send.previsiondesign.com` in the Microsoft
-Defender Tenant Allow/Block List (security.microsoft.com/tenantAllowBlockList).
-Moving files out of the email should also improve scoring.
+⚠️ **Deliverability is the weak link.** O365 quarantined a test as **High
+Confidence Phish** — because the mail arrives externally From a subdomain of
+previsiondesign.com addressed *to* previsiondesign.com, which reads as spoofing.
+Auth is fine (SPF/DKIM/DMARC all pass); this is Defender heuristics.
+Key gotcha: a **manually added** Tenant Allow/Block List entry only overrides
+"upto regular confidence phish" and the scope is not editable. Only an allow
+entry created via **Actions & submissions → Submissions → report false positive
+→ "allow messages like this"** overrides high-confidence phish. Also consider
+Anti-phishing policy → Trusted senders and domains.
+Structural alternative if filtering keeps fighting: send the notification From a
+domain that is NOT previsiondesign.com (removes the self-spoof signal entirely).
+
+**Safety net:** every submission writes `inquiry.txt` into the same Dropbox
+folder as the uploads, so a quarantined notification costs a delay, never the
+lead. Verified 2026-07-27 with a no-attachment submission.
 
 Verified 2026-06-14: direct POST and a real browser submission from
 previsiondesign.github.io both returned ok with attachments.
