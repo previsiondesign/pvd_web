@@ -155,6 +155,29 @@ Remaining:
 2. After a few stable days: cancel the Wix site plan (LAST step — Wix DNS
    is dead weight now but harmless; nothing references Wix after this).
 
+## Contact form — LIVE (2026-06-14)
+
+B2-Business `contact.html` posts to **https://clients.previsiondesign.com/api/contact**
+(Cloudflare Pages Function in the `clients` repo) which emails the inquiry via
+**Resend** with reply-to set to the inquirer. Optional attachments: 3 files,
+10 MB each / 20 MB total, delivered as email attachments.
+Env vars on the CF `clients` project: `RESEND_API_KEY` (secret), `CONTACT_TO`,
+optional `CONTACT_FROM`. `GET /api/contact` returns a boolean-only config check.
+
+Two gotchas learned the hard way:
+1. **"Retry deployment" did NOT bind new env vars** — a fresh commit/deployment
+   was required. If the form 503s, check `GET /api/contact` then push a commit.
+2. Resend's shared `onboarding@resend.dev` sender **only delivers to the Resend
+   account's own address**, hence `CONTACT_TO=adam@previsiondesign.com` for now.
+
+Pending (optional): verify **send.previsiondesign.com** in Resend (subdomain
+only — keeps the root SPF/MX for O365 untouched), then set
+`CONTACT_FROM="Prevision Design Website <website@send.previsiondesign.com>"`
+and `CONTACT_TO=info@previsiondesign.com`.
+
+Verified 2026-06-14: direct POST and a real browser submission from
+previsiondesign.github.io both returned ok with attachments.
+
 ## Client portal — LIVE at https://clients.previsiondesign.com (2026-06-12)
 
 Full E2E green (9/9) on the custom domain with TLS: login/sessions, Dropbox
