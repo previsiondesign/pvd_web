@@ -365,6 +365,8 @@ section { padding: 72px 0; }
   justify-content: center;
   background: var(--light);
   border-color: transparent;
+  /* 4 services + this card = 5; span the leftover column so the row fills */
+  grid-column: span 2;
 }
 
 .service-cta h3 { color: var(--blue); margin-bottom: 12px; }
@@ -579,6 +581,7 @@ section { padding: 72px 0; }
   .hero p { font-size: 15px; }
 
   .services-grid { grid-template-columns: 1fr; }
+  .service-cta { grid-column: auto; } /* no leftover column to fill at 1-up */
   .projects-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .about-preview { grid-template-columns: 1fr; }
