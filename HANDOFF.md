@@ -170,10 +170,22 @@ Two gotchas learned the hard way:
 2. Resend's shared `onboarding@resend.dev` sender **only delivers to the Resend
    account's own address**, hence `CONTACT_TO=adam@previsiondesign.com` for now.
 
-Pending (optional): verify **send.previsiondesign.com** in Resend (subdomain
-only — keeps the root SPF/MX for O365 untouched), then set
-`CONTACT_FROM="Prevision Design Website <website@send.previsiondesign.com>"`
-and `CONTACT_TO=info@previsiondesign.com`.
+Sending domain **send.previsiondesign.com** verified in Resend 2026-07-27
+(subdomain only — root SPF/MX for O365 untouched; DKIM/SPF/DMARC all align).
+Sends as `website@send.previsiondesign.com` to `info@previsiondesign.com`.
+
+**Uploads go to Dropbox, not email attachments** (changed 2026-07-27): files
+land in `Apps/Prevision Clients/_Website Inquiries/<timestamp> <name>/` and the
+notification carries a file list + a login-required Dropbox folder link (no
+public share links). Falls back to email attachments if Dropbox is unreachable,
+so an inquiry is never lost. Caps: 3 files, 10 MB each, 30 MB total (client and
+server limits must stay in sync — js/main.js and functions/api/contact.js).
+
+⚠️ Deliverability: the first test landed in **Junk** in O365 — expected for a
+brand-new sending domain (and one test used a malformed PDF, itself a spam
+signal). Fix: mark not-junk + allow `send.previsiondesign.com` in the Microsoft
+Defender Tenant Allow/Block List (security.microsoft.com/tenantAllowBlockList).
+Moving files out of the email should also improve scoring.
 
 Verified 2026-06-14: direct POST and a real browser submission from
 previsiondesign.github.io both returned ok with attachments.

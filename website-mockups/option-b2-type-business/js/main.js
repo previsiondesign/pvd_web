@@ -8,7 +8,7 @@ const FORM_ENDPOINT = 'https://clients.previsiondesign.com/api/contact';
 // Attachment limits — keep in sync with functions/api/contact.js in the clients repo.
 const MAX_FILES = 3;
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
-const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 30 * 1024 * 1024;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sticky header shadow
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const total = attachments.reduce((n, a) => n + a.size, 0) + f.size;
         if (total > MAX_TOTAL_BYTES) {
-          errorBox.textContent = 'Attachments total more than 20 MB — please remove one.';
+          errorBox.textContent = 'Attachments total more than 30 MB — please remove one.';
           errorBox.hidden = false;
           continue;
         }
