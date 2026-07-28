@@ -41,11 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const series = Array.from(document.querySelectorAll('.hero-serie'));
   const tagline = document.querySelector('.hero-tagline');
   const dotsWrap = document.querySelector('.hero-dots');
-  const heroEl = document.querySelector('.hero');
   if (series.length && tagline && dotsWrap) {
+    const SERIE_FADE = 1000;  // keep in step with the .hero-serie transition
     const frameTimers = [];
     let current = 0;
     let serieTimer = null;
+    let hideTimer = null;
+    let taglineTimer = null;
+    let zTop = 1;
 
     const dots = series.map((s, i) => {
       const d = document.createElement('button');
@@ -72,15 +75,32 @@ document.addEventListener('DOMContentLoaded', () => {
       while (frameTimers.length) clearTimeout(frameTimers.pop());
     }
 
-    // Step through a series' frames, holding each for its own duration.
-    function runFrames(serie) {
+    // Put a series back to its first frame. Done while the series is still
+    // transparent (or covered), with transitions off so the reset can't animate.
+    function resetFrames(serie) {
       const frames = Array.from(serie.querySelectorAll('.hero-frame'));
-      frames.forEach((f, i) => f.classList.toggle('is-shown', i === 0));
+      frames.forEach((f, i) => {
+        f.style.transition = 'none';
+        f.style.zIndex = i;              // later frames fade in over earlier ones
+        f.classList.toggle('is-shown', i === 0);
+      });
+      void serie.offsetWidth;            // flush the reset before re-enabling
+      frames.forEach((f) => { f.style.transition = ''; });
+      return frames;
+    }
+
+    // Step through a series' frames, holding each for its own duration. A frame
+    // fades in on top and the one under it stays put, so there is no dip.
+    function runFrames(serie) {
+      const frames = resetFrames(serie);
       let at = 0;
       frames.slice(0, -1).forEach((f, i) => {
-        at += parseInt(f.dataset.dur, 10) || 1000;
+        const hold = parseInt(f.dataset.dur, 10) || 1000;
+        at += hold;
         frameTimers.push(setTimeout(() => {
-          frames[i].classList.remove('is-shown');
+          // long holds get the full 1s cross-fade (the before/after rule);
+          // 1s frames get a shorter one so they still read as separate steps
+          frames[i + 1].style.setProperty('--fade', (hold >= 2000 ? 1000 : 600) + 'ms');
           frames[i + 1].classList.add('is-shown');
         }, at));
       });
@@ -93,29 +113,40 @@ document.addEventListener('DOMContentLoaded', () => {
     function show(n) {
       clearFrameTimers();
       clearTimeout(serieTimer);
+      clearTimeout(hideTimer);
 
-      if (n !== current) {
-        const prev = series[current];
-        prev.classList.remove('is-active');
-        dots[current].classList.remove('is-active');
-        const prevVideo = prev.querySelector('video');
-        if (prevVideo) prevVideo.pause();
-        current = n;
-      }
-
+      current = n;
       const serie = series[current];
       load(serie);
       load(series[(current + 1) % series.length]); // warm the next one
-      serie.classList.add('is-active');
-      dots[current].classList.add('is-active');
-      if (heroEl) heroEl.classList.toggle('is-contain', serie.classList.contains('fit-contain'));
 
+      // The incoming series fades in on top; the outgoing one stays opaque
+      // underneath until it is fully covered, so the cross-fade never shows
+      // the background through two half-transparent layers.
+      serie.style.zIndex = ++zTop;
+      serie.classList.add('is-active');
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === n));
+
+      hideTimer = setTimeout(() => {
+        series.forEach((s, i) => {
+          if (i === current) return;
+          s.classList.remove('is-active');
+          const v = s.querySelector('video');
+          if (v) v.pause();
+        });
+      }, SERIE_FADE);
+
+      // tracked, so clicking dots faster than the fade can't strand the tagline
+      // mid-fade (invisible) or land a stale swap after a newer one
+      clearTimeout(taglineTimer);
       if (tagline.textContent !== serie.dataset.tagline) {
         tagline.classList.add('is-fading');
-        setTimeout(() => {
+        taglineTimer = setTimeout(() => {
           tagline.textContent = serie.dataset.tagline;
           tagline.classList.remove('is-fading');
         }, 400);
+      } else {
+        tagline.classList.remove('is-fading');
       }
 
       runFrames(serie);

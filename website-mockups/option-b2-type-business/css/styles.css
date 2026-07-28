@@ -133,7 +133,15 @@ a:hover { color: var(--orange); }
   overflow: hidden;
 }
 
-.hero-slides { position: absolute; inset: 0; background: var(--surface-dark); }
+/* isolate: the cross-fade raises each incoming series' z-index, and without a
+   stacking context here those values would escape and paint the imagery over
+   the scrim and the headline block. */
+.hero-slides {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  background: var(--surface-dark);
+}
 
 /* a series = one 6s slot (e.g. a before/after pair, or a 6-frame study) */
 .hero-serie {
@@ -145,12 +153,16 @@ a:hover { color: var(--orange); }
 
 .hero-serie.is-active { opacity: 1; }
 
-/* frames inside a series cross-fade on their own hold times */
+/* Frames inside a series cross-fade on their own hold times. Both series and
+   frames fade IN on top of whatever is already showing (JS raises z-index and
+   holds the outgoing layer opaque underneath until the fade finishes), so a
+   transition never dips through the background the way two simultaneous
+   opacity ramps would. --fade is set per frame from its predecessor's hold. */
 .hero-frame {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity var(--fade, 600ms) ease;
 }
 
 .hero-frame.is-shown { opacity: 1; }
@@ -162,24 +174,17 @@ a:hover { color: var(--orange); }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center var(--focus, 50%);
 }
 
-/* Plan/analysis exhibits carry their own legends and title blocks, so they are
-   letterboxed whole rather than cropped — held to the right so the headline
-   block never covers them. The left reservation has a px floor because the
-   text column doesn't shrink with the viewport: at 44% alone the exhibit runs
-   into the tagline around 900px wide. On wide screens the exhibit is limited by
-   hero height, not this padding, so the floor changes nothing there. */
-.fit-contain .hero-frame img {
-  object-fit: contain;
-  object-position: right center;
-  padding: 26px 28px 26px max(44%, 576px);
-}
+/* Exhibits whose subject sits above centre — the shadow plume on the duration
+   maps, the insolation gradient up the tower — crop from higher up so the
+   full-bleed window lands on the analysis rather than the surrounding site. */
+.hero-serie.focus-upper { --focus: 42%; }
 
-/* Held narrower than .hero p so it clears the letterboxed exhibits on the
-   right; min-height reserves the tallest tagline so buttons never shift. */
+/* min-height reserves the tallest tagline so rotating copy never shifts the
+   buttons underneath it. */
 .hero p.hero-tagline {
-  max-width: 470px;
   min-height: 3.4em;
   transition: opacity 0.4s ease;
 }
@@ -201,17 +206,17 @@ a:hover { color: var(--orange); }
 
 .hero-dot.is-active { background: var(--orange); }
 
+/* Two layers: a wash down the left where the headline block sits, plus the
+   bottom fade. The wash is what makes white type hold up over the light
+   exhibits (shadow maps are near-white paper) without muddying the imagery on
+   the right, which a single stronger vertical gradient would do. */
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7,17,29,0.12) 30%, rgba(7,17,29,0.8) 100%);
+  background:
+    linear-gradient(90deg, rgba(7,17,29,0.72) 0%, rgba(7,17,29,0.45) 38%, rgba(7,17,29,0) 62%),
+    linear-gradient(180deg, rgba(7,17,29,0.10) 25%, rgba(7,17,29,0.78) 100%);
   transition: background 0.6s ease;
-}
-
-/* On letterboxed exhibit series the text sits on the dark surface at the left,
-   so the scrim runs sideways and leaves the exhibit itself unmuddied. */
-.hero.is-contain .hero-scrim {
-  background: linear-gradient(90deg, rgba(57,68,77,0.97) 0%, rgba(57,68,77,0.9) 34%, rgba(57,68,77,0) 56%);
 }
 
 .hero-content {
@@ -856,16 +861,10 @@ section { padding: 72px 0; }
      jump as the series rotate. */
   .hero p.hero-tagline { min-height: 4.9em; }
 
-  /* No room for a side-by-side split, and the text block already fills most of
-     the hero — a legible exhibit doesn't fit. Sit these in the upper band and
-     let the scrim carry them as atmosphere; the tagline does the explaining at
-     phone width. (padding-% resolves against width, so this scales with it.) */
-  .fit-contain .hero-frame img {
-    object-position: center top;
-    padding: 10px 10px 40%;
-  }
-  .hero.is-contain .hero-scrim {
-    background: linear-gradient(180deg, rgba(57,68,77,0.45) 0%, rgba(57,68,77,0.88) 38%, rgba(57,68,77,0.97) 100%);
+  /* Text spans the full width here, so the left wash can't do the work — carry
+     it vertically instead, strong enough for white type over the light exhibits. */
+  .hero-scrim {
+    background: linear-gradient(180deg, rgba(7,17,29,0.40) 0%, rgba(7,17,29,0.68) 30%, rgba(7,17,29,0.92) 100%);
   }
 
   .services-grid { grid-template-columns: 1fr; }

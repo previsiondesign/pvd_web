@@ -4,9 +4,9 @@
 The masters (~137 MB of PNGs) stay local and gitignored; this writes ~2 MB of
 WebP into website-mockups/shared/images/hero/, which is what the site ships.
 
-Widths differ by role, because the hero displays them differently:
-  photos / massing  -> full-bleed (object-fit: cover), so they need to be wide
-  plan exhibits     -> letterboxed (object-fit: contain) at roughly half width
+Every series is full-bleed (object-fit: cover), so all of them are sized for the
+full hero width; 1800 covers a 1440px hero with room to spare. HL16's master is
+only 900px wide, so it stays there rather than being upscaled.
 
 Filenames encode the per-frame hold time (`_2s`), which the hero JS mirrors in
 each frame's data-dur. Run from the repo root:  python scripts/build-hero-images.py
@@ -19,15 +19,16 @@ OUT = os.path.join('website-mockups', 'shared', 'images', 'hero')
 QUALITY = 82
 
 # stem prefix -> (output basename, target width)
+WIDTH = 1800
 ROLES = {
-    'HL01': ('hl01-ob', 1800),   # Old Bayshore, existing (photo, full-bleed)
-    'HL02': ('hl02-ob', 1800),   # Old Bayshore, proposed (photo, full-bleed)
-    'HL16': ('hl16-ss', 900),    # shadow shaping placeholder (already small)
+    'HL01': ('hl01-ob', WIDTH),  # Old Bayshore, existing (master is 1473 wide)
+    'HL02': ('hl02-ob', WIDTH),  # Old Bayshore, proposed
+    'HL16': ('hl16-ss', 900),    # shadow shaping placeholder (master is 900)
 }
 for i in range(3, 9):
-    ROLES['HL%02d' % i] = ('hl%02d-ppp' % i, 1200)   # shadow duration exhibits
+    ROLES['HL%02d' % i] = ('hl%02d-ppp' % i, WIDTH)  # shadow duration exhibits
 for i in range(10, 16):
-    ROLES['HL%02d' % i] = ('hl%02d-fc' % i, 1600)    # daylight analysis frames
+    ROLES['HL%02d' % i] = ('hl%02d-fc' % i, WIDTH)   # daylight analysis frames
 
 
 def main():

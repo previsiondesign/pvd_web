@@ -38,8 +38,10 @@
     </header>
 
     <!-- HERO: five series, 6s each. Frames inside a series hold for their own
-         data-dur (mirrors the _#s in the master filenames). Plan exhibits are
-         letterboxed right (fit-contain) so text never sits on top of them. -->
+         data-dur (mirrors the _#s in the master filenames). Every series is
+         full-bleed per Adam (2026-07-28) — legends and title blocks crop away,
+         and the tagline carries the explanation instead. focus-upper shifts
+         the crop window up where the subject sits above centre. -->
     <section class="hero" id="top">
       <div class="hero-slides">
 
@@ -54,7 +56,7 @@
         </div>
 
         <!-- 2. Sun & shadow studies — Potrero Power Station duration exhibits -->
-        <div class="hero-serie fit-contain" data-tagline="Quantified sun and shadow studies — Section 295 and CEQA-compliant analysis and reporting.">
+        <div class="hero-serie focus-upper" data-tagline="Quantified sun and shadow studies — Section 295 and CEQA-compliant analysis and reporting.">
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl03-ppp.webp" alt="Net new shadow duration study — September"></div>
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl04-ppp.webp" alt="Net new shadow duration study"></div>
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl05-ppp.webp" alt="Net new shadow duration study"></div>
@@ -71,7 +73,7 @@
         </div>
 
         <!-- 4. Daylight / interior lighting analysis -->
-        <div class="hero-serie fit-contain" data-tagline="Daylight and interior lighting analysis for proposed developments and their neighbors.">
+        <div class="hero-serie" data-tagline="Daylight and interior lighting analysis for proposed developments and their neighbors.">
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl10-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl11-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl12-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
@@ -80,10 +82,9 @@
           <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl15-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
         </div>
 
-        <!-- 5. Shadow shaping (placeholder art) -->
-        <!-- letterboxed: the insolation gradient runs the full height of the tower,
-             so a full-bleed crop would cut the top and bottom off the analysis -->
-        <div class="hero-serie fit-contain" data-tagline="Shadow shaping — building form studied and refined to reduce shadow on parks, plazas, and sensitive areas.">
+        <!-- 5. Shadow shaping (placeholder art) — cropped high to keep the hot
+             end of the insolation gradient on the tower in frame -->
+        <div class="hero-serie focus-upper" data-tagline="Shadow shaping — building form studied and refined to reduce shadow on parks, plazas, and sensitive areas.">
           <div class="hero-frame" data-dur="6000">
             <img data-src="../shared/images/hero/hl16-ss.webp" alt="Building massing studied for solar exposure and shadow reduction">
           </div>

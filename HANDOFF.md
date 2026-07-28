@@ -114,37 +114,48 @@ Key facts a fresh session needs:
   only — the other variants still run the old portfolio slideshow).** Five
   *series* of **6 s each**, per Adam's masters in `projects/Headline Images`:
 
-  | # | series | frames | fit |
-  |---|--------|--------|-----|
-  | 0 | Visual sims — Old Bayshore before/after | HL01 2s + HL02 4s | cover |
-  | 1 | Shadow studies — shadow-duration exhibits | HL03–08, 1s each | contain |
-  | 2 | Animation — SFMTA simulation (mp4) | HL09 6s | cover |
-  | 3 | Daylight/lighting analysis | HL10–15, 1s each | contain |
-  | 4 | Shadow shaping — insolation massing (placeholder) | HL16 6s | contain |
+  | # | series | frames |
+  |---|--------|--------|
+  | 0 | Visual sims — Old Bayshore before/after | HL01 2s + HL02 4s |
+  | 1 | Shadow studies — shadow-duration exhibits | HL03–08, 1s each |
+  | 2 | Animation — SFMTA simulation (mp4) | HL09 6s |
+  | 3 | Daylight/lighting analysis | HL10–15, 1s each |
+  | 4 | Shadow shaping — insolation massing (placeholder) | HL16 6s |
 
   Per-frame hold times come from the `_#s` suffix in each filename and live in
   `data-dur` on each `.hero-frame`. Series 0 follows the before/after rule
   below. `scripts/build-hero-images.py` rebuilds the shipped derivatives
   (`website-mockups/shared/images/hero/`) from the masters: **137 MB of PNG →
   1.93 MB of WebP**, widths by role (photos 1800 / exhibits 1200 / daylight
-  1600 / HL16 900, never upscaled). The masters stay local — `projects/` is
-  gitignored.
-  - Series marked `.fit-contain` are letterboxed, not cropped: these exhibits
-    carry their own legends and title blocks, so cropping would cut the
-    analysis. They sit **right**, with the scrim switching to a horizontal
-    gradient via `.hero.is-contain` so the text keeps a dark bed on the left.
-  - The text column doesn't shrink with the viewport, so the exhibit's left
-    reservation is `max(44%, 576px)` — the px floor is what keeps the exhibit
-    off the tagline around 900 px wide. Verified clearance: 1440 px → 99 px,
-    1280 px → 50–99 px, 1024 px and 900 px → 34 px+. On wide screens the
-    exhibit is limited by hero height, so the floor changes nothing there.
-  - `.hero p.hero-tagline` is capped at 470 px (needs `.hero p` specificity to
-    win) and reserves its tallest wrap so rotating taglines never shift the
-    buttons — 2 lines on desktop, 3 at ≤768 px.
-  - ≤768 px: no room for a split (the text block is ~360 px of a 420 px hero),
-    and these drawings can't be read at phone width anyway — the exhibit sits
-    in the upper band under a stronger vertical scrim as atmosphere while the
-    tagline does the explaining.
+  1800 wide, HL16 900 because that is its master). The masters stay local —
+  `projects/` is gitignored.
+  - **All five series are full-bleed** (`object-fit: cover`) per Adam
+    (2026-07-28): legends, title blocks and captions crop away and the tagline
+    carries the explanation. An earlier pass letterboxed the exhibits to the
+    right — that is gone, along with `.fit-contain` / `.hero.is-contain`.
+  - `--focus` sets the vertical crop; `.focus-upper` (42%) is on the shadow maps
+    and the insolation tower, whose subjects sit above centre. Note
+    `object-position` percentages offset the *overflow*, so 42% shows the band
+    from 21% to 71% of the map's height, not 42% ± half.
+  - `.hero-scrim` is two stacked gradients: a wash down the left (0.72 → 0 by
+    62%) plus the bottom fade. The wash is what keeps white type readable over
+    the near-white shadow maps without muddying the imagery on the right; a
+    single stronger vertical gradient would flatten everything. At ≤768 px the
+    text spans the full width, so that breakpoint swaps in a stronger vertical
+    scrim (0.40 → 0.92) instead.
+  - `.hero p.hero-tagline` reserves its tallest wrap so rotating taglines never
+    shift the buttons — 2 lines on desktop, 3 at ≤768 px (`.hero p` specificity
+    is needed to beat the base rule).
+  - **Cross-fades stack rather than swap** (Adam asked for smooth transitions):
+    the incoming series/frame fades in on a raised z-index while the outgoing
+    layer stays fully opaque underneath until it is covered, so a transition
+    never dips through the background the way two simultaneous opacity ramps
+    do. Verified: 0% background visible across a whole transition. This is why
+    `.hero-slides` needs `isolation: isolate` — without a stacking context those
+    raised z-indexes escape and paint the imagery over the headline block.
+    Frame fade is 1 s after a ≥2 s hold (the before/after rule) and 600 ms
+    between the 1 s study frames; series fade is 1 s (`SERIE_FADE` in main.js
+    must stay in step with the CSS transition).
   - **Open: `hl09-sfmta.mp4` ships uncompressed at 8.7 MB** (~9.8 Mbps for
     7.1 s at 1280×720 — no ffmpeg on this machine). It is `preload="none"` and
     lazy-loaded one series ahead, so it isn't in the initial payload, but it
