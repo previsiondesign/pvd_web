@@ -37,27 +37,58 @@
       </div>
     </header>
 
-    <!-- HERO: slideshow cycling project types; tagline syncs to the active slide -->
+    <!-- HERO: five series, 6s each. Frames inside a series hold for their own
+         data-dur (mirrors the _#s in the master filenames). Plan exhibits are
+         letterboxed right (fit-contain) so text never sits on top of them. -->
     <section class="hero" id="top">
       <div class="hero-slides">
-        <div class="hero-slide is-active has-ba" data-tagline="Photorealistic visual simulations that show commissions and communities exactly what's proposed.">
-          <img class="ba-before" src="../shared/images/portfolio/bayshore_page01.jpg" alt="Old Bayshore — existing conditions">
-          <img class="ba-after" src="../shared/images/portfolio/bayshore_page02.jpg" alt="Old Bayshore visual impact simulation — proposed">
+
+        <!-- 1. Visual simulations — Old Bayshore before (2s) / after (4s) -->
+        <div class="hero-serie is-active" data-tagline="Photorealistic visual simulations that show commissions and communities exactly what's proposed.">
+          <div class="hero-frame" data-dur="2000">
+            <img data-src="../shared/images/hero/hl01-ob.webp" alt="Old Bayshore — existing conditions">
+          </div>
+          <div class="hero-frame" data-dur="4000">
+            <img data-src="../shared/images/hero/hl02-ob.webp" alt="Old Bayshore — proposed development, visual simulation">
+          </div>
         </div>
-        <div class="hero-slide has-ba" data-tagline="Quantified sun and shadow studies — Section 295 and CEQA-compliant analysis and reporting.">
-          <img class="ba-before" src="../shared/images/portfolio/61gough_before.jpg" alt="61 Gough Street — existing conditions">
-          <img class="ba-after" src="../shared/images/portfolio/61gough_after.jpg" alt="61 Gough Street sun and shadow study — proposed">
+
+        <!-- 2. Sun & shadow studies — Potrero Power Station duration exhibits -->
+        <div class="hero-serie fit-contain" data-tagline="Quantified sun and shadow studies — Section 295 and CEQA-compliant analysis and reporting.">
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl03-ppp.webp" alt="Net new shadow duration study — September"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl04-ppp.webp" alt="Net new shadow duration study"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl05-ppp.webp" alt="Net new shadow duration study"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl06-ppp.webp" alt="Net new shadow duration study"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl07-ppp.webp" alt="Net new shadow duration study"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl08-ppp.webp" alt="Net new shadow duration study"></div>
         </div>
-        <div class="hero-slide" data-tagline="Daylight and solar access studies for proposed developments and their neighbors.">
-          <img src="../shared/images/portfolio/onni_page04.jpg" alt="Daylight study example">
+
+        <!-- 3. Animated simulation — SFMTA -->
+        <div class="hero-serie is-video" data-tagline="Animated simulations and shadow sequences built for public hearings and community outreach.">
+          <div class="hero-frame" data-dur="6000">
+            <video data-src="../shared/images/hero/hl09-sfmta.mp4" muted loop playsinline preload="none" aria-label="Animated visual simulation"></video>
+          </div>
         </div>
-        <div class="hero-slide has-ba" data-tagline="Visual impact studies from public vantage points — accepted by reviewing agencies statewide.">
-          <img class="ba-before" src="../shared/images/portfolio/sfport_view1.jpg" alt="SF Port — existing conditions">
-          <img class="ba-after" src="../shared/images/portfolio/sfport_view1_after.jpg" alt="SF Port coastal flood study visual simulation — proposed">
+
+        <!-- 4. Daylight / interior lighting analysis -->
+        <div class="hero-serie fit-contain" data-tagline="Daylight and interior lighting analysis for proposed developments and their neighbors.">
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl10-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl11-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl12-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl13-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl14-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
+          <div class="hero-frame" data-dur="1000"><img data-src="../shared/images/hero/hl15-fc.webp" alt="Interior daylight levels — photometric analysis"></div>
         </div>
-        <div class="hero-slide" data-tagline="Technical studies and exhibits that carry projects through entitlement and public hearings.">
-          <img src="../shared/images/portfolio/claremont_page03.jpg" alt="Claremont Residences visual simulation">
+
+        <!-- 5. Shadow shaping (placeholder art) -->
+        <!-- letterboxed: the insolation gradient runs the full height of the tower,
+             so a full-bleed crop would cut the top and bottom off the analysis -->
+        <div class="hero-serie fit-contain" data-tagline="Shadow shaping — building form studied and refined to reduce shadow on parks, plazas, and sensitive areas.">
+          <div class="hero-frame" data-dur="6000">
+            <img data-src="../shared/images/hero/hl16-ss.webp" alt="Building massing studied for solar exposure and shadow reduction">
+          </div>
         </div>
+
       </div>
       <div class="hero-scrim"></div>
       <div class="hero-content">

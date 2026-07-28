@@ -35,57 +35,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hero slideshow: cycle slides, sync tagline to the active slide.
-  // Slides marked .has-ba run a before/after sequence when shown:
-  // 1s on the before image, 1s crossfade, then hold the after image.
-  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  // Hero: five 6s series. Frames inside a series hold for their own data-dur
+  // (mirroring the _#s in the master filenames), cross-fading between them.
+  // Images/video load lazily: current series plus the next one.
+  const series = Array.from(document.querySelectorAll('.hero-serie'));
   const tagline = document.querySelector('.hero-tagline');
   const dotsWrap = document.querySelector('.hero-dots');
-  if (slides.length > 1 && tagline && dotsWrap) {
+  const heroEl = document.querySelector('.hero');
+  if (series.length && tagline && dotsWrap) {
+    const frameTimers = [];
     let current = 0;
-    let timer = null;
-    let baTimer = null;
-    const dots = slides.map((s, i) => {
+    let serieTimer = null;
+
+    const dots = series.map((s, i) => {
       const d = document.createElement('button');
       d.className = 'hero-dot' + (i === 0 ? ' is-active' : '');
       d.setAttribute('aria-label', 'Slide ' + (i + 1));
-      d.addEventListener('click', () => { show(i); restart(); });
+      d.addEventListener('click', () => { show(i); });
       dotsWrap.appendChild(d);
       return d;
     });
-    function runBeforeAfter(slide) {
-      clearTimeout(baTimer);
-      if (!slide.classList.contains('has-ba')) return;
-      slide.classList.remove('ba-shown');
-      baTimer = setTimeout(() => {
-        if (slide.classList.contains('is-active')) slide.classList.add('ba-shown');
-      }, 1000);
+
+    const durations = series.map((s) =>
+      Array.from(s.querySelectorAll('.hero-frame'))
+        .reduce((sum, f) => sum + (parseInt(f.dataset.dur, 10) || 1000), 0)
+    );
+
+    function load(serie) {
+      serie.querySelectorAll('img[data-src], video[data-src]').forEach((el) => {
+        el.src = el.dataset.src;
+        el.removeAttribute('data-src');
+      });
     }
+
+    function clearFrameTimers() {
+      while (frameTimers.length) clearTimeout(frameTimers.pop());
+    }
+
+    // Step through a series' frames, holding each for its own duration.
+    function runFrames(serie) {
+      const frames = Array.from(serie.querySelectorAll('.hero-frame'));
+      frames.forEach((f, i) => f.classList.toggle('is-shown', i === 0));
+      let at = 0;
+      frames.slice(0, -1).forEach((f, i) => {
+        at += parseInt(f.dataset.dur, 10) || 1000;
+        frameTimers.push(setTimeout(() => {
+          frames[i].classList.remove('is-shown');
+          frames[i + 1].classList.add('is-shown');
+        }, at));
+      });
+      const video = serie.querySelector('video');
+      if (video && video.src) {
+        try { video.currentTime = 0; video.play(); } catch (err) { /* autoplay blocked */ }
+      }
+    }
+
     function show(n) {
-      if (n === current) return;
-      const prev = slides[current];
-      prev.classList.remove('is-active');
-      dots[current].classList.remove('is-active');
-      // reset the outgoing slide's before/after state once it has faded out
-      setTimeout(() => {
-        if (!prev.classList.contains('is-active')) prev.classList.remove('ba-shown');
-      }, 1300);
-      current = n;
-      slides[current].classList.add('is-active');
+      clearFrameTimers();
+      clearTimeout(serieTimer);
+
+      if (n !== current) {
+        const prev = series[current];
+        prev.classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+        const prevVideo = prev.querySelector('video');
+        if (prevVideo) prevVideo.pause();
+        current = n;
+      }
+
+      const serie = series[current];
+      load(serie);
+      load(series[(current + 1) % series.length]); // warm the next one
+      serie.classList.add('is-active');
       dots[current].classList.add('is-active');
-      runBeforeAfter(slides[current]);
-      tagline.classList.add('is-fading');
-      setTimeout(() => {
-        tagline.textContent = slides[current].dataset.tagline;
-        tagline.classList.remove('is-fading');
-      }, 400);
+      if (heroEl) heroEl.classList.toggle('is-contain', serie.classList.contains('fit-contain'));
+
+      if (tagline.textContent !== serie.dataset.tagline) {
+        tagline.classList.add('is-fading');
+        setTimeout(() => {
+          tagline.textContent = serie.dataset.tagline;
+          tagline.classList.remove('is-fading');
+        }, 400);
+      }
+
+      runFrames(serie);
+      serieTimer = setTimeout(() => show((current + 1) % series.length), durations[current]);
     }
-    function restart() {
-      clearInterval(timer);
-      timer = setInterval(() => show((current + 1) % slides.length), 5000);
-    }
-    runBeforeAfter(slides[0]);
-    restart();
+
+    show(0);
   }
 
   // Contact form (contact.html)

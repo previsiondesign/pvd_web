@@ -105,11 +105,54 @@ Key facts a fresh session needs:
   when edits come back, apply them to the winning variant and clone B's
   subpages (services/portfolio/about/contact) into its style.
 - Hero (B2 + color variants, 2026-06-10): headline simplified to "Analysis for
-  the Built Environment"; static image replaced by a 5-slide slideshow cycling
-  project types with the subheadline (tagline) synced to the active slide
-  (5s interval, crossfade, clickable dots; taglines in data-tagline attrs).
-  Per Adam: avoid "consulting" language; "sun/shadow" is the preferred term —
-  note the copy doc still shows the old static hero copy.
+  the Built Environment"; static image replaced by a slideshow cycling project
+  types with the subheadline (tagline) synced to the active slide (crossfade,
+  clickable dots; taglines in data-tagline attrs). Per Adam: avoid "consulting"
+  language; "sun/shadow" is the preferred term — note the copy doc still shows
+  the old static hero copy.
+- **Hero rebuilt on real project imagery (2026-07-28, option-b2-type-business
+  only — the other variants still run the old portfolio slideshow).** Five
+  *series* of **6 s each**, per Adam's masters in `projects/Headline Images`:
+
+  | # | series | frames | fit |
+  |---|--------|--------|-----|
+  | 0 | Visual sims — Old Bayshore before/after | HL01 2s + HL02 4s | cover |
+  | 1 | Shadow studies — shadow-duration exhibits | HL03–08, 1s each | contain |
+  | 2 | Animation — SFMTA simulation (mp4) | HL09 6s | cover |
+  | 3 | Daylight/lighting analysis | HL10–15, 1s each | contain |
+  | 4 | Shadow shaping — insolation massing (placeholder) | HL16 6s | contain |
+
+  Per-frame hold times come from the `_#s` suffix in each filename and live in
+  `data-dur` on each `.hero-frame`. Series 0 follows the before/after rule
+  below. `scripts/build-hero-images.py` rebuilds the shipped derivatives
+  (`website-mockups/shared/images/hero/`) from the masters: **137 MB of PNG →
+  1.93 MB of WebP**, widths by role (photos 1800 / exhibits 1200 / daylight
+  1600 / HL16 900, never upscaled). The masters stay local — `projects/` is
+  gitignored.
+  - Series marked `.fit-contain` are letterboxed, not cropped: these exhibits
+    carry their own legends and title blocks, so cropping would cut the
+    analysis. They sit **right**, with the scrim switching to a horizontal
+    gradient via `.hero.is-contain` so the text keeps a dark bed on the left.
+  - The text column doesn't shrink with the viewport, so the exhibit's left
+    reservation is `max(44%, 576px)` — the px floor is what keeps the exhibit
+    off the tagline around 900 px wide. Verified clearance: 1440 px → 99 px,
+    1280 px → 50–99 px, 1024 px and 900 px → 34 px+. On wide screens the
+    exhibit is limited by hero height, so the floor changes nothing there.
+  - `.hero p.hero-tagline` is capped at 470 px (needs `.hero p` specificity to
+    win) and reserves its tallest wrap so rotating taglines never shift the
+    buttons — 2 lines on desktop, 3 at ≤768 px.
+  - ≤768 px: no room for a split (the text block is ~360 px of a 420 px hero),
+    and these drawings can't be read at phone width anyway — the exhibit sits
+    in the upper band under a stronger vertical scrim as atmosphere while the
+    tagline does the explaining.
+  - **Open: `hl09-sfmta.mp4` ships uncompressed at 8.7 MB** (~9.8 Mbps for
+    7.1 s at 1280×720 — no ffmpeg on this machine). It is `preload="none"` and
+    lazy-loaded one series ahead, so it isn't in the initial payload, but it
+    should be re-encoded before launch, e.g.
+    `ffmpeg -i HL09_*.mp4 -c:v libx264 -crf 26 -preset slow -an -movflags +faststart hl09-sfmta.mp4`
+    (`-an` because the hero plays it muted). Expect ~1.5–2.5 MB. Re-encode from
+    the master in `projects/Headline Images`, not the committed copy. The video
+    runs 7.1 s but the series holds 6 s, so the tail is cut by design.
 - **Before/after rule (per Adam, 2026-06-10): any image with a before/after
   pair should be shown as a sequence — 1s on the before, 1s crossfade, 3s on
   the after.** Hero slides implement this via `.has-ba` (`.ba-before`/`.ba-after`

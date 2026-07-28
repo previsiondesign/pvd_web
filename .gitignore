@@ -8,6 +8,10 @@ docs/
 # Palette reference images (third-party samples; hex values live in the variant CSS)
 pallettes/
 
+# Hero source masters (137 MB of PNGs) — web-ready WebP derivatives are committed
+# under website-mockups/shared/images/hero/ and rebuilt by scripts/build-hero-images.py
+projects/
+
 # Local scratch / machine-specific
 _logotest.html
 .claude/settings.local.json

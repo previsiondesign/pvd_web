@@ -133,18 +133,30 @@ a:hover { color: var(--orange); }
   overflow: hidden;
 }
 
-.hero-slides { position: absolute; inset: 0; }
+.hero-slides { position: absolute; inset: 0; background: var(--surface-dark); }
 
-.hero-slide {
+/* a series = one 6s slot (e.g. a before/after pair, or a 6-frame study) */
+.hero-serie {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1s ease;
 }
 
-.hero-slide.is-active { opacity: 1; }
+.hero-serie.is-active { opacity: 1; }
 
-.hero-slide img {
+/* frames inside a series cross-fade on their own hold times */
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.hero-frame.is-shown { opacity: 1; }
+
+.hero-frame img,
+.hero-frame video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -152,16 +164,22 @@ a:hover { color: var(--orange); }
   object-fit: cover;
 }
 
-/* before/after slides: 1s on the before, then the after fades in over 1s */
-.hero-slide .ba-after {
-  opacity: 0;
-  transition: opacity 1s ease;
+/* Plan/analysis exhibits carry their own legends and title blocks, so they are
+   letterboxed whole rather than cropped — held to the right so the headline
+   block never covers them. The left reservation has a px floor because the
+   text column doesn't shrink with the viewport: at 44% alone the exhibit runs
+   into the tagline around 900px wide. On wide screens the exhibit is limited by
+   hero height, not this padding, so the floor changes nothing there. */
+.fit-contain .hero-frame img {
+  object-fit: contain;
+  object-position: right center;
+  padding: 26px 28px 26px max(44%, 576px);
 }
 
-.hero-slide.ba-shown .ba-after { opacity: 1; }
-
-/* reserve two lines so rotating taglines don't shift the buttons */
-.hero-tagline {
+/* Held narrower than .hero p so it clears the letterboxed exhibits on the
+   right; min-height reserves the tallest tagline so buttons never shift. */
+.hero p.hero-tagline {
+  max-width: 470px;
   min-height: 3.4em;
   transition: opacity 0.4s ease;
 }
@@ -187,6 +205,13 @@ a:hover { color: var(--orange); }
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(7,17,29,0.12) 30%, rgba(7,17,29,0.8) 100%);
+  transition: background 0.6s ease;
+}
+
+/* On letterboxed exhibit series the text sits on the dark surface at the left,
+   so the scrim runs sideways and leaves the exhibit itself unmuddied. */
+.hero.is-contain .hero-scrim {
+  background: linear-gradient(90deg, rgba(57,68,77,0.97) 0%, rgba(57,68,77,0.9) 34%, rgba(57,68,77,0) 56%);
 }
 
 .hero-content {
@@ -826,6 +851,22 @@ section { padding: 72px 0; }
   .hero { height: 420px; }
   .hero h1 { font-size: 27px; }
   .hero p { font-size: 15px; }
+
+  /* Three lines of tagline wrap at this width, so reserve them or the buttons
+     jump as the series rotate. */
+  .hero p.hero-tagline { min-height: 4.9em; }
+
+  /* No room for a side-by-side split, and the text block already fills most of
+     the hero — a legible exhibit doesn't fit. Sit these in the upper band and
+     let the scrim carry them as atmosphere; the tagline does the explaining at
+     phone width. (padding-% resolves against width, so this scales with it.) */
+  .fit-contain .hero-frame img {
+    object-position: center top;
+    padding: 10px 10px 40%;
+  }
+  .hero.is-contain .hero-scrim {
+    background: linear-gradient(180deg, rgba(57,68,77,0.45) 0%, rgba(57,68,77,0.88) 38%, rgba(57,68,77,0.97) 100%);
+  }
 
   .services-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
