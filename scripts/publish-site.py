@@ -28,7 +28,8 @@ PAGES = ['index.html', 'contact.html']
 CODE = [os.path.join('css', 'styles.css'), os.path.join('js', 'main.js')]
 ASSET_DIRS = ['hero', 'disciplines', 'work', 'clients']
 ASSET_FILES = ['prevision_icon.svg', 'prevision_icon_reverse.svg', 'adam_phillips.jpg',
-               'favicon-32.png', 'apple-touch-icon.png', 'icon-512.png', 'og-card.jpg']
+               'favicon-32.png', 'apple-touch-icon.png', 'icon-512.png', 'og-card.jpg',
+               'favicon.svg', 'favicon.ico']
 
 SITE_URL = 'https://www.previsiondesign.com'
 # Crawlers look for these at the root. Generated here rather than kept by hand so
