@@ -26,7 +26,7 @@ DEFAULT_DEST = os.path.join('D:', os.sep, 'Dev', 'site')
 
 PAGES = ['index.html', 'contact.html']
 CODE = [os.path.join('css', 'styles.css'), os.path.join('js', 'main.js')]
-ASSET_DIRS = ['hero', 'disciplines', 'work']
+ASSET_DIRS = ['hero', 'disciplines', 'work', 'clients']
 ASSET_FILES = ['prevision_icon.svg', 'prevision_icon_reverse.svg', 'adam_phillips.jpg',
                'favicon-32.png', 'apple-touch-icon.png', 'icon-512.png', 'og-card.jpg']
 
