@@ -35,6 +35,113 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Featured Work: each card rests on its main still and cross-fades through the
+  // project's other frames while hovered. Frames live in data-frames and are only
+  // fetched on first hover, so the grid costs one image per card until then —
+  // eager markup for all 48 would be several MB nobody asked for.
+  const workCards = Array.from(
+    document.querySelectorAll('.project-card[data-frames], .project-card[data-video]'));
+
+  workCards.forEach((card) => {
+    const WORK = '../shared/images/work/';
+    const HOLD = 900;   // ms a frame is held
+    const FADE = 500;   // ms cross-fade — keep in step with .pc-frame's transition
+    const files = (card.dataset.frames || '').split(',').filter(Boolean);
+    const clip = card.dataset.video;
+    const overlay = card.querySelector('.overlay');
+    const still = card.querySelector('img');
+    let layers = null;
+    let video = null;
+    let at = 0;
+    let stepTimer = null;
+    let resetTimer = null;
+    let prefetched = false;
+
+    // an auto-cycling slideshow is exactly what reduced-motion asks us not to do
+    const stillPlease = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function layer(i) {
+      if (!layers) {
+        layers = [0, 1].map(() => {
+          const el = document.createElement('img');
+          el.className = 'pc-frame';
+          el.alt = '';
+          el.setAttribute('aria-hidden', 'true');
+          card.insertBefore(el, overlay);
+          return el;
+        });
+      }
+      return layers[i % 2];
+    }
+
+    function step() {
+      const el = layer(at);
+      const under = layers[(at + 1) % 2];
+      const src = WORK + files[at % files.length];
+      const pre = new Image();
+      // wait for the bitmap so a layer is never revealed blank; after the first
+      // frame these are already warm from the prefetch, so the cadence holds
+      pre.onload = pre.onerror = () => {
+        el.src = src;
+        // demote the outgoing layer NOW, not after the fade: while both sat at
+        // the same z-index, DOM order decided the stack and the old frame could
+        // paint over the incoming one, so the cross-fade did nothing then jumped
+        under.style.zIndex = 1;
+        el.style.zIndex = 2;
+        el.classList.add('is-shown');
+        // it only goes transparent once it is covered, so its next turn
+        // starts from 0 and actually cross-fades
+        resetTimer = setTimeout(() => under.classList.remove('is-shown'), FADE);
+        at += 1;
+        stepTimer = setTimeout(step, HOLD);
+      };
+      pre.src = src;
+    }
+
+    function start() {
+      if (stillPlease.matches) return;
+      if (clip) {
+        if (!video) {
+          video = document.createElement('video');
+          video.className = 'pc-frame';
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.preload = 'none';
+          video.setAttribute('aria-hidden', 'true');
+          video.src = WORK + clip;
+          card.insertBefore(video, overlay);
+        }
+        video.classList.add('is-shown');
+        try { video.currentTime = 0; video.play(); } catch (err) { /* blocked */ }
+        return;
+      }
+      if (!files.length) return;
+      // warm the whole set on the first hover so later steps keep to HOLD rather
+      // than stalling on a fetch; the browser caps its own parallelism
+      if (!prefetched) {
+        prefetched = true;
+        files.forEach((f) => { new Image().src = WORK + f; });
+      }
+      at = 0;
+      step();
+    }
+
+    function stop() {
+      clearTimeout(stepTimer);
+      clearTimeout(resetTimer);
+      if (video) { video.classList.remove('is-shown'); video.pause(); }
+      if (layers) layers.forEach((el) => el.classList.remove('is-shown'));
+    }
+
+    card.addEventListener('mouseenter', start);
+    card.addEventListener('mouseleave', stop);
+    // keyboard users get it too, since the card is a focus target on the grid
+    card.addEventListener('focusin', start);
+    card.addEventListener('focusout', stop);
+    if (still) still.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+
   // Discipline snippets sit greyscale until something singles a card out. On a
   // hover device that is :hover (CSS); on a touch device there is nothing to
   // hover, so the card nearest the middle of the viewport lights as you scroll.

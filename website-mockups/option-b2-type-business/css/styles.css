@@ -501,9 +501,23 @@ section { padding: 72px 0; }
 
 .project-card:hover img { transform: scale(1.05); }
 
+/* Slideshow layers, added by main.js on first hover — two of them, alternating,
+   so an incoming frame fades in on top while the outgoing one stays opaque
+   underneath (the same no-dip trick as the hero). z-index is capped at 2 rather
+   than climbing, so .overlay at 3 always stays above the imagery. */
+.project-card .pc-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.4s;
+}
+
+.project-card .pc-frame.is-shown { opacity: 1; }
+
 .project-card .overlay {
   position: absolute;
   inset: 0;
+  z-index: 3;
   background: linear-gradient(transparent 40%, rgba(0,0,0,0.8));
   display: flex;
   flex-direction: column;
@@ -538,6 +552,7 @@ section { padding: 72px 0; }
 
 .badge-visual { background: #AE2C11; color: var(--white); }
 .badge-shadow { background: var(--blue); color: var(--white); }
+.badge-daylight { background: var(--orange); color: var(--white); }
 
 /* ---- CLIENTS ---- */
 .clients-section { border-top: 1px solid var(--gray-100); }

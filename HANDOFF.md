@@ -175,6 +175,38 @@ Key facts a fresh session needs:
     (hidden on desktop, where the `<em>` inside the zone carries them). Vertical
     spacing tightened throughout: page hero 30/26, section 26/40, field gap 14,
     contact grid 28.
+- **Featured Work rebuilt on the real projects (2026-07-28).** Six cards, from
+  the six folders in `projects/Featured Work`; the old `shared/images/portfolio/`
+  stills are no longer referenced by this variant. `scripts/build-work-images.py`
+  builds them (542 MB of masters → 2.33 MB of WebP at 800×600, 4:3, a shade over
+  2× retina for the ~390 px one-column phone card) plus the Valencia video.
+  - Each folder's **main image is the still**: `XX_main.png`, a bare `main.png`,
+    or `poster.png` — Adam renamed Valencia's `poster.png` to `main.png` mid-build,
+    so the matcher accepts all three. The other numbered PNGs are slideshow frames.
+  - **Frames are capped at 10**, sampled evenly with first and last kept so a
+    shadow progression still reads start-to-finish. Potrero has 27 masters and
+    drops 17; Housing Element drops 8; Foster City drops 2. The script prints
+    what it dropped — a silent cap would read as "all frames included".
+  - Two folders have no frames and stay static: **shadow shaper** (one image
+    only — worth adding frames if Adam wants it animated) and **Valencia
+    Street**, which is a video project. Valencia plays `val-options.mp4` on hover
+    instead of a cross-fade. That mp4 is cropped to 4:3 **at encode time**
+    (`crop=ih*4/3:ih`) rather than letting CSS discard the sides — no sense
+    spending bitrate on pixels the card never shows; 8.09 MB → 1.87 MB at CRF 27.
+  - Hover engine in main.js: frames are listed in `data-frames` and fetched only
+    on first hover (eager markup for all 45 files would be megabytes nobody
+    asked for), then the whole set is warmed so the cadence holds at ~900 ms.
+    Two alternating `.pc-frame` layers cross-fade with the incoming one on top,
+    same no-dip trick as the hero. **The outgoing layer must be demoted to
+    z-index 1 immediately, not after the fade** — while both sat at 2, DOM order
+    decided the stack and the old frame painted over the incoming one, so the
+    fade appeared to do nothing and then jumped. `.overlay` sits at z-index 3 to
+    stay above both. Verified: steady ~1000 ms cadence through ppp-01…05, z-index
+    never tied, everything torn down on mouseleave, static card creates no
+    layers. `prefers-reduced-motion` skips the slideshow and the video entirely.
+  - Known gap, pre-existing and not addressed: `.overlay` (badge + project
+    title) only appears on `:hover`, so on a phone the Featured Work grid has no
+    visible labels. Worth deciding whether to show it always at ≤768 px.
 - **Discipline cards carry work snippets, not line icons (2026-07-28, both
   breakpoints).** Each of the five service cards has a 4.2:1 banner flush to the
   card's top edge, built from the masters in `projects/Disciplines` by
