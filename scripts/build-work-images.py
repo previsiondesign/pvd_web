@@ -9,10 +9,12 @@ web-ready WebP into website-mockups/shared/images/work/.
 Cards are 4:3 and never render wider than ~390px (one column on a phone), so
 CARD at 800x600 is a shade over 2x for retina.
 
-Frames are capped: a hover slideshow does not need 27 steps, and shipping them
-would mean megabytes fetched on one mouseover. Where a project has more, frames
-are sampled evenly across the sequence — keeping first and last, so a shadow
-progression still reads start-to-finish — and the script reports what it dropped.
+MAX_FRAMES is deliberately high enough to keep every frame. An earlier cap of 10
+sampled them evenly, which quietly wrecked the sequences: Housing Element is six
+viewpoints x three states (existing / partial / full massing) and Old Bayshore is
+four existing/proposed pairs, so dropping every second frame scrambled the pairing
+rather than just shortening the show. The sampling code stays as a safety valve
+for a folder that turns up with hundreds of frames, and it reports every drop.
 
 Run from the repo root:  python scripts/build-work-images.py
 """
@@ -22,7 +24,7 @@ import glob, os, shutil, subprocess, sys
 SRC = os.path.join('projects', 'Featured Work')
 OUT = os.path.join('website-mockups', 'shared', 'images', 'work')
 CARD = (800, 600)
-MAX_FRAMES = 10
+MAX_FRAMES = 40   # high enough to keep whole sequences intact; see the docstring
 Q_MAIN, Q_FRAME = 82, 76
 VIDEO_CRF = 27
 

@@ -492,14 +492,27 @@ section { padding: 72px 0; }
   cursor: pointer;
 }
 
+/* Held 15% down on saturation until the card is rolled over, then it comes back
+   to full colour. Unlike the discipline snippets this is a light touch, so it
+   reads as "resting" rather than greyed out. */
+.project-card img,
+.project-card video {
+  filter: saturate(0.85);
+  transition: transform 0.4s, filter 0.45s ease;
+}
+
 .project-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s;
 }
 
 .project-card:hover img { transform: scale(1.05); }
+
+.project-card:hover img,
+.project-card:hover video,
+.project-card:focus-within img,
+.project-card:focus-within video { filter: saturate(1); }
 
 /* Slideshow layers, added by main.js on first hover — two of them, alternating,
    so an incoming frame fades in on top while the outgoing one stays opaque
@@ -516,7 +529,9 @@ section { padding: 72px 0; }
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.5s ease, transform 0.4s;
+  /* --pc-fade is set per card from data-fade; Old Bayshore runs a double-length
+     cross-fade because its frames are existing/proposed pairs */
+  transition: opacity var(--pc-fade, 500ms) ease, transform 0.4s, filter 0.45s ease;
 }
 
 .project-card .pc-frame.is-shown { opacity: 1; }

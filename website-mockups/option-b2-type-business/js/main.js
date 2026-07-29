@@ -44,8 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   workCards.forEach((card) => {
     const WORK = '../shared/images/work/';
-    const HOLD = 900;   // ms a frame is held
-    const FADE = 500;   // ms cross-fade — keep in step with .pc-frame's transition
+    const HOLD = 900;      // ms a frame is held
+    const LEAD_IN = 500;   // ms the main still holds after rollover, so the
+                           // re-saturation lands before anything starts moving
+    // cross-fade length; data-fade overrides it per card and is mirrored into
+    // --pc-fade so the CSS transition and this timer stay in step
+    const FADE = parseInt(card.dataset.fade, 10) || 500;
     const files = (card.dataset.frames || '').split(',').filter(Boolean);
     // data-holds gives per-frame hold times where a project needs them — the
     // Old Bayshore pairs run 1.5s on each existing view, 2.5s on each proposal
@@ -72,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
           el.className = 'pc-frame';
           el.alt = '';
           el.setAttribute('aria-hidden', 'true');
+          el.style.setProperty('--pc-fade', FADE + 'ms');
           card.insertBefore(el, overlay);
           return el;
         });
@@ -141,8 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
           video.src = WORK + clip;
           card.insertBefore(video, overlay);
         }
-        video.classList.add('is-shown');
-        try { video.currentTime = 0; video.play(); } catch (err) { /* blocked */ }
+        // same lead-in as the slideshow: let the colour come back first
+        stepTimer = setTimeout(() => {
+          if (!live) return;
+          video.classList.add('is-shown');
+          try { video.currentTime = 0; video.play(); } catch (err) { /* blocked */ }
+        }, LEAD_IN);
         return;
       }
       if (!files.length) return;
@@ -153,7 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
         files.forEach(warm);
       }
       at = 0;
-      step();
+      // hold the main still briefly so the re-saturation reads before the
+      // slideshow starts moving (Adam, 2026-07-28)
+      stepTimer = setTimeout(step, LEAD_IN);
     }
 
     function stop() {

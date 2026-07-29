@@ -44,10 +44,10 @@ CROPS = {
 # stem -> (dx, dy) in BANNER_CSS px: which way the visible content should move.
 # Positive dx is right, positive dy is down. Adam's review, 2026-07-28.
 NUDGE = {
-    'shadow-studies':   (-38, 42),   # +11 on review 2
-    'shadow-shaping':   (0, 18),     # +6
+    'shadow-studies':   (-38, 58),   # +11 on review 2, +16 on review 3
+    'shadow-shaping':   (0, 28),     # +6, then +10
     'daylight-studies': (4, -9),
-    'visual-studies':   (0, 16),     # +6
+    'visual-studies':   (0, 26),     # +6, then +10
     'peer-review':      (0, 0),
 }
 
