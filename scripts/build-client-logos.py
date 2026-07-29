@@ -19,7 +19,7 @@ from PIL import Image
 
 SRC = os.path.join('images', 'logos', 'client_logos')
 OUT = os.path.join('website-mockups', 'shared', 'images', 'clients')
-BOX = (280, 88)          # 2x the 140x44 cell the page draws
+BOX = (280, 112)         # 2x the 140x56 cell the page draws
 PAD = 2                  # keeps antialiased edges off the boundary
 
 # source stem -> output stem, so the markup does not inherit vendor filenames
@@ -35,6 +35,27 @@ NAMES = {
     'sfplanning-logo': 'sf-planning',
     'sfrpd-logo': 'sf-rec-parks',
     'sf-port-logo': 'port-of-sf',
+    'related': 'related-california',
+}
+
+# Fitting every mark to the same box makes a wide wordmark's letters tower over a
+# square badge's, because one is width-limited and the other height-limited. These
+# multipliers pull the *lettering* into a comparable range — tuned by eye against
+# the contact sheet, which is the only way to judge it (a circular badge's ink
+# height says nothing about the size of the name inside it).
+SCALE = {
+    'esa': 0.78,
+    'icf': 0.78,
+    'tishman-speyer': 1.00,
+    'sf-rec-parks': 0.78,
+    'related-california': 1.00,
+    'swca': 0.72,
+    'sf-planning': 0.72,
+    'stantec': 0.85,
+    'tmg-partners': 0.80,
+    'perkins-will': 1.00,
+    'urban-planning-partners': 1.00,
+    'port-of-sf': 1.00,
 }
 
 
@@ -88,7 +109,7 @@ def main():
         im, _ = darken_knockout(load(path), os.path.basename(path))
         im = trim(im)
         w, h = im.size
-        scale = min((BOX[0] - PAD * 2) / w, (BOX[1] - PAD * 2) / h)
+        scale = min((BOX[0] - PAD * 2) / w, (BOX[1] - PAD * 2) / h) * SCALE.get(NAMES[stem], 1.0)
         upscaled = scale > 1
         im = im.resize((max(1, round(w * scale)), max(1, round(h * scale))), Image.LANCZOS)
         canvas = Image.new('RGBA', BOX, (0, 0, 0, 0))
@@ -97,8 +118,9 @@ def main():
         canvas.save(dest, 'WEBP', quality=90, method=6)
         total += os.path.getsize(dest)
         note = '  !! upscaled %.1fx from %dx%d — ask for a larger source' % (scale, w, h) if upscaled else ''
-        print('%-26s -> %-28s fits %dx%d%s'
-              % (os.path.basename(path), NAMES[stem] + '.webp', im.width, im.height, note))
+        print('%-26s -> %-28s %3dx%-3d  scale %.2f%s'
+              % (os.path.basename(path), NAMES[stem] + '.webp', im.width, im.height,
+                 SCALE.get(NAMES[stem], 1.0), note))
     print('\n%d logos, %.0f KB' % (len(NAMES), total / 1024))
 
 
