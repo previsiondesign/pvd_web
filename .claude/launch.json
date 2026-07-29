@@ -8,6 +8,12 @@
       "port": 8091
     },
     {
+      "name": "site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8094", "--directory", "D:/Dev/site"],
+      "port": 8094
+    },
+    {
       "name": "clients-ui",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8093", "--directory", "D:/Dev/clients"],

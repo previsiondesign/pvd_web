@@ -99,6 +99,32 @@ Key facts a fresh session needs:
 
 ## State / open items
 
+- **THE REAL SITE IS LIVE at https://www.previsiondesign.com (2026-07-28).**
+  The under-construction placeholder is gone. Published from
+  `website-mockups/option-b2-type-business` by **`scripts/publish-site.py`** into
+  the `previsiondesign/site` repo (local clone `D:\Dev\site`) — run it from the
+  pvd_web root, then commit and push in the site repo. It rewrites the three
+  things that differ between mockup and production: drops the "← All Mockups"
+  button, turns `../shared/...` paths into `shared/...` for the site root, and
+  replaces the contact form's "Mockup note:" fallback with a message a real
+  enquirer can act on. It refuses to publish if CNAME is missing, since that is
+  what points the domain at Pages.
+  - Live structure: `index.html` (one-pager — hero, six discipline cards,
+    Featured Work, about), `contact.html`, `css/`, `js/`, `shared/images/{hero,
+    disciplines,work}` — 96 asset files, 10.7 MB. Apex 301s to www.
+  - Verified live: title, both pages 200, CSS/JS/hero/work/video/discipline
+    assets all 200, hero rotating, 18-frame Housing Element slideshow running,
+    resting filters correct, hub button gone, no broken images.
+  - **Adam's rejected "consulting" language is gone** (he called out
+    "environmental consulting services" and "we don't really do 'consulting'"
+    back on 2026-06-10, but it was still in the meta description, the services
+    subhead, the about paragraph and both footers). Replaced with concrete
+    service wording. **The copy-doc pass is still outstanding** — when
+    `Prevision_Site_Copy.docx` edits come back they apply to the mockup, then
+    re-publish.
+  - Still missing vs. the old multi-page plan: no Services/Portfolio/About
+    subpages; the nav points at anchors on the one-pager. No favicon.
+    Featured Work card labels only appear on hover, so a phone shows none.
 - Direction: **B2 "Boxed Canvas" selected** (2026-06-10). Three color studies
   (option-b2-autumn/blues/preppy) generated from palette samples in pallettes/;
   no palette picked yet. Copy revision underway via Prevision_Site_Copy.docx —
