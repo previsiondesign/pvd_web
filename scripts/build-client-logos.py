@@ -19,7 +19,7 @@ from PIL import Image
 
 SRC = os.path.join('images', 'logos', 'client_logos')
 OUT = os.path.join('website-mockups', 'shared', 'images', 'clients')
-BOX = (280, 112)         # 2x the 140x56 cell the page draws
+BOX = (280, 128)         # 2x the 140x64 cell the page draws
 PAD = 2                  # keeps antialiased edges off the boundary
 
 # source stem -> output stem, so the markup does not inherit vendor filenames
@@ -44,18 +44,25 @@ NAMES = {
 # the contact sheet, which is the only way to judge it (a circular badge's ink
 # height says nothing about the size of the name inside it).
 SCALE = {
-    'esa': 0.78,
-    'icf': 0.78,
+    'esa': 0.677,
+    'icf': 0.677,
     'tishman-speyer': 1.00,
-    'sf-rec-parks': 0.78,
+    'sf-rec-parks': 0.677,
     'related-california': 1.00,
-    'swca': 0.72,
-    'sf-planning': 0.72,
-    'stantec': 0.85,
-    'tmg-partners': 0.80,
-    'perkins-will': 1.00,
-    'urban-planning-partners': 1.00,
-    'port-of-sf': 1.00,
+    'swca': 0.649,                    # -10% on review 2
+    'sf-planning': 0.721,
+    'stantec': 0.851,
+    'tmg-partners': 0.721,            # -10% on review 2
+    'perkins-will': 0.960,            # +10% on review 2
+    'urban-planning-partners': 0.871,
+    'port-of-sf': 0.871,
+}
+
+# Ink luminance multiplier for marks that read too light next to the rest once
+# the strip is greyscaled. Applied to RGB only, so the alpha edge stays clean.
+DARKEN = {
+    'esa': 0.90,
+    'urban-planning-partners': 0.90,
 }
 
 
@@ -108,6 +115,10 @@ def main():
             continue
         im, _ = darken_knockout(load(path), os.path.basename(path))
         im = trim(im)
+        d = DARKEN.get(NAMES[stem])
+        if d:
+            r, g, b, a = im.split()
+            im = Image.merge('RGBA', [ch.point(lambda v, k=d: int(v * k)) for ch in (r, g, b)] + [a])
         w, h = im.size
         scale = min((BOX[0] - PAD * 2) / w, (BOX[1] - PAD * 2) / h) * SCALE.get(NAMES[stem], 1.0)
         upscaled = scale > 1
@@ -118,9 +129,10 @@ def main():
         canvas.save(dest, 'WEBP', quality=90, method=6)
         total += os.path.getsize(dest)
         note = '  !! upscaled %.1fx from %dx%d — ask for a larger source' % (scale, w, h) if upscaled else ''
-        print('%-26s -> %-28s %3dx%-3d  scale %.2f%s'
+        print('%-26s -> %-28s %3dx%-3d  scale %.3f%s%s'
               % (os.path.basename(path), NAMES[stem] + '.webp', im.width, im.height,
-                 SCALE.get(NAMES[stem], 1.0), note))
+                 SCALE.get(NAMES[stem], 1.0),
+                 '  darkened %.2f' % DARKEN[NAMES[stem]] if NAMES[stem] in DARKEN else '', note))
     print('\n%d logos, %.0f KB' % (len(NAMES), total / 1024))
 
 
