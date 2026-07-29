@@ -187,14 +187,31 @@ Key facts a fresh session needs:
     reads as noise at 800×190. Note `daylighting.png` is **not** the same frame
     as hero HL10 — its subject is the warm shaft from the french doors, so a
     centred crop landed on blank floor; it is offset to 0.42/0.57.
+  - Framing notes from review go in `NUDGE` **in rendered card pixels** (the
+    338×80 desktop banner), so "down 31, left 38" can be typed in as given and
+    the script converts into master coordinates — positive dx right, positive dy
+    down, inverted internally because moving the content one way means moving the
+    crop window the other. It warns if a nudge hits the edge of the master rather
+    than silently clamping, which would look like the note was ignored.
+    Adam's 2026-07-28 pass: shadow −38/+31, shaping 0/+12, daylight +4/−9,
+    sims 0/+10, peer review unchanged.
   - 800 px wide covers the widest the banner ever gets (380 px on a phone,
     338 px in the 1180 px desktop frame) at just over 2× for retina.
-  - Resting state is `grayscale(1) brightness(1.08) contrast(0.94)`, rolling to
-    full colour over 550 ms on `:hover`/`:focus-within`, per card. **The whole
-    greyscale treatment lives inside `@media (hover: hover)`** — a touch device
-    has nothing to hover, so phones and tablets get the images in colour from the
-    start instead of being stuck grey forever. `prefers-reduced-motion` drops the
-    transition (the colour change still happens, just instantly).
+  - Resting state is `grayscale(1) brightness(1.3) contrast(0.86)` (lightened
+    from 1.08/0.94 per Adam, 2026-07-28 — candidates were rendered offline and
+    1.42/0.80 washed the shadow map out entirely), rolling to full colour over
+    550 ms, per card.
+  - What singles a card out depends on the device. Hover devices use
+    `:hover`/`:focus-within` inside `@media (hover: hover)`. **Touch devices have
+    no hover, so `main.js` lights whichever card is nearest the middle of the
+    viewport as you scroll** (`.is-lit`, rAF-throttled passive scroll listener,
+    attached only when `hover: hover` does not match and torn down if it starts
+    to). A threshold of 0.35 × viewport height means nothing is lit while the
+    grid is away from the middle. Verified against simulated scroll offsets at
+    430×932: nothing lit before the grid, each of the five cards lights in turn,
+    nothing after; the CTA card is excluded since it has no snippet.
+    `prefers-reduced-motion` drops the transition (colour still changes, just
+    instantly).
   - Caveat on verification: the browser pane stopped compositing partway through
     this change, and **`filter` transitions run on the compositor** — so a frozen
     transition returns its start value from `getComputedStyle` and outranks even

@@ -35,6 +35,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Discipline snippets sit greyscale until something singles a card out. On a
+  // hover device that is :hover (CSS); on a touch device there is nothing to
+  // hover, so the card nearest the middle of the viewport lights as you scroll.
+  const shotCards = Array.from(document.querySelectorAll('.service-card'))
+    .filter((c) => c.querySelector('.service-shot'));
+  if (shotCards.length) {
+    const canHover = window.matchMedia('(hover: hover)');
+    let queued = false;
+
+    function lightCentred() {
+      queued = false;
+      const middle = window.innerHeight / 2;
+      // start at a threshold rather than Infinity: with the grid off-screen or
+      // straddling the edge, nothing should be lit
+      let best = null;
+      let bestGap = window.innerHeight * 0.35;
+      shotCards.forEach((card) => {
+        const r = card.getBoundingClientRect();
+        const gap = Math.abs((r.top + r.bottom) / 2 - middle);
+        if (gap < bestGap) { bestGap = gap; best = card; }
+      });
+      shotCards.forEach((c) => c.classList.toggle('is-lit', c === best));
+    }
+
+    function onScroll() {
+      if (!queued) { queued = true; requestAnimationFrame(lightCentred); }
+    }
+
+    function syncLighting() {
+      if (canHover.matches) {
+        window.removeEventListener('scroll', onScroll);
+        shotCards.forEach((c) => c.classList.remove('is-lit'));
+      } else {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        lightCentred();
+      }
+    }
+
+    canHover.addEventListener('change', syncLighting);
+    window.addEventListener('resize', onScroll, { passive: true });
+    syncLighting();
+  }
+
   // ≤768px: the hero buttons move out of the image and into the stats bar, so
   // the headline block can sit lower and show more of the picture. Moved rather
   // than duplicated to keep one copy of the labels; the hero already needs JS

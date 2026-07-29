@@ -429,20 +429,20 @@ section { padding: 72px 0; }
   display: block;
 }
 
-/* Desaturated and lifted until the card is hovered, then it rolls into colour.
-   Gated on hover:hover — a touch device has nothing to hover, so phones and
-   tablets get the images in colour from the start rather than permanently grey. */
-@media (hover: hover) {
-  .service-shot img {
-    filter: grayscale(1) brightness(1.08) contrast(0.94);
-    transition: filter 0.55s ease;
-  }
-
-  .service-card:hover .service-shot img,
-  .service-card:focus-within .service-shot img {
-    filter: grayscale(0) brightness(1) contrast(1);
-  }
+/* Desaturated and lightened at rest, rolling into colour over 550ms. */
+.service-shot img {
+  filter: grayscale(1) brightness(1.3) contrast(0.86);
+  transition: filter 0.55s ease;
 }
+
+@media (hover: hover) {
+  .service-card:hover .service-shot img,
+  .service-card:focus-within .service-shot img { filter: none; }
+}
+
+/* Touch devices have no hover to work with, so main.js lights whichever card is
+   centred in the viewport as you scroll and clears the rest. */
+.service-card.is-lit .service-shot img { filter: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .service-shot img { transition: none; }

@@ -24,6 +24,12 @@ OUT = os.path.join('website-mockups', 'shared', 'images', 'disciplines')
 BANNER = (800, 190)          # 4.21:1
 QUALITY = 82
 
+# The banner as it renders in the 1180px desktop frame. NUDGE values below are in
+# these units — the pixels you actually see on the card — so a review note like
+# "down 31px, left 38px" can be typed in as-is and the script scales it into the
+# master's coordinates.
+BANNER_CSS = (338, 80)
+
 # master -> (output stem, centre x, centre y, width) — fractions of the master
 CROPS = {
     'shadow.png':         ('shadow-studies',  0.55, 0.42, 0.68),
@@ -35,20 +41,36 @@ CROPS = {
     'peer_review.png':    ('peer-review',     0.49, 0.50, 0.95),
 }
 
+# stem -> (dx, dy) in BANNER_CSS px: which way the visible content should move.
+# Positive dx is right, positive dy is down. Adam's review, 2026-07-28.
+NUDGE = {
+    'shadow-studies':   (-38, 31),
+    'shadow-shaping':   (0, 12),
+    'daylight-studies': (4, -9),
+    'visual-studies':   (0, 10),
+    'peer-review':      (0, 0),
+}
 
-def crop_box(size, cx, cy, wfrac):
-    """Widest 4.2:1 box at this centre that still fits inside the master."""
+
+def crop_box(size, cx, cy, wfrac, nudge=(0, 0)):
+    """Widest 4.2:1 box at this centre that still fits inside the master.
+
+    Moving the visible content one way means moving the crop window the other,
+    hence the inverted nudge.
+    """
     w, h = size
     bw = w * wfrac
     bh = bw * BANNER[1] / BANNER[0]
     if bh > h:                       # too tall to fit — fall back to full height
         bh = h
         bw = bh * BANNER[0] / BANNER[1]
-    left = cx * w - bw / 2
-    top = cy * h - bh / 2
-    left = max(0, min(left, w - bw))  # keep the box on the canvas
-    top = max(0, min(top, h - bh))
-    return tuple(round(v) for v in (left, top, left + bw, top + bh))
+    left = cx * w - bw / 2 - (nudge[0] / BANNER_CSS[0]) * bw
+    top = cy * h - bh / 2 - (nudge[1] / BANNER_CSS[1]) * bh
+    clamped = tuple(round(v) for v in (
+        max(0, min(left, w - bw)), max(0, min(top, h - bh))))
+    # a silently clamped nudge would look like the request was ignored
+    short = (round(clamped[0] - left), round(clamped[1] - top))
+    return clamped[0], clamped[1], clamped[0] + round(bw), clamped[1] + round(bh), short
 
 
 def main():
@@ -62,15 +84,19 @@ def main():
             print('skip (missing): %s' % name)
             continue
         im = Image.open(path).convert('RGB')
-        box = crop_box(im.size, cx, cy, wfrac)
-        im = im.crop(box).resize(BANNER, Image.LANCZOS)
+        nudge = NUDGE.get(stem, (0, 0))
+        l, t, r, b, short = crop_box(im.size, cx, cy, wfrac, nudge)
+        im = im.crop((l, t, r, b)).resize(BANNER, Image.LANCZOS)
         dest = os.path.join(OUT, stem + '.webp')
         im.save(dest, 'WEBP', quality=QUALITY, method=6)
         si, so = os.path.getsize(path), os.path.getsize(dest)
         total_in += si
         total_out += so
-        print('%-22s -> %-22s crop %-24s %6.2f MB -> %4.0f KB'
-              % (name, stem + '.webp', str(box), si / 1048576, so / 1024))
+        note = ''
+        if any(short):
+            note = '  !! hit the master edge, nudge short by %s px of master' % (short,)
+        print('%-22s -> %-22s nudge %-10s crop %-24s %4.0f KB%s'
+              % (name, stem + '.webp', str(nudge), str((l, t, r, b)), so / 1024, note))
     print('\n%.1f MB -> %.0f KB' % (total_in / 1048576, total_out / 1024))
 
 
