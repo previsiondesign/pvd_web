@@ -27,7 +27,17 @@ DEFAULT_DEST = os.path.join('D:', os.sep, 'Dev', 'site')
 PAGES = ['index.html', 'contact.html']
 CODE = [os.path.join('css', 'styles.css'), os.path.join('js', 'main.js')]
 ASSET_DIRS = ['hero', 'disciplines', 'work']
-ASSET_FILES = ['prevision_icon.svg', 'prevision_icon_reverse.svg', 'adam_phillips.jpg']
+ASSET_FILES = ['prevision_icon.svg', 'prevision_icon_reverse.svg', 'adam_phillips.jpg',
+               'favicon-32.png', 'apple-touch-icon.png', 'icon-512.png', 'og-card.jpg']
+
+SITE_URL = 'https://www.previsiondesign.com'
+# Crawlers look for these at the root. Generated here rather than kept by hand so
+# they cannot drift from the page list above.
+ROBOTS = '''User-agent: *
+Allow: /
+
+Sitemap: %s/sitemap.xml
+''' % SITE_URL
 
 HUB_BUTTON = '  <a class="back-to-hub" href="https://previsiondesign.github.io/pvd_web/">&larr; All Mockups</a>\n'
 
@@ -39,6 +49,10 @@ DEMO_NOTE = ("Mockup note: no message was actually sent &mdash; the form's "
 LIVE_NOTE = ("We couldn't send that just now &mdash; please email "
              "<a href=\"mailto:info@previsiondesign.com\">info@previsiondesign.com</a> "
              "and we'll pick it up right away.")
+
+
+def write(path, text):
+    io.open(path, 'w', encoding='utf-8', newline='\n').write(text)
 
 
 def rewrite(text, is_page):
@@ -109,6 +123,20 @@ def main():
 
     # harmless here, but keeps Pages from ever second-guessing a path
     open(os.path.join(dest, '.nojekyll'), 'w').close()
+
+    # /favicon.ico is requested by crawlers and older browsers whether or not the
+    # HTML links it, so it has to sit at the root
+    shutil.copy2(os.path.join(SHARED, 'favicon.ico'), os.path.join(dest, 'favicon.ico'))
+
+    write(os.path.join(dest, 'robots.txt'), ROBOTS)
+    urls = ''.join(
+        '  <url><loc>%s/%s</loc></url>\n' % (SITE_URL, '' if p == 'index.html' else p)
+        for p in PAGES)
+    write(os.path.join(dest, 'sitemap.xml'),
+          '<?xml version="1.0" encoding="UTF-8"?>\n'
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          '%s</urlset>\n' % urls)
+    print('wrote  robots.txt, sitemap.xml (%d urls), favicon.ico' % len(PAGES))
 
     print('\n%d asset files, %.2f MB total' % (total_n, total_size / 1048576))
     print('CNAME preserved: %s' % io.open(os.path.join(dest, 'CNAME')).read().strip())
