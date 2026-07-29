@@ -1,8 +1,11 @@
 #!/usr/bin/env python
-"""Rebuild web-ready hero images from the masters in projects/Headline Images.
+"""Rebuild web-ready hero media from the masters in projects/Headline Images.
 
-The masters (~137 MB of PNGs) stay local and gitignored; this writes ~2 MB of
-WebP into website-mockups/shared/images/hero/, which is what the site ships.
+The masters (~146 MB of PNG + MP4) stay local and gitignored; this writes ~5 MB
+into website-mockups/shared/images/hero/, which is what the site ships.
+
+The video needs ffmpeg on PATH (`scoop install ffmpeg`); without it the existing
+copy is left alone rather than being replaced by the uncompressed master.
 
 Every series is full-bleed (object-fit: cover), so all of them are sized for the
 full hero width; 1800 covers a 1440px hero with room to spare. HL16's master is
@@ -12,11 +15,13 @@ Filenames encode the per-frame hold time (`_2s`), which the hero JS mirrors in
 each frame's data-dur. Run from the repo root:  python scripts/build-hero-images.py
 """
 from PIL import Image
-import os, glob, re, sys
+import os, glob, re, shutil, subprocess, sys
 
 SRC = os.path.join('projects', 'Headline Images')
 OUT = os.path.join('website-mockups', 'shared', 'images', 'hero')
 QUALITY = 82
+VIDEO_CRF = 23
+VIDEO_SECONDS = 6.05   # the series holds 6s; the rest is never shown
 
 # stem prefix -> (output basename, target width)
 WIDTH = 1800
@@ -29,6 +34,32 @@ for i in range(3, 9):
     ROLES['HL%02d' % i] = ('hl%02d-ppp' % i, WIDTH)  # shadow duration exhibits
 for i in range(10, 16):
     ROLES['HL%02d' % i] = ('hl%02d-fc' % i, WIDTH)   # daylight analysis frames
+
+
+def encode_video(src, dest):
+    """The master is 9.6 Mbps with an audio track the hero never plays.
+
+    CRF 23 lands ~2 MB at SSIM 0.97 against the source (CRF 26 saves 600 KB but
+    drops to 0.96 — not worth it on the one moving element of the page). Trimmed
+    to VIDEO_SECONDS because the series only ever holds 6 s and the hero resets
+    currentTime to 0 each time, so the tail is never seen.
+    """
+    if not shutil.which('ffmpeg'):
+        print('%-20s -> SKIPPED, ffmpeg not on PATH (`scoop install ffmpeg`)'
+              % os.path.basename(src))
+        return
+    subprocess.run([
+        'ffmpeg', '-v', 'error', '-y', '-i', src,
+        '-t', str(VIDEO_SECONDS),
+        '-c:v', 'libx264', '-profile:v', 'high', '-crf', str(VIDEO_CRF),
+        '-preset', 'slow', '-pix_fmt', 'yuv420p',
+        '-an',                        # muted in the hero
+        '-movflags', '+faststart',    # metadata first, so it can start streaming
+        dest,
+    ], check=True)
+    print('%-20s -> %-16s %6.2f MB -> %5.2f MB'
+          % (os.path.basename(src), os.path.basename(dest),
+             os.path.getsize(src) / 1048576, os.path.getsize(dest) / 1048576))
 
 
 def main():
@@ -56,14 +87,8 @@ def main():
               % (stem, base + '.webp', im.width, im.height, si / 1048576, so / 1024,
                  dur.group(1) if dur else '?'))
 
-    # video is copied as-is: no ffmpeg here. Compress it before launch.
     for mp4 in glob.glob(os.path.join(SRC, '*.mp4')):
-        dest = os.path.join(OUT, 'hl09-sfmta.mp4')
-        if not os.path.exists(dest) or os.path.getmtime(mp4) > os.path.getmtime(dest):
-            with open(mp4, 'rb') as f, open(dest, 'wb') as g:
-                g.write(f.read())
-        print('%-20s -> %-16s %6.2f MB (uncompressed — see HANDOFF)'
-              % (os.path.basename(mp4), 'hl09-sfmta.mp4', os.path.getsize(dest) / 1048576))
+        encode_video(mp4, os.path.join(OUT, 'hl09-sfmta.mp4'))
 
     print('\nimages: %.1f MB -> %.2f MB' % (total_in / 1048576, total_out / 1048576))
 

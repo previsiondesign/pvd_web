@@ -98,9 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const hold = parseInt(f.dataset.dur, 10) || 1000;
         at += hold;
         frameTimers.push(setTimeout(() => {
-          // long holds get the full 1s cross-fade (the before/after rule);
-          // 1s frames get a shorter one so they still read as separate steps
-          frames[i + 1].style.setProperty('--fade', (hold >= 2000 ? 1000 : 600) + 'ms');
+          // data-fade wins where a frame wants its own timing (the Bayshore
+          // before/after runs 2s); otherwise long holds get 1s and the 1s study
+          // frames get 600ms so they still read as separate steps
+          const fade = parseInt(frames[i + 1].dataset.fade, 10) || (hold >= 2000 ? 1000 : 600);
+          frames[i + 1].style.setProperty('--fade', fade + 'ms');
           frames[i + 1].classList.add('is-shown');
         }, at));
       });
@@ -119,6 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const serie = series[current];
       load(serie);
       load(series[(current + 1) % series.length]); // warm the next one
+
+      // restart the Ken Burns drift from the top of its keyframes
+      serie.style.animation = 'none';
+      void serie.offsetWidth;
+      serie.style.animation = '';
 
       // The incoming series fades in on top; the outgoing one stays opaque
       // underneath until it is fully covered, so the cross-fade never shows

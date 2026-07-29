@@ -153,17 +153,31 @@ Key facts a fresh session needs:
     do. Verified: 0% background visible across a whole transition. This is why
     `.hero-slides` needs `isolation: isolate` — without a stacking context those
     raised z-indexes escape and paint the imagery over the headline block.
-    Frame fade is 1 s after a ≥2 s hold (the before/after rule) and 600 ms
-    between the 1 s study frames; series fade is 1 s (`SERIE_FADE` in main.js
-    must stay in step with the CSS transition).
-  - **Open: `hl09-sfmta.mp4` ships uncompressed at 8.7 MB** (~9.8 Mbps for
-    7.1 s at 1280×720 — no ffmpeg on this machine). It is `preload="none"` and
-    lazy-loaded one series ahead, so it isn't in the initial payload, but it
-    should be re-encoded before launch, e.g.
-    `ffmpeg -i HL09_*.mp4 -c:v libx264 -crf 26 -preset slow -an -movflags +faststart hl09-sfmta.mp4`
-    (`-an` because the hero plays it muted). Expect ~1.5–2.5 MB. Re-encode from
-    the master in `projects/Headline Images`, not the committed copy. The video
-    runs 7.1 s but the series holds 6 s, so the tail is cut by design.
+    Frame fade defaults to 1 s after a ≥2 s hold and 600 ms between the 1 s
+    study frames; `data-fade` on a frame overrides that, and the Bayshore
+    before/after uses `data-fade="2000"` per Adam (2026-07-28) — so that series
+    reads 2 s existing / 2 s cross-fade / 2 s proposed, superseding the older
+    1s-1s-3s before/after rule for the hero. Series fade is 1 s (`SERIE_FADE`
+    in main.js must stay in step with the CSS transition).
+  - **Ken Burns** drift is on `.hero-serie`, not the individual frames, so the
+    six shadow-duration steps stay registered with each other while they
+    cross-fade — drifting them separately made the same base map jitter. Four
+    keyframe variants (`kb-drift-a`…`d`) are assigned by `:nth-child`; the video
+    is excluded via `.is-video`. Runs 9 s against a 6 s series so it is still
+    moving through the hand-off and never snaps back on screen; paused unless
+    the series is active; `show()` restarts it. Scale runs 1.08→1.16 (1.18 on
+    the tower), which stays inside the 1800 px masters' headroom over a 1180 px
+    hero, so nothing softens. Drift is capped well inside the overflow the scale
+    creates — verified no edge can pull into frame at 1280 px or 375 px, worst
+    case 9.3 px of slack. `prefers-reduced-motion` disables drift and fades.
+  - `hl09-sfmta.mp4` is **compressed** (2026-07-28): 8.3 MB → 1.98 MB, H.264
+    CRF 23 preset slow, audio dropped (the hero plays it muted), `+faststart`,
+    trimmed to 6.05 s because the series only holds 6 s and `currentTime` resets
+    to 0 each time. SSIM 0.970 against the master; CRF 26 saved another 600 KB
+    but fell to 0.960, not worth it on the page's one moving element.
+    `scripts/build-hero-images.py` now does this — it needs **ffmpeg on PATH**
+    (installed here via `scoop install ffmpeg`) and skips the video with a
+    notice rather than shipping the uncompressed master if ffmpeg is missing.
 - **Before/after rule (per Adam, 2026-06-10): any image with a before/after
   pair should be shown as a sequence — 1s on the before, 1s crossfade, 3s on
   the after.** Hero slides implement this via `.has-ba` (`.ba-before`/`.ba-after`

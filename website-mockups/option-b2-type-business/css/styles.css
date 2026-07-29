@@ -182,6 +182,49 @@ a:hover { color: var(--orange); }
    full-bleed window lands on the analysis rather than the surrounding site. */
 .hero-serie.focus-upper { --focus: 42%; }
 
+/* Ken Burns. Applied to the series, not the individual frames, so the six
+   shadow-duration steps stay registered with each other as they cross-fade —
+   drifting them independently would make the same base map jitter. JS restarts
+   the animation on each show(). It runs 9s against a 6s series so it is still
+   moving through the 1s hand-off and never snaps back on screen.
+
+   Scale stays under the 1.52x headroom the 1800px masters have over a 1180px
+   hero, so nothing softens. Drift is capped well inside the overflow the scale
+   creates ((S-1)/2 per side), so no edge can ever pull into frame. */
+.hero-serie {
+  animation: kb-drift-a 9s ease-out both;
+  animation-play-state: paused;   /* only the visible series drifts */
+}
+
+.hero-serie.is-active { animation-play-state: running; }
+.hero-serie:nth-child(2) { animation-name: kb-drift-b; }
+.hero-serie:nth-child(4) { animation-name: kb-drift-c; }
+.hero-serie:nth-child(5) { animation-name: kb-drift-d; }
+.hero-serie.is-video { animation: none; }   /* the footage already moves */
+
+@keyframes kb-drift-a {   /* push in, drifting right and down */
+  from { transform: scale(1.08) translate(-1.4%, -0.7%); }
+  to   { transform: scale(1.16) translate(1.2%, 0.6%); }
+}
+@keyframes kb-drift-b {   /* pull back off the site, drifting left */
+  from { transform: scale(1.16) translate(1.2%, 0.7%); }
+  to   { transform: scale(1.08) translate(-1.2%, -0.5%); }
+}
+@keyframes kb-drift-c {   /* push in, drifting left and down */
+  from { transform: scale(1.08) translate(1.4%, -0.6%); }
+  to   { transform: scale(1.16) translate(-1.2%, 0.7%); }
+}
+@keyframes kb-drift-d {   /* push in, rising up the tower */
+  from { transform: scale(1.08) translate(0, 1.0%); }
+  to   { transform: scale(1.18) translate(0, -0.9%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-serie { animation: none; }
+  .hero-serie,
+  .hero-frame { transition: none; }
+}
+
 /* min-height reserves the tallest tagline so rotating copy never shifts the
    buttons underneath it. */
 .hero p.hero-tagline {
