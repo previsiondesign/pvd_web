@@ -505,9 +505,16 @@ section { padding: 72px 0; }
    so an incoming frame fades in on top while the outgoing one stays opaque
    underneath (the same no-dip trick as the hero). z-index is capped at 2 rather
    than climbing, so .overlay at 3 always stays above the imagery. */
+/* width/height are explicit because inset alone does NOT stretch a replaced
+   element — a <video> with auto sizing lays out at its intrinsic 640x480 and gets
+   clipped to the card's top-left corner, which reads as "only the left of the
+   frame". The img layers escaped this only by matching .project-card img. */
 .project-card .pc-frame {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
   transition: opacity 0.5s ease, transform 0.4s;
 }

@@ -26,15 +26,17 @@ MAX_FRAMES = 10
 Q_MAIN, Q_FRAME = 82, 76
 VIDEO_CRF = 27
 
-# folder -> (output stem, focus x, focus y). Focus is where the 4:3 crop centres,
-# in fractions of the master; the shadow sheets put their plume above centre.
+# folder -> (output stem, focus x, focus y, zoom). Focus is where the 4:3 crop
+# centres, in fractions of the master. Zoom < 1 crops in first — the shadow sheets
+# carry a legend strip and title block that are illegible at card size anyway, so
+# they are cropped away to leave just the plan diagram (Adam, 2026-07-28).
 PROJECTS = {
-    'shadow_Potrero Power Plant_San Francisco': ('ppp', 0.5, 0.44),
-    'daylighting_Foster City_California':       ('fc',  0.5, 0.50),
-    'sims_HousingElement_San Francisco':        ('he',  0.5, 0.50),
-    'sims_OldBayshore_Burlingame':              ('ob',  0.5, 0.52),
-    'sims_ValenciaStreet_San Francisco':        ('val', 0.5, 0.50),
-    'shadow shaper':                            ('ss',  0.5, 0.42),
+    'shadow_Potrero Power Plant_San Francisco': ('ppp', 0.50, 0.38, 0.62),
+    'daylighting_Foster City_California':       ('fc',  0.50, 0.50, 1.00),
+    'sims_HousingElement_San Francisco':        ('he',  0.50, 0.50, 1.00),
+    'sims_OldBayshore_Burlingame':              ('ob',  0.50, 0.52, 1.00),
+    'sims_ValenciaStreet_San Francisco':        ('val', 0.50, 0.50, 1.00),
+    'shadow shaper':                            ('ss',  0.50, 0.42, 1.00),
 }
 
 
@@ -47,8 +49,16 @@ def sample(frames):
     return [frames[i] for i in sorted(set(idx))]
 
 
-def render(path, dest, focus, quality):
+def render(path, dest, focus, quality, zoom=1.0):
     im = Image.open(path).convert('RGB')
+    if zoom < 1.0:
+        # take a window of the master around the focus point, then fit 4:3 to it
+        w, h = im.size
+        bw, bh = w * zoom, h * zoom
+        left = max(0, min(focus[0] * w - bw / 2, w - bw))
+        top = max(0, min(focus[1] * h - bh / 2, h - bh))
+        im = im.crop((round(left), round(top), round(left + bw), round(top + bh)))
+        focus = (0.5, 0.5)
     im = ImageOps.fit(im, CARD, Image.LANCZOS, centering=focus)
     im.save(dest, 'WEBP', quality=quality, method=6)
     return os.path.getsize(path), os.path.getsize(dest)
@@ -89,7 +99,7 @@ def main():
         if folder not in PROJECTS:
             print('%-46s SKIPPED — add it to PROJECTS to include it' % folder)
             continue
-        stem, fx, fy = PROJECTS[folder]
+        stem, fx, fy, zoom = PROJECTS[folder]
         focus = (fx, fy)
         pngs = sorted(glob.glob(os.path.join(path, '*.png')))
 
@@ -104,14 +114,14 @@ def main():
             print('%-46s SKIPPED — no main.png / *_main.png / poster.png' % folder)
             continue
 
-        si, so = render(mains[0], os.path.join(OUT, stem + '-main.webp'), focus, Q_MAIN)
+        si, so = render(mains[0], os.path.join(OUT, stem + '-main.webp'), focus, Q_MAIN, zoom)
         total_in += si
         total_out += so
 
         frames = [p for p in pngs if p not in mains]
         kept = sample(frames)
         for n, f in enumerate(kept, 1):
-            si, so = render(f, os.path.join(OUT, '%s-%02d.webp' % (stem, n)), focus, Q_FRAME)
+            si, so = render(f, os.path.join(OUT, '%s-%02d.webp' % (stem, n)), focus, Q_FRAME, zoom)
             total_in += si
             total_out += so
 

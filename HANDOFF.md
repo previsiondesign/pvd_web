@@ -193,9 +193,28 @@ Key facts a fresh session needs:
     instead of a cross-fade. That mp4 is cropped to 4:3 **at encode time**
     (`crop=ih*4/3:ih`) rather than letting CSS discard the sides — no sense
     spending bitrate on pixels the card never shows; 8.09 MB → 1.87 MB at CRF 27.
+  - **Potrero's crop zooms past the legend and title block** (`zoom` 0.62 in
+    PROJECTS, Adam 2026-07-28) — at card size that sheet furniture is illegible
+    anyway, so the card shows just the plan diagram.
   - Hover engine in main.js: frames are listed in `data-frames` and fetched only
     on first hover (eager markup for all 45 files would be megabytes nobody
-    asked for), then the whole set is warmed so the cadence holds at ~900 ms.
+    asked for), then the whole set is warmed so the cadence holds. Default hold
+    is 900 ms; `data-holds` overrides per frame, and **Old Bayshore runs
+    1500/2500** because its eight frames are four existing/proposed pairs (odd
+    frames existing, even proposed).
+  - Three bugs found in review, all fixed: (a) leaving the card while a frame was
+    still loading let the pending load callback show it and queue the next step,
+    so **the slideshow kept running after mouseout** — guarded with a `live` flag
+    checked inside the callback; (b) `mouseenter` and `focusin` both fire on a
+    click, starting a second chain of timers that raced the first — `start()` now
+    bails if already running; (c) each step created a fresh `Image()`, re-requesting
+    the file and paying a revalidation round-trip per frame, which inflated every
+    hold — the prefetched Image objects are now reused and checked via `.complete`.
+  - `.pc-frame` needs explicit `width/height: 100%`: `inset: 0` does **not**
+    stretch a replaced element, so the `<video>` laid out at its intrinsic
+    640×480 inside a 382×287 card and was clipped to the top-left corner — which
+    is what "the video is only showing the left side" was. The img layers dodged
+    it by matching `.project-card img`.
     Two alternating `.pc-frame` layers cross-fade with the incoming one on top,
     same no-dip trick as the hero. **The outgoing layer must be demoted to
     z-index 1 immediately, not after the fade** — while both sat at 2, DOM order

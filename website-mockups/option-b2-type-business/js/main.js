@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const HOLD = 900;   // ms a frame is held
     const FADE = 500;   // ms cross-fade — keep in step with .pc-frame's transition
     const files = (card.dataset.frames || '').split(',').filter(Boolean);
+    // data-holds gives per-frame hold times where a project needs them — the
+    // Old Bayshore pairs run 1.5s on each existing view, 2.5s on each proposal
+    const holds = (card.dataset.holds || '').split(',')
+      .map((n) => parseInt(n, 10)).filter((n) => n > 0);
     const clip = card.dataset.video;
     const overlay = card.querySelector('.overlay');
     const still = card.querySelector('img');
@@ -56,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let stepTimer = null;
     let resetTimer = null;
     let prefetched = false;
+    let live = false;   // true only between mouseenter and mouseleave
 
     // an auto-cycling slideshow is exactly what reduced-motion asks us not to do
     const stillPlease = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -74,14 +79,28 @@ document.addEventListener('DOMContentLoaded', () => {
       return layers[i % 2];
     }
 
+    // One Image per frame, reused. A fresh Image() each step re-requests the
+    // file, and without cache headers that is a revalidation round-trip per
+    // frame — a fixed cost on top of every hold, which threw the timing out.
+    const warmed = new Map();
+    function warm(file) {
+      let img = warmed.get(file);
+      if (!img) { img = new Image(); img.src = WORK + file; warmed.set(file, img); }
+      return img;
+    }
+
     function step() {
       const el = layer(at);
       const under = layers[(at + 1) % 2];
-      const src = WORK + files[at % files.length];
-      const pre = new Image();
-      // wait for the bitmap so a layer is never revealed blank; after the first
-      // frame these are already warm from the prefetch, so the cadence holds
-      pre.onload = pre.onerror = () => {
+      const file = files[at % files.length];
+      const src = WORK + file;
+      const pre = warm(file);
+      // wait for the bitmap so a layer is never revealed blank
+      const reveal = () => {
+        // the pointer can leave while a frame is still loading; without this the
+        // callback would show it and queue the next step, and the slideshow would
+        // carry on running after mouseout
+        if (!live) return;
         el.src = src;
         // demote the outgoing layer NOW, not after the fade: while both sat at
         // the same z-index, DOM order decided the stack and the old frame could
@@ -92,14 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // it only goes transparent once it is covered, so its next turn
         // starts from 0 and actually cross-fades
         resetTimer = setTimeout(() => under.classList.remove('is-shown'), FADE);
+        const hold = holds.length ? holds[at % holds.length] : HOLD;
         at += 1;
-        stepTimer = setTimeout(step, HOLD);
+        stepTimer = setTimeout(step, hold);
       };
-      pre.src = src;
+      if (pre.complete) reveal();
+      else {
+        pre.addEventListener('load', reveal, { once: true });
+        pre.addEventListener('error', reveal, { once: true });
+      }
     }
 
     function start() {
       if (stillPlease.matches) return;
+      // mouseenter and focusin both fire when a card is clicked; without this a
+      // second chain of timers starts alongside the first and they race, each
+      // advancing the frame counter
+      if (live) return;
+      live = true;
       if (clip) {
         if (!video) {
           video = document.createElement('video');
@@ -117,17 +146,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       if (!files.length) return;
-      // warm the whole set on the first hover so later steps keep to HOLD rather
-      // than stalling on a fetch; the browser caps its own parallelism
+      // warm the whole set on the first hover so later steps keep to their hold
+      // rather than stalling on a fetch; the browser caps its own parallelism
       if (!prefetched) {
         prefetched = true;
-        files.forEach((f) => { new Image().src = WORK + f; });
+        files.forEach(warm);
       }
       at = 0;
       step();
     }
 
     function stop() {
+      live = false;
       clearTimeout(stepTimer);
       clearTimeout(resetTimer);
       if (video) { video.classList.remove('is-shown'); video.pause(); }
