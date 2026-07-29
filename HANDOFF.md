@@ -175,6 +175,33 @@ Key facts a fresh session needs:
     (hidden on desktop, where the `<em>` inside the zone carries them). Vertical
     spacing tightened throughout: page hero 30/26, section 26/40, field gap 14,
     contact grid 28.
+- **Discipline cards carry work snippets, not line icons (2026-07-28, both
+  breakpoints).** Each of the five service cards has a 4.2:1 banner flush to the
+  card's top edge, built from the masters in `projects/Disciplines` by
+  `scripts/build-discipline-images.py` (25.4 MB → 107 KB of WebP in
+  `website-mockups/shared/images/disciplines/`). The sixth card is the CTA and
+  has no image, matching Adam's reference. The old `.service-icon` SVGs are gone.
+  - Crops are stored as **normalised centre + width**, not pixels, so they
+    survive a master being re-exported at a different size. Each is aimed at the
+    recognisable part of the analysis, because a centred crop of a whole sheet
+    reads as noise at 800×190. Note `daylighting.png` is **not** the same frame
+    as hero HL10 — its subject is the warm shaft from the french doors, so a
+    centred crop landed on blank floor; it is offset to 0.42/0.57.
+  - 800 px wide covers the widest the banner ever gets (380 px on a phone,
+    338 px in the 1180 px desktop frame) at just over 2× for retina.
+  - Resting state is `grayscale(1) brightness(1.08) contrast(0.94)`, rolling to
+    full colour over 550 ms on `:hover`/`:focus-within`, per card. **The whole
+    greyscale treatment lives inside `@media (hover: hover)`** — a touch device
+    has nothing to hover, so phones and tablets get the images in colour from the
+    start instead of being stuck grey forever. `prefers-reduced-motion` drops the
+    transition (the colour change still happens, just instantly).
+  - Caveat on verification: the browser pane stopped compositing partway through
+    this change, and **`filter` transitions run on the compositor** — so a frozen
+    transition returns its start value from `getComputedStyle` and outranks even
+    inline `!important`, which looks exactly like a broken cascade. It isn't.
+    Geometry, loading and the authored rules were verified through the CSSOM, and
+    both states were rendered offline to check the look; the hover roll itself was
+    not confirmed on screen.
   - **Cross-fades stack rather than swap** (Adam asked for smooth transitions):
     the incoming series/frame fades in on a raised z-index while the outgoing
     layer stays fully opaque underneath until it is covered, so a transition

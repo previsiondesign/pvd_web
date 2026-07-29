@@ -411,21 +411,41 @@ section { padding: 72px 0; }
   box-shadow: 0 12px 40px rgba(0,0,0,0.08);
 }
 
-.service-icon {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Work snippet across the top of each discipline card. Negative margins pull it
+   out of the card's padding so it sits flush to the border, and the top corners
+   follow the card's 8px radius less its 1px border. */
+.service-shot {
+  margin: -32px -24px 20px;
+  border-radius: 7px 7px 0 0;
+  overflow: hidden;
+  aspect-ratio: 4.2 / 1;
+  background: var(--light);
 }
 
-.service-icon svg {
-  width: 46px;
-  height: 46px;
-  stroke: var(--blue);
-  fill: none;
-  stroke-width: 1.5;
+.service-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Desaturated and lifted until the card is hovered, then it rolls into colour.
+   Gated on hover:hover — a touch device has nothing to hover, so phones and
+   tablets get the images in colour from the start rather than permanently grey. */
+@media (hover: hover) {
+  .service-shot img {
+    filter: grayscale(1) brightness(1.08) contrast(0.94);
+    transition: filter 0.55s ease;
+  }
+
+  .service-card:hover .service-shot img,
+  .service-card:focus-within .service-shot img {
+    filter: grayscale(0) brightness(1) contrast(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-shot img { transition: none; }
 }
 
 .service-card h3 {
