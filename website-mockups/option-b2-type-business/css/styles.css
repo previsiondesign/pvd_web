@@ -253,9 +253,13 @@ a:hover { color: var(--orange); }
    bottom fade. The wash is what makes white type hold up over the light
    exhibits (shadow maps are near-white paper) without muddying the imagery on
    the right, which a single stronger vertical gradient would do. */
+/* inset -2px, not 0: the Ken Burns transform puts each series on its own
+   compositing layer, whose clip against .hero's overflow rounds outward to whole
+   device pixels — so at inset 0 a 1px row of undimmed image bled through along
+   the bottom edge. Overhanging the clip box covers it; .hero clips the excess. */
 .hero-scrim {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   background:
     linear-gradient(90deg, rgba(7,17,29,0.72) 0%, rgba(7,17,29,0.45) 38%, rgba(7,17,29,0) 62%),
     linear-gradient(180deg, rgba(7,17,29,0.10) 25%, rgba(7,17,29,0.78) 100%);
@@ -326,6 +330,10 @@ a:hover { color: var(--orange); }
 
 /* Slot for the hero buttons at ≤768px; stays out of the way above that. */
 .stats-actions:empty { display: none; }
+
+/* Stat labels shorten at ≤768px — see the media query. display:none keeps the
+   unused wording out of the accessibility tree, so nothing reads twice. */
+.lbl-short { display: none; }
 
 .stats-grid {
   display: grid;
@@ -932,6 +940,10 @@ section { padding: 72px 0; }
   /* Two stats on one line — the other two are cut here per Adam. */
   .stat-item:nth-child(2),
   .stat-item:nth-child(4) { display: none; }
+
+  /* "Projects" / "Clients" — short enough to stay on one line each. */
+  .lbl-long { display: none; }
+  .lbl-short { display: inline; }
 
   .services-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }

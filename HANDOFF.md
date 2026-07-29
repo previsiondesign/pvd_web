@@ -158,7 +158,11 @@ Key facts a fresh session needs:
     .stats-grid`; desktop renders identically.
   - Only **Projects Completed and Client Organizations** show, on one line —
     `.stat-item:nth-child(2)`/`(4)` (Years of Experience, Licensed Architect)
-    are hidden. They still render on desktop.
+    are hidden. They still render on desktop. Their labels also shorten to
+    **"Projects" / "Clients"** here (`.lbl-long` / `.lbl-short` spans, toggled by
+    `display`, so the unused wording stays out of the accessibility tree).
+    Desktop keeps the long labels — with four across, shortening two of them
+    unbalances the row.
   - The headline block sits lower now that the buttons are gone: 222 px of the
     420 px hero is clear above the type, up from ~60 px. The mobile scrim was
     lightened at the top to suit (0.16 → 0.42 → 0.90) — the headline still
@@ -195,6 +199,13 @@ Key facts a fresh session needs:
     hero, so nothing softens. Drift is capped well inside the overflow the scale
     creates — verified no edge can pull into frame at 1280 px or 375 px, worst
     case 9.3 px of slack. `prefers-reduced-motion` disables drift and fades.
+    **`.hero-scrim` is `inset: -2px`, not 0, because of this drift**: the
+    transform puts each series on its own compositing layer, and that layer's
+    clip against `.hero`'s `overflow: hidden` rounds outward to whole device
+    pixels, so a 1 px row of undimmed image bled through along the bottom edge
+    (Adam spotted it, 2026-07-28). Overhanging the clip box covers the row;
+    `.hero` clips the excess, so nothing outside the hero is darkened. Confirmed
+    by A/B: the row disappears when the transform is removed.
   - `hl09-sfmta.mp4` is **compressed** (2026-07-28): 8.3 MB → 1.98 MB, H.264
     CRF 23 preset slow, audio dropped (the hero plays it muted), `+faststart`,
     trimmed to 6.05 s because the series only holds 6 s and `currentTime` resets

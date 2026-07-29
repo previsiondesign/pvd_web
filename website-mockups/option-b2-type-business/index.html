@@ -111,9 +111,11 @@
              image, and puts them back on resize past the breakpoint -->
         <div class="stats-actions" id="stats-actions"></div>
         <div class="stats-grid">
+          <!-- short labels at ≤768px, where these two carry the row alone and
+               "Client Organizations" wrapped to two lines -->
           <div class="stat-item">
             <span class="stat-number">120+</span>
-            <span class="stat-label">Projects Completed</span>
+            <span class="stat-label"><span class="lbl-long">Projects Completed</span><span class="lbl-short">Projects</span></span>
           </div>
           <!-- hidden at ≤768px, where only two stats are shown on one line -->
           <div class="stat-item">
@@ -122,7 +124,7 @@
           </div>
           <div class="stat-item">
             <span class="stat-number">50+</span>
-            <span class="stat-label">Client Organizations</span>
+            <span class="stat-label"><span class="lbl-long">Client Organizations</span><span class="lbl-short">Clients</span></span>
           </div>
           <div class="stat-item">
             <span class="stat-number">CA</span>
