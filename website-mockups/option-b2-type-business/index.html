@@ -106,22 +106,28 @@
 
     <!-- STATS -->
     <div class="stats-bar">
-      <div class="inner stats-grid">
-        <div class="stat-item">
-          <span class="stat-number">120+</span>
-          <span class="stat-label">Projects Completed</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">15+</span>
-          <span class="stat-label">Years of Experience</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">50+</span>
-          <span class="stat-label">Client Organizations</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">CA</span>
-          <span class="stat-label">Licensed Architect</span>
+      <div class="inner">
+        <!-- ≤768px only: main.js moves the hero's buttons in here, off the
+             image, and puts them back on resize past the breakpoint -->
+        <div class="stats-actions" id="stats-actions"></div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">120+</span>
+            <span class="stat-label">Projects Completed</span>
+          </div>
+          <!-- hidden at ≤768px, where only two stats are shown on one line -->
+          <div class="stat-item">
+            <span class="stat-number">15+</span>
+            <span class="stat-label">Years of Experience</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Client Organizations</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">CA</span>
+            <span class="stat-label">Licensed Architect</span>
+          </div>
         </div>
       </div>
     </div>

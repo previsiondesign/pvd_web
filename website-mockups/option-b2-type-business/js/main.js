@@ -35,6 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ≤768px: the hero buttons move out of the image and into the stats bar, so
+  // the headline block can sit lower and show more of the picture. Moved rather
+  // than duplicated to keep one copy of the labels; the hero already needs JS
+  // to run at all, so there is no no-JS case to fall back to.
+  const heroActions = document.querySelector('.hero-actions');
+  const statsActions = document.getElementById('stats-actions');
+  if (heroActions && statsActions) {
+    const heroHome = heroActions.parentNode;
+    const heroNext = heroActions.nextElementSibling;   // .hero-dots
+    const narrow = window.matchMedia('(max-width: 768px)');
+    const placeActions = () => {
+      if (narrow.matches) statsActions.appendChild(heroActions);
+      else heroHome.insertBefore(heroActions, heroNext);
+    };
+    narrow.addEventListener('change', placeActions);
+    placeActions();
+  }
+
   // Hero: five 6s series. Frames inside a series hold for their own data-dur
   // (mirroring the _#s in the master filenames), cross-fading between them.
   // Images/video load lazily: current series plus the next one.

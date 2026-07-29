@@ -324,6 +324,9 @@ a:hover { color: var(--orange); }
   padding: 44px 0;
 }
 
+/* Slot for the hero buttons at ≤768px; stays out of the way above that. */
+.stats-actions:empty { display: none; }
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -798,6 +801,9 @@ section { padding: 72px 0; }
 
 .attach-hint { font-size: 12.5px; color: var(--gray-400); margin-top: 8px; }
 
+/* only shown at ≤768px, where the drop zone becomes a button */
+.fd-note { display: none; }
+
 .form-error {
   font-size: 14px;
   color: #AE2C11;
@@ -904,11 +910,28 @@ section { padding: 72px 0; }
      jump as the series rotate. */
   .hero p.hero-tagline { min-height: 4.9em; }
 
+  /* With the buttons moved to the stats bar the text block is roughly half
+     what it was, so it sits low and leaves the upper two-thirds of the image
+     clear. Padding is tight because the dots are the last thing in the block. */
+  .hero-content { padding-bottom: 18px; }
+  .hero-dots { margin-top: 16px; }
+
   /* Text spans the full width here, so the left wash can't do the work — carry
-     it vertically instead, strong enough for white type over the light exhibits. */
+     it vertically instead. Lighter up top than it used to be: the type now
+     starts around 55% down, so the image can stay clear above it. */
   .hero-scrim {
-    background: linear-gradient(180deg, rgba(7,17,29,0.40) 0%, rgba(7,17,29,0.68) 30%, rgba(7,17,29,0.92) 100%);
+    background: linear-gradient(180deg, rgba(7,17,29,0.16) 0%, rgba(7,17,29,0.42) 42%, rgba(7,17,29,0.90) 100%);
   }
+
+  /* Buttons relocated off the hero image by main.js sit above the stats. */
+  .stats-bar { padding: 26px 0 30px; }
+  .stats-actions { margin-bottom: 24px; }
+  .stats-actions .hero-actions { gap: 12px; flex-wrap: nowrap; }
+  .stats-actions .btn { flex: 1; text-align: center; padding: 13px 8px; }
+
+  /* Two stats on one line — the other two are cut here per Adam. */
+  .stat-item:nth-child(2),
+  .stat-item:nth-child(4) { display: none; }
 
   .services-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -916,10 +939,42 @@ section { padding: 72px 0; }
   .about-preview { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
 
-  .page-hero { padding: 40px 0; }
-  .page-hero h1 { font-size: 26px; }
+  /* ---- contact page, tightened ---- */
+  .page-hero { padding: 30px 0 26px; }
+  .page-hero + section { padding: 26px 0 40px; }
+  .page-hero h1 { font-size: 26px; margin-bottom: 6px; }
+  .page-hero p { font-size: 15.5px; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
-  .check-grid { grid-template-columns: 1fr; }
+  .check-grid { grid-template-columns: 1fr; gap: 2px; }
+  .field { margin-bottom: 14px; }
+  .contact-grid { gap: 28px; }
+  .contact-info { padding-top: 24px; }
+  .info-block { margin-bottom: 18px; }
+
+  /* A dashed landing zone means nothing on a touch device — there is nothing
+     to drag. Collapse it to a plain button; the file input behind it is
+     unchanged, so tapping still opens the picker. */
+  .file-drop {
+    display: inline-block;
+    width: auto;
+    padding: 12px 24px;
+    border: 2px solid var(--blue);
+    border-radius: 3px;
+    background: transparent;
+    line-height: 1;   /* the block's strut sets the line box, not the label's */
+  }
+  .file-drop:hover, .file-drop.drag { background: transparent; border-color: var(--orange); }
+  .fd-label {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;          /* so it matches the submit button's height */
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .fd-label br, .fd-label em { display: none; }
+  .fd-note { display: block; font-size: 12.5px; color: var(--gray-400); margin-top: 8px; }
 
   section { padding: 48px 0; }
   .section-header { margin-bottom: 36px; }

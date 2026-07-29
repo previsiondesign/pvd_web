@@ -146,6 +146,31 @@ Key facts a fresh session needs:
   - `.hero p.hero-tagline` reserves its tallest wrap so rotating taglines never
     shift the buttons — 2 lines on desktop, 3 at ≤768 px (`.hero p` specificity
     is needed to beat the base rule).
+- **Mobile-only hero/stats/contact pass (2026-07-28, ≤768 px; desktop verified
+  unchanged).** Per Adam, on phones only:
+  - The two hero buttons move **out of the image into the grey stats bar**, side
+    by side above the stats. `main.js` relocates the existing `.hero-actions`
+    into `#stats-actions` on a `matchMedia('(max-width: 768px)')` listener and
+    puts it back past the breakpoint — moved, not duplicated, so the labels have
+    one source of truth. (Safe because the hero already needs JS to show
+    anything.) `.stats-actions:empty` is hidden, so desktop sees nothing. This
+    is why `.inner.stats-grid` was split into `.inner > .stats-actions +
+    .stats-grid`; desktop renders identically.
+  - Only **Projects Completed and Client Organizations** show, on one line —
+    `.stat-item:nth-child(2)`/`(4)` (Years of Experience, Licensed Architect)
+    are hidden. They still render on desktop.
+  - The headline block sits lower now that the buttons are gone: 222 px of the
+    420 px hero is clear above the type, up from ~60 px. The mobile scrim was
+    lightened at the top to suit (0.16 → 0.42 → 0.90) — the headline still
+    measures 4.95:1 over near-white shadow-map paper, well past the 3:1 large
+    text needs.
+  - Contact page: the dashed drop zone collapses to a plain **Attach files
+    button** (there is nothing to drag on a touch device). The file input,
+    click, keyboard and drop handlers are untouched, so desktop drag-and-drop
+    still works; the size/type limits move to a `.fd-note` line below the button
+    (hidden on desktop, where the `<em>` inside the zone carries them). Vertical
+    spacing tightened throughout: page hero 30/26, section 26/40, field gap 14,
+    contact grid 28.
   - **Cross-fades stack rather than swap** (Adam asked for smooth transitions):
     the incoming series/frame fades in on a raised z-index while the outgoing
     layer stays fully opaque underneath until it is covered, so a transition
