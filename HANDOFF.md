@@ -1,13 +1,28 @@
 # Handoff — Prevision Design Website
 
-_Last updated: 2026-06-09_
+_Last updated: 2026-07-29_
 
 ## Project
 
-Marketing-site mockups for **Prevision Design** (Adam Phillips, Licensed Architect, CA C-30995) — an architectural consulting firm in San Francisco, CA specializing in shadow analysis, visual simulation, daylight studies, peer review, and the proprietary Parasolv software.
+**Prevision Design** (Adam Phillips, Licensed Architect, CA C-30995) — San
+Francisco, CA. Sun and shadow studies, daylight analysis, visual simulation and
+peer review. (Parasolv is **not** part of this site any more — that IP moved to
+Berm Labs, and every reference was removed from the selected design.)
 
-Git repo, pushed to **https://github.com/previsiondesign/pvd_web** (public).
-Live via GitHub Pages at **https://previsiondesign.github.io/pvd_web/** — root `index.html` is a hub page linking all mockup options (rebuilds automatically on push to main; `.nojekyll` present).
+**The real site is live at https://www.previsiondesign.com.** Two repos:
+
+| repo | role | local clone |
+|------|------|-------------|
+| `previsiondesign/site` (public) | **production** — what the domain serves | `D:\Dev\site` |
+| `previsiondesign/pvd_web` (public) | design source: mockups, build scripts, this doc | `D:\Dev\Prevision Web` |
+
+Production is **generated, never hand-edited** — `scripts/publish-site.py` copies
+the selected mockup into the site repo. Edit the mockup, run the script, then
+commit and push in *both* repos. Editing `D:\Dev\site` directly gets overwritten
+on the next publish.
+
+The mockup hub stays live at **https://previsiondesign.github.io/pvd_web/** — root
+`index.html` links all the options (rebuilds on push to main; `.nojekyll` present).
 
 Hub conventions (per Adam, 2026-06-10):
 - The **most-current iterations always go in the first section** of the hub page; demote earlier rounds below when adding a new round.
@@ -71,14 +86,44 @@ Prevision_Site_Copy.docx All site copy (B2 home + option-b subpages) organized b
                          page/section in editable tables — for copy revision
 docs/                    Resume + firm-profile reference PDFs
 Prevision_Design_Firm_Overviews.docx
+scripts/                 Asset pipeline + publish (see below)
 ```
 
-Each option has its own `css/styles.css` (shared palette: blue `#5188B5`, orange `#F18B01`, Montserrat headings / Roboto body via Google Fonts).
+Each option has its own `css/styles.css`. Note the palette above is the **old**
+shared one; the selected design (option-b2-type-business) runs the Autumn palette
+with Inter throughout — see its `:root`.
+
+## Scripts
+
+All run from the repo root. The three build scripts read masters that stay local
+(`projects/` is gitignored) and write the web-ready copies that actually ship.
+
+| script | reads | writes |
+|--------|-------|--------|
+| `build-hero-images.py` | `projects/Headline Images` | `shared/images/hero/` — 137 MB → 1.9 MB WebP + the compressed mp4 (needs ffmpeg) |
+| `build-discipline-images.py` | `projects/Disciplines` | `shared/images/disciplines/` — 4.2:1 card banners |
+| `build-work-images.py` | `projects/Featured Work` | `shared/images/work/` — 4:3 cards + slideshow frames + the Valencia mp4 |
+| `build-client-logos.py` | `images/logos/client_logos` (tracked) | `shared/images/clients/` — normalised Trusted By marks |
+| **`publish-site.py`** | the selected mockup | `D:\Dev\site` — the production copy |
+
+Per-image framing lives in these scripts as named constants (`NUDGE`, `SCALE`,
+`DARKEN`, `PROJECTS`, `CROPS`), expressed in **rendered card pixels** where they
+came from a review note — so "down 12px, right 5px" can be typed in as given and
+the script converts. They warn rather than silently clamping when an adjustment
+runs off the edge of a master, and report every frame they drop.
+
+ffmpeg is required for the two videos and was installed with `scoop install
+ffmpeg`; without it those scripts skip the video with a notice rather than
+shipping an uncompressed master.
 
 ## Preview
 
-`.claude/launch.json` defines server **"mockups"**: `python3 -m http.server 8091 --directory website-mockups`.
-Pages live at `http://localhost:8091/option-{a,b,c}/index.html`.
+`.claude/launch.json` defines three servers:
+- **mockups** — `http.server 8091 --directory website-mockups`; pages at
+  `http://localhost:8091/option-{a,b,c,b2-type-business}/index.html`
+- **site** — `http.server 8094 --directory D:/Dev/site`; the production copy,
+  worth loading after a publish and before pushing
+- **clients-ui** — `http.server 8093 --directory D:/Dev/clients`
 
 ## Recently completed: revised logo rollout (2026-06-09)
 
@@ -123,8 +168,87 @@ Key facts a fresh session needs:
     `Prevision_Site_Copy.docx` edits come back they apply to the mockup, then
     re-publish.
   - Still missing vs. the old multi-page plan: no Services/Portfolio/About
-    subpages; the nav points at anchors on the one-pager. No favicon.
-    Featured Work card labels only appear on hover, so a phone shows none.
+    subpages; the nav points at anchors on the one-pager. (The favicon and the
+    hover-only Featured Work labels were both fixed later the same day — see
+    below.)
+- **SEO layer added at launch (2026-07-28).** The site already had a good title,
+  description, `lang`, heading outline and alt text; everything else was missing.
+  Added: canonical URLs, Open Graph + Twitter card tags (1200×630 card built from
+  the Old Bayshore simulation), and a **`ProfessionalService` JSON-LD** block on
+  the home page — services, phone, email, city, area served, founder and licence.
+  That block is the piece that matters for AI answers and knowledge panels: it
+  states what the firm does in machine-readable form instead of making a crawler
+  infer it from prose. `publish-site.py` generates **robots.txt and sitemap.xml**
+  from its own page list so they cannot drift, and drops `favicon.ico` at the root.
+  - **Only Adam can do the rest**, roughly by impact: verify the domain in Google
+    Search Console and submit the sitemap (Bing Webmaster too — it feeds Copilot);
+    set up a Google Business Profile, which also gives the JSON-LD a real street
+    address (it currently carries city/state only, since that is all the site
+    states); get cited from AIA SF, consultant directories and published EIRs;
+    and — the real lever — write pages that answer actual questions ("What is a
+    Section 295 shadow study?"), because that is what gets quoted.
+  - Nobody can guarantee inclusion in AI answers; anyone selling "AI SEO" is
+    overstating it. The mechanics that help are the ordinary ones.
+- **Favicon (2026-07-28).** `shared/images/favicon.svg` is a **squared-up** copy of
+  the logo icon, built by hand from `prevision_icon.svg`: the source art is
+  236×188 and its bounds include the blue cast shadow, so dropping it into a
+  square tab slot letterboxes it to ~16×12 and pushes the P off-centre — the tab
+  showed a smudge. The square version is scaled 0.78 and translated so the **P
+  box**, not the art bounds, sits on the canvas centre (the brand rule noted
+  inside the SVG). Links are the modern set: `.ico` first for old browsers, then
+  the SVG, then apple-touch. Also generated: `favicon-32.png`, `apple-touch-icon.png`,
+  `icon-512.png`, `favicon.ico`. Favicons cache hard — expect to need a new tab.
+- **Client logos replace the Trusted By names (2026-07-29).** Twelve real marks,
+  built by **`scripts/build-client-logos.py`** from `images/logos/client_logos/`
+  (now tracked, 92 KB — the script and its output were committed but the sources
+  were not, so a fresh clone could serve the strip but not rebuild it).
+  - Sources run from a 5:1 wordmark to a square badge, so they **share a 140×64
+    cell with `object-fit: contain`** rather than a common height — matching
+    heights let the wide ones tower over the badges. Each is trimmed to its
+    actual ink first.
+  - Per-logo `SCALE` multipliers even out the *lettering*, which is what Adam
+    cares about; tuned by eye against a contact sheet, since no automatic measure
+    works (a circular badge's ink height says nothing about the name inside it).
+    `DARKEN` does the same for marks that read too light. Current: SWCA 0.649,
+    TMG 0.721, SF Planning 0.721, Stantec 0.851, Perkins&Will 0.960; ESA and
+    Urban Planning Partners darkened to 0.90.
+  - **SF Rec & Parks is a white knockout logo** and was invisible on the white
+    band, so the script detects near-white ink and recolours it dark — same
+    artwork, opposite polarity. It warns on any logo it has to upscale; **ICF
+    (1.7×) and Tishman Speyer (1.2×) are still soft and want better sources.**
+  - Greyscale + 0.6 opacity, at rest and on hover alike (colour is kept in the
+    files, so full colour is deleting two CSS lines).
+  - Layout is **staggered, not a grid**: rows alternate 5 and 4 across (twelve
+    logos land 5/4/3) inside explicit `.clients-row` groups, and centring each row
+    is what offsets it — exactly half of the 180px cell pitch. At ≤768px the rows
+    collapse to `display: contents` so they flow as one group, because the groups
+    otherwise strand a single logo under a pair.
+- **Desktop hero fills to the fold (2026-07-29).** Above 1024px the hero is
+  `clamp(500px, calc(100vh - 264px), 940px)`. 264 = 32px frame margin + 72px
+  header + 144px stats band + **16px deliberately left over**, so the band stops
+  just short of the viewport edge and a sliver of the white section shows below
+  it. Scoped to min-width 1025px because below that the stats grid wraps to two
+  rows and the constant stops holding. The headline block is anchored bottom-left
+  so it keeps its offsets as the hero grows. Side effect: the taller box crops the
+  imagery less — the shadow maps show 76% of their height, up from 50%.
+- **Late mobile pass (2026-07-29).** All at ≤768px unless noted:
+  - The menu panel had **no background**: `.site-header` sets `backdrop-filter`,
+    which makes it the containing block for the fixed nav inside it, so top/bottom
+    resolved against the 60px header and the panel collapsed to 430×0 — a
+    zero-height box paints nothing and the links floated over the page. Dropped
+    the filter at this breakpoint. Panel is now `rgba(255,255,255,0.8)` + blur.
+  - `.btn` is **inline-flex and centres its own label**: in a flex row the outline
+    button is 4px taller (its borders), so stretch put the difference below the
+    primary button's text and "Our Services" rode high.
+  - Anchor targets get `scroll-margin-top: var(--header-height)` — exactly the
+    header, no more, or a sliver of the previous section shows in the gap.
+  - **Featured Work lights on scroll** like the discipline snippets: the centred
+    card resaturates, shows its label overlay and runs its slideshow. Both card
+    types share one pool in `main.js`. Bulk frame prefetch is **hover-only** —
+    pulling all 27 Potrero frames for every card scrolled past would be megabytes
+    of phone data — and `step()` warms one frame ahead instead.
+  - Headshot is 128px on the left with the name and title beside it; this needed
+    the heading split into `.about-head` so grid could place it separately.
 - Direction: **B2 "Boxed Canvas" selected** (2026-06-10). Three color studies
   (option-b2-autumn/blues/preppy) generated from palette samples in pallettes/;
   no palette picked yet. Copy revision underway via Prevision_Site_Copy.docx —
@@ -348,10 +472,10 @@ Key facts a fresh session needs:
   after an avoice.co-inspired dark gradient look) remain live for reference.
 - Option B is the only multi-page option; A and C are single-page index mockups.
 - Contact form (option-b/contact.html) is a stub — `onsubmit` shows an alert; needs a real backend (e.g. Formspree) for production.
-- No favicon is set on any page — `images/logos/prevision_logo.svg` (icon-only 3D box, also copied to shared/images/prevision_icon.svg) is the natural candidate. (The old PrevisionP.png P-mark was removed 2026-06-10.)
+- Favicons exist **only on option-b2-type-business** (the selected design) and the live site — see the favicon entry above. The other mockup variants still have none. (The old PrevisionP.png P-mark was removed 2026-06-10.)
 - Email `info@previsiondesign.com` and "CA License C-30995" appear across all pages — verify before launch.
 
-## Domain migration (in progress, 2026-06-10)
+## Domain migration — COMPLETE (2026-06-10)
 
 Moving previsiondesign.com: registrar Wild West Domains/secureserver.net
 ("Inexpensive Domains" reseller account) → Porkbun; web Wix → GitHub Pages;
@@ -360,7 +484,8 @@ registrar; pending completion at Porkbun. DNS currently hosted by Wix
 (ns10/ns11.wixdns.net) — **keep the Wix plan active until cutover**.
 
 Production repo: **github.com/previsiondesign/site** (local clone D:\Dev\site)
-— serves the under-construction page at **www.previsiondesign.com**.
+— served the under-construction placeholder at **www.previsiondesign.com** until
+2026-07-28, and now serves the real site.
 
 **Cutover completed 2026-06-10:** domain at Porkbun (expiry 2027-06-20),
 nameservers on Porkbun's current fleet (*.ns.porkbun.com), all 12 records
