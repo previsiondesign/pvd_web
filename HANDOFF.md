@@ -171,6 +171,30 @@ Key facts a fresh session needs:
     subpages; the nav points at anchors on the one-pager. (The favicon and the
     hover-only Featured Work labels were both fixed later the same day — see
     below.)
+- **Valencia Street is WITHHELD (2026-10-12) — pending permission to show it.**
+  Both appearances are hidden: the hero's animation series (`hl09-sfmta.mp4`,
+  which is the Valencia streetscape) and its Featured Work card (`val-main.webp`
+  + `val-options.mp4`). Hero now rotates 4 series; Featured Work shows 5 cards.
+  - In the mockup each block is wrapped in `<template data-withheld="valencia">`
+    — inert, so nothing renders and the media is never fetched. **To restore:
+    unwrap the two templates in `option-b2-type-business/index.html` and
+    re-publish.** Nothing else needs touching.
+  - `publish-site.py` strips every `data-withheld` block and its explanatory
+    note from production, and **skips the files those blocks reference** —
+    derived from the markup, so there is no separate list to keep in sync. On
+    the live site there is no trace: no markup, no text, files 404.
+  - **Not covered, by design — Adam's call:** the three files are still in the
+    public `pvd_web` repo and served by the mockup hub at
+    previsiondesign.github.io/pvd_web/…, and both repos' git history contain
+    them. Fully removing them would mean deleting from pvd_web (rebuildable —
+    the masters are local) and, for history, a rewrite.
+  - Two layout fixes came with it, both general rather than Valencia-specific:
+    Ken Burns drift variants are assigned by class (`kb-b/c/d`), not
+    `:nth-child`, which silently re-shuffled every series' drift when one was
+    removed; and Featured Work centres a short last row (half-column grid,
+    cards span two, `:nth-child(… of .project-card)` so withheld templates
+    don't count) instead of leaving a hole — verified at 1440 (3+2), 900
+    (2+2+1) and 430 (single column).
 - **SEO layer added at launch (2026-07-28).** The site already had a good title,
   description, `lang`, heading outline and alt text; everything else was missing.
   Added: canonical URLs, Open Graph + Twitter card tags (1200×630 card built from

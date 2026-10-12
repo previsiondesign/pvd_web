@@ -18,7 +18,7 @@ site repo, not here.
 
     python scripts/publish-site.py [dest]      # default dest: D:/Dev/site
 """
-import io, os, shutil, sys
+import io, os, re, shutil, sys
 
 SRC = os.path.join('website-mockups', 'option-b2-type-business')
 SHARED = os.path.join('website-mockups', 'shared', 'images')
@@ -52,6 +52,36 @@ LIVE_NOTE = ("We couldn't send that just now &mdash; please email "
              "and we'll pick it up right away.")
 
 
+WITHHELD_BLOCK = re.compile(r'<template data-withheld="[^"]*">.*?</template>\n?', re.S)
+WITHHELD_NOTE = re.compile(r'[ \t]*<!--(?:(?!-->).)*WITHHELD(?:(?!-->).)*-->\n', re.S)
+
+
+def withheld_files(pages):
+    """Media referenced only inside <template data-withheld> blocks.
+
+    Content waiting on permission is wrapped in an inert <template> in the mockup.
+    On production it must leave no trace: the block, the note explaining it, and
+    the files it points at. Derived from the markup, so restoring a project is
+    just unwrapping its template — nothing to keep in sync here.
+    """
+    held, shown = set(), set()
+    for page in pages:
+        s = io.open(os.path.join(SRC, page), encoding='utf-8').read()
+        for block in WITHHELD_BLOCK.findall(s):
+            held |= referenced(block)
+        shown |= referenced(WITHHELD_BLOCK.sub('', s))
+    return held - shown
+
+
+def referenced(html):
+    """shared/images-relative paths an HTML fragment points at."""
+    out = set(re.findall(r'shared/images/([\w./-]+?\.\w{2,4})"', html))
+    for attr in ('data-video', 'data-frames'):
+        for v in re.findall(attr + r'="([^"]+)"', html):
+            out |= {'work/' + f.strip() for f in v.split(',') if f.strip()}
+    return out
+
+
 def write(path, text):
     io.open(path, 'w', encoding='utf-8', newline='\n').write(text)
 
@@ -59,16 +89,18 @@ def write(path, text):
 def rewrite(text, is_page):
     text = text.replace('../shared/', 'shared/')
     if is_page:
+        text = WITHHELD_BLOCK.sub('', text)
+        text = WITHHELD_NOTE.sub('', text)
         text = text.replace(HUB_BUTTON, '')
         text = text.replace(DEMO_NOTE, LIVE_NOTE)
     return text
 
 
-def copy_tree(src, dest):
-    """Mirror a directory, reporting the file count and bytes moved."""
+def copy_tree(src, dest, skip=()):
+    """Mirror a directory, minus `skip` (bare filenames), reporting count and bytes."""
     if os.path.isdir(dest):
         shutil.rmtree(dest)
-    shutil.copytree(src, dest)
+    shutil.copytree(src, dest, ignore=lambda d, names: [n for n in names if n in skip])
     n = size = 0
     for root, _, files in os.walk(dest):
         for f in files:
@@ -86,9 +118,16 @@ def main():
     if not os.path.exists(os.path.join(dest, 'CNAME')):
         sys.exit('no CNAME in %s — refusing to publish, the domain would break' % dest)
 
+    held = withheld_files(PAGES)
+    for f in sorted(held):
+        print('WITHHELD  shared/images/%s — not published' % f)
+
     for page in PAGES:
         s = io.open(os.path.join(SRC, page), encoding='utf-8').read()
         out = rewrite(s, True)
+        assert 'data-withheld' not in out and 'WITHHELD' not in out, 'withheld block survived in ' + page
+        for f in held:
+            assert os.path.basename(f) not in out, 'withheld file still referenced: ' + f
         assert 'back-to-hub' not in out, 'hub button survived in ' + page
         assert '../shared/' not in out, 'unrewritten asset path in ' + page
         io.open(os.path.join(dest, page), 'w', encoding='utf-8', newline='\n').write(out)
@@ -105,8 +144,9 @@ def main():
 
     total_n = total_size = 0
     for d in ASSET_DIRS:
+        skip = {os.path.basename(f) for f in held if f.startswith(d + '/')}
         n, size = copy_tree(os.path.join(SHARED, d),
-                            os.path.join(dest, 'shared', 'images', d))
+                            os.path.join(dest, 'shared', 'images', d), skip)
         total_n += n
         total_size += size
         print('assets shared/images/%-8s %3d files %6.2f MB' % (d, n, size / 1048576))
