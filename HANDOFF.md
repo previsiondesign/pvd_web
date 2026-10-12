@@ -188,6 +188,12 @@ Key facts a fresh session needs:
     previsiondesign.github.io/pvd_web/…, and both repos' git history contain
     them. Fully removing them would mean deleting from pvd_web (rebuildable —
     the masters are local) and, for history, a rewrite.
+  - **Housing Element is withheld too (2026-10-12), for layout only** — five
+    cards left a ragged grid, four make an even 2×2. Same `<template
+    data-withheld="housing-element">` mechanism; its 19 files are held back from
+    production. **Unwrap it together with Valencia.** The 2×2 comes from a rule
+    keyed on the card count (`:has(... :nth-child(4 of .project-card):nth-last-child(1 ...))`),
+    so it switches itself off once there are six again — no CSS to undo.
   - Two layout fixes came with it, both general rather than Valencia-specific:
     Ken Burns drift variants are assigned by class (`kb-b/c/d`), not
     `:nth-child`, which silently re-shuffled every series' drift when one was
